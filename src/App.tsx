@@ -1,10 +1,11 @@
 import React from "react";
 import Footer from "./components/layout/Footer";
+import Header from "./components/layout/Header";
 
 function App() {
   return (
     <div>
-      <h1 className="text-red-500">FUNCIONANDO</h1>
+      <Header></Header>
       <Footer></Footer>
     </div>
   );
