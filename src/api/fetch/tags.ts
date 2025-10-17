@@ -14,7 +14,7 @@ export async function getTags(): Promise<object[]> {
   }
 }
 
-export interface Tags {
+/* export interface Tags {
   title?: string;
   id?: number;
-}
+} */

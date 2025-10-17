@@ -1,4 +1,4 @@
-async function getProducts(): Promise<object[]> {
+async function fetchProducts(): Promise<object[]> {
   try {
     const res = await fetch(`http://161.35.104.211:8000/products/`, {
       headers: {
@@ -16,7 +16,7 @@ async function getProducts(): Promise<object[]> {
   }
 }
 
-async function getProductByID(id: number): Promise<object[]> {
+async function fetchProductByID(id: number): Promise<object[]> {
   try {
     const res = await fetch(`http://161.35.104.211:8000/products/${id}`, {
       headers: {
@@ -33,7 +33,7 @@ async function getProductByID(id: number): Promise<object[]> {
     throw error;
   }
 }
-export interface Product {
+/* export interface Product {
   title: string;
   pictures: string[];
   price: number;
@@ -46,5 +46,5 @@ export interface Product {
       id: string;
     }
   ];
-}
-export { getProducts, getProductByID };
+} */
+export { fetchProducts, fetchProductByID };
