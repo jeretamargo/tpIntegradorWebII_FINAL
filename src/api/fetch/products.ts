@@ -1,3 +1,5 @@
+import type { Product } from "../interfaces/interfaces";
+
 async function fetchProducts(): Promise<object[]> {
   try {
     const res = await fetch(`http://161.35.104.211:8000/products/`, {
@@ -15,8 +17,8 @@ async function fetchProducts(): Promise<object[]> {
     throw error;
   }
 }
-
-async function fetchProductByID(id: number): Promise<object[]> {
+//cambie a tipo de retorno de la interface Product
+async function fetchProductByID(id: number): Promise<Product> {
   try {
     const res = await fetch(`http://161.35.104.211:8000/products/${id}`, {
       headers: {
