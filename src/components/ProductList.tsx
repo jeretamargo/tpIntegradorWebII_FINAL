@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { Products } from "../../api/interfaces/interfaces";
+import type { Products } from "../api/interfaces/interfaces";
 import ProductCard from "./ProductCard";
 
 interface Props {
@@ -60,14 +60,13 @@ export function ProductList({ products }: Props) {
               </h2>
             </header>
             <ul className="mt-8 grid gap-4 sm:grid-cols-2 p lg:grid-cols-6 ">
-              $
               {filteredProducts.map((producto: Products) => {
                 return (
                   <ProductCard
                     title={producto.title}
-                    picture={`"http://161.35.104.211:8000"${producto.pictures[0]}`}
+                    picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
                     price={producto.price * 1000}
-                    description="{producto.description}"
+                    description={producto.description}
                     productId={producto.id}
                   ></ProductCard>
                 );

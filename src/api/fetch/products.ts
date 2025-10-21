@@ -35,7 +35,7 @@ async function fetchProductByID(id: number): Promise<Product> {
     throw error;
   }
 }
-/* export interface Product {
+ /*export interface Product {
   title: string;
   pictures: string[];
   price: number;
