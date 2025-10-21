@@ -7,7 +7,7 @@ import { Listado } from "./pages/Listado";
 function App() {
   return (
     <div>
-      <Home></Home>
+      <Listado></Listado>
     </div>
   );
 }
