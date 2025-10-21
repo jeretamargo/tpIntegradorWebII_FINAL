@@ -1,15 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
-import { ProductList } from "../components/layout/ProductList";
-import TagList from "../components/layout/TagList";
-import type { Products } from "../api/interfaces/interfaces";
+import { ProductList } from "../components/ProductList";
+import TagList from "../components/TagList";
+import type { Products, Tag } from "../api/interfaces/interfaces";
 
 function Home() {
-  const [products, setProducts] = useState<Products[]>([]);
-  const [tags, setTags] = useState();
+  const [arrayProducts, setProducts] = useState<Products[]>([]);
+  const [arrayTags, setTags] = useState<Tag[]>([]);
 
   useEffect(() => {
+    async function fetchTags(): Promise<Tag[]> {
+      try {
+        const res = await fetch("http://161.35.104.211:8000/tags", {
+          headers: {
+            accept: "application/json",
+            Authorization: "Bearer jeremias01",
+          },
+        });
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.error(`Error cargando etiquetas: ", ${error}`);
+        throw error;
+      }
+    }
+    fetchTags()
+      .then((tags) => setTags(tags))
+      .catch((err) => console.error(err));
+
     async function fetchProducts(): Promise<Products[]> {
       try {
         const res = await fetch(`http://161.35.104.211:8000/products/`, {
@@ -32,16 +51,16 @@ function Home() {
       .then((products) => setProducts(products))
       .catch((err) => console.error(err));
   }, []);
-  if (products.length === 0) {
+  if (arrayProducts.length === 0) {
     return <div>Cargando Productos</div>;
   } else {
     return (
       <>
         <Header></Header>
         <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
-          <TagList></TagList>
+          <TagList tags={arrayTags}></TagList>
         </div>
-        <ProductList products={products}></ProductList>
+        <ProductList products={arrayProducts}></ProductList>
         <Footer></Footer>
       </>
     );
