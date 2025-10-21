@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import ProductDetail from "../components/layout/ProductDetail";
 import { fetchProductByID } from "../api/fetch/products";
 import React, { useEffect, useState } from "react";
@@ -17,8 +16,8 @@ const Ficha = ({ id }: { id: number }) => {
   useEffect(() => {
     async function loadProduct() {
       try {
-        const p = await fetchProductByID(id);//funcion de la carpeta fetch
-        
+        const p = await fetchProductByID(id); //funcion de la carpeta fetch
+
         setProduct({
           title: p.title,
           picture: p.pictures[0], // suponiendo que pictures es un array
@@ -39,16 +38,3 @@ const Ficha = ({ id }: { id: number }) => {
 };
 
 export default Ficha;
-=======
-import React from 'react'
-
-function Ficha() {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default Ficha
->>>>>>> main
