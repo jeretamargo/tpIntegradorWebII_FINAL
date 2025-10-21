@@ -3,13 +3,35 @@ import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { ProductList } from "../components/ProductList";
 import TagList from "../components/TagList";
-import type { Products, Tag } from "../api/interfaces/interfaces";
+import type { Category, Products, Tag } from "../api/interfaces/interfaces";
 
 function Home() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
   const [arrayTags, setTags] = useState<Tag[]>([]);
+  const [arrayCategories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
+    async function fetchCategories(): Promise<Category[]> {
+      try {
+        const res = await fetch(`http://161.35.104.211:8000/categories/`, {
+          headers: {
+            accept: "application/json",
+            Authorization: "Bearer jeremias01",
+          },
+        });
+
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.error(`Error cargando productos: ", ${error}`);
+
+        throw error;
+      }
+    }
+    fetchCategories()
+      .then((categories) => setCategories(categories))
+      .catch((err) => console.error(err));
+
     async function fetchTags(): Promise<Tag[]> {
       try {
         const res = await fetch("http://161.35.104.211:8000/tags", {
@@ -56,7 +78,7 @@ function Home() {
   } else {
     return (
       <>
-        <Header></Header>
+        <Header categories={arrayCategories}></Header>
         <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
           <TagList tags={arrayTags}></TagList>
         </div>

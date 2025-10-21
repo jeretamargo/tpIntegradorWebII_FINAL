@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import cartIcon from "../../assets/images/carro.png";
-function Header() {
+import type { Category } from "../../api/interfaces/interfaces";
+interface Props {
+  categories: Category[];
+}
+
+function Header({ categories }: Props) {
+  const [showCategories, setShowCategories] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
   return (
     <div>
       <header className="bg-gradient-to-t from-blue-800 via-blue-700 to-blue-50 sticky top-0 z-50">
@@ -22,38 +30,38 @@ function Header() {
                 <button
                   type="button"
                   className="overflow-hidden px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 hover:text-gray-700 focus:relative divide-gray-300 rounded border border-gray-300 bg-white shadow-sm"
-                  /* onClick={() => setShowCategories(!showCategories)} */
+                  onClick={() => setShowCategories(!showCategories)}
                 >
                   <span className="sr-only">Toggle dashboard menu</span>
                   Categorias
                 </button>
 
-                {
-                  /* showCategories && */ <div
+                {showCategories && (
+                  <div
                     className="absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
                     role="menu"
                   >
                     <div className="p-2">
-                      {/*  {categories.map((cat) => ( */}
-                      <a
-                        /* key={cat.id}
-                        href={`/listado.html?cat=${cat.id}`} */
-                        className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        role="menuitem"
-                      >
-                        {/* {cat.title} */}
-                      </a>
-                      {/* ))} */}
+                      {categories.map((cat) => (
+                        <a
+                          key={cat.id}
+                          href={`/listado.html?cat=${cat.id}`}
+                          className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          role="menuitem"
+                        >
+                          {cat.title}
+                        </a>
+                      ))}
                     </div>
                   </div>
-                }
+                )}
               </div>
 
               {/* Botón hamburguesa (mobile) */}
               <div className="block md:hidden">
                 <button
                   className="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
-                  /* onClick={() => setShowMobileMenu(!showMobileMenu)} */
+                  onClick={() => setShowMobileMenu(!showMobileMenu)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -86,21 +94,21 @@ function Header() {
         </div>
 
         {/* Menú mobile desplegable */}
-        {/*   {showMobileMenu && ( */}
-        <div className="absolute left-0 right-0 top-16 z-20 bg-white border-t border-gray-200 shadow-md">
-          <nav className="flex flex-col p-4 space-y-2">
-            {/*  {categories.map((cat) => ( */}
-            <a
-              /* key={cat.id}
-                  href={`/listado.html?cat=${cat.id}`} */
-              className="block rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              {/* {cat.title} */}
-            </a>
-            {/* ))} */}
-          </nav>
-        </div>
-        {/*  )} */}
+        {showMobileMenu && (
+          <div className="absolute left-0 right-0 top-16 z-20 bg-white border-t border-gray-200 shadow-md">
+            <nav className="flex flex-col p-4 space-y-2">
+              {categories.map((cat) => (
+                <a
+                  key={cat.id}
+                  href={`/listado.html?cat=${cat.id}`}
+                  className="block rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  {cat.title}
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
     </div>
   );
