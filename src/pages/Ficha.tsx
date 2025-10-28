@@ -3,7 +3,10 @@ import { fetchProductByID } from "../api/fetch/products";
 import React, { useEffect, useState } from "react";
 import Home from "./Home";
 import { useParams } from "react-router";
-
+import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
+import TagList from "../components/TagList";
+import type { Products, Tag } from "../api/interfaces/interfaces";
 
 interface Props {
   title: string;
@@ -13,19 +16,17 @@ interface Props {
   productId: number;
 }
 
-
- function Ficha () {
+function Ficha() {
   const [product, setProduct] = useState<Props | null>(null);
-  const {idProduct}= useParams();//useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
+  const { idProduct } = useParams(); //useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
   const id: number = Number(idProduct);
-  console.log(idProduct)
- 
+  console.log(idProduct);
 
   useEffect(() => {
     async function loadProduct() {
       try {
-        const p = await fetchProductByID(id);//funcion de la carpeta fetch
-        
+        const p = await fetchProductByID(id); //funcion de la carpeta fetch
+
         setProduct({
           title: p.title,
           picture: p.pictures[0], // suponiendo que pictures es un array
@@ -42,9 +43,13 @@ interface Props {
 
   if (!product) return <p>Cargando...</p>;
   //... spread operator equivalente a esquibir las props
-  return <ProductDetail {...product} />;
-};
-
-
+  return (
+    <>
+      <Header></Header>
+      <ProductDetail {...product} />
+      <Footer></Footer>
+    </>
+  );
+}
 
 export default Ficha;
