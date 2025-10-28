@@ -21,7 +21,7 @@ function ProductCard({ title, picture, description, price, productId }: Props) {
       </div>
       <div>
         <a
-          href={`http://localhost:5173/ficha.html?product-id=${productId}`}
+          href={`http://localhost:5173/product-id/${productId}`}
           className="group block overflow-hidden"
         >
           <div className="h-[40px] relative bg-white pt-3">
@@ -42,7 +42,7 @@ function ProductCard({ title, picture, description, price, productId }: Props) {
         <div className="mt-2 flex flex-row gap-4 m-3 items-center">
           <a
             className="flex-1 text-grow hover:underline"
-            href={`http://localhost:5173/ficha.html?product-id=${productId}`}
+            href={`http://localhost:5173/ficha?product-id=${productId}`}
           >
             Ver mas
           </a>

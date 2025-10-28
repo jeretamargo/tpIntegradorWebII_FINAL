@@ -1,6 +1,9 @@
 import ProductDetail from "../components/layout/ProductDetail";
 import { fetchProductByID } from "../api/fetch/products";
 import React, { useEffect, useState } from "react";
+import Home from "./Home";
+import { useParams } from "react-router";
+
 
 interface Props {
   title: string;
@@ -10,14 +13,19 @@ interface Props {
   productId: number;
 }
 
-const Ficha = ({ id }: { id: number }) => {
+
+ function Ficha () {
   const [product, setProduct] = useState<Props | null>(null);
+  const {idProduct}= useParams();//useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
+  const id: number = Number(idProduct);
+  console.log(idProduct)
+ 
 
   useEffect(() => {
     async function loadProduct() {
       try {
-        const p = await fetchProductByID(id); //funcion de la carpeta fetch
-
+        const p = await fetchProductByID(id);//funcion de la carpeta fetch
+        
         setProduct({
           title: p.title,
           picture: p.pictures[0], // suponiendo que pictures es un array
@@ -36,5 +44,7 @@ const Ficha = ({ id }: { id: number }) => {
   //... spread operator equivalente a esquibir las props
   return <ProductDetail {...product} />;
 };
+
+
 
 export default Ficha;
