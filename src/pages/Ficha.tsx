@@ -2,6 +2,8 @@ import ProductDetail from "../components/layout/ProductDetail";
 import { fetchProductByID } from "../api/fetch/products";
 import React, { useEffect, useState } from "react";
 import Home from "./Home";
+import { useParams } from "react-router";
+
 
 interface Props {
   title: string;
@@ -11,46 +13,38 @@ interface Props {
   productId: number;
 }
 
-function Ficha() {
-  console.log("cargando ficha");
-  const [id, setId] = useState("");
+
+ function Ficha () {
   const [product, setProduct] = useState<Props | null>(null);
+  const {idProduct}= useParams();//useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
+  const id: number = Number(idProduct);
+  console.log(idProduct)
+ 
 
-  //  Leer el parámetro de la URL una sola vez o cuando cambie
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get("product-id") ?? "";
-    setId(productId);
-  }, [window.location.search]);
-console.log("producto recibido"+ id );
-  //  Hacer el fetch solo si hay ID válido
-  useEffect(() => {
-    if (!id) return; // si no hay ID, no cargamos producto
-
     async function loadProduct() {
       try {
-        const p = await fetchProductByID(Number(id));
+        const p = await fetchProductByID(id);//funcion de la carpeta fetch
+        
         setProduct({
           title: p.title,
-          picture: p.pictures[0],
+          picture: p.pictures[0], // suponiendo que pictures es un array
           description: p.description,
           price: p.price,
           productId: p.id,
         });
-
-
       } catch (error) {
         console.error(error);
       }
     }
-
     loadProduct();
   }, [id]);
 
-  //  Render según el estado
-  if (!id) return <Home />; // si no hay id en la URL, mostramos Home
-  if (!product) return <p>Cargando...</p>; // mientras se carga
+  if (!product) return <p>Cargando...</p>;
+  //... spread operator equivalente a esquibir las props
   return <ProductDetail {...product} />;
-}
+};
+
+
 
 export default Ficha;

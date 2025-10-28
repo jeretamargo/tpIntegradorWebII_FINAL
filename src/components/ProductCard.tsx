@@ -21,7 +21,7 @@ function ProductCard({ title, picture, description, price, productId }: Props) {
       </div>
       <div>
         <a
-          href={`http://localhost:5173/ficha?product-id=${productId}`}
+          href={`http://localhost:5173/product-id/${productId}`}
           className="group block overflow-hidden"
         >
           <div className="h-[40px] relative bg-white pt-3">
