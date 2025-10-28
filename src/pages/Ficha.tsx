@@ -3,6 +3,7 @@ import { fetchProductByID } from "../api/fetch/products";
 import React, { useEffect, useState } from "react";
 import Home from "./Home";
 import { useParams } from "react-router";
+import { useSearchParams } from "react-router";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import TagList from "../components/TagList";
@@ -18,8 +19,9 @@ interface Props {
 
 function Ficha() {
   const [product, setProduct] = useState<Props | null>(null);
-  const { idProduct } = useParams(); //useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
-  const id: number = Number(idProduct);
+  const [ idProduct ] = useSearchParams(); //useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
+  const idP = idProduct.get("product-id");
+  const id: number = Number(idP);
   console.log(idProduct);
 
   useEffect(() => {
