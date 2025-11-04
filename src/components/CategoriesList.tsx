@@ -19,7 +19,7 @@ function CategoriesList({ categorias }: Props) {
             return (
               <a
                 className="inline-block rounded-sm bg-blue-800 px-8  py-2 mx-5 text-sm   font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
-                href={`http://localhost:5173/listado.html?cat=${cat.id}`}
+                href={`http://localhost:5173/list?cat=${cat.id}`}
               >
                 {cat.title}
               </a>

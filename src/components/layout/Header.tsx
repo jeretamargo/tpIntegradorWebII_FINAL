@@ -45,7 +45,7 @@ function Header({ categories }: Props) {
                       {categories.map((cat) => (
                         <a
                           key={cat.id}
-                          href={`/listado.html?cat=${cat.id}`}
+                          href={`/list?cat=${cat.id}`}
                           className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                           role="menuitem"
                         >

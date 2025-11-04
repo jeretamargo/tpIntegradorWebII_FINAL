@@ -19,7 +19,7 @@ function TagList({ tags }: Props) {
             return (
               <a
                 className="inline-block rounded-sm bg-blue-800 px-8  py-2 mx-5 text-sm   font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
-                href={`http://localhost:5173/index.html?tag=${tag.id}`}
+                href={`http://localhost:5173/?tag=${tag.id}`}
               >
                 {tag.title}
               </a>
@@ -27,7 +27,7 @@ function TagList({ tags }: Props) {
           })}
           <a
             className="inline-block rounded-sm bg-blue-800 px-8  py-2 mx-5 text-sm   font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
-            href="http://localhost:5173/index.html"
+            href="http://localhost:5173/"
           >
             Mostrar Todo
           </a>

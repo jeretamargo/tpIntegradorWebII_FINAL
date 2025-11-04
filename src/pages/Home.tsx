@@ -3,7 +3,8 @@ import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { ProductList } from "../components/ProductList";
 import TagList from "../components/TagList";
-import type { Category, Products, Tag } from "../api/interfaces/interfaces";
+import type { Products, Tag, Category } from "../api/interfaces/interfaces";
+import cargaGif from "../assets/images/carga.gif";
 
 function Home() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
@@ -74,7 +75,12 @@ function Home() {
       .catch((err) => console.error(err));
   }, []);
   if (arrayProducts.length === 0) {
-    return <div>Cargando Productos</div>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <img src={cargaGif} />
+        <p>Cargando Productos</p>
+      </div>
+    );
   } else {
     return (
       <>

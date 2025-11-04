@@ -5,6 +5,7 @@ import Header from "../components/layout/Header";
 import CategoriesList from "../components/CategoriesList";
 import { ProductList } from "../components/ProductList";
 import Footer from "../components/layout/Footer";
+import cargaGif from "../assets/images/carga.gif";
 
 export function Listado() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -54,10 +55,16 @@ export function Listado() {
       .catch((err) => console.error(err));
   });
   if (products.length === 0) {
-    return <div>Cargando Productos</div>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <img src={cargaGif} />
+        <p>Cargando Productos</p>
+      </div>
+    );
   } else {
     return (
       <>
+        <Header categories={categories}></Header>
         <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
           <CategoriesList categorias={categories}></CategoriesList>
         </div>

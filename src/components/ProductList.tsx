@@ -157,7 +157,7 @@ export function ProductList({ products }: Props) {
     console.log("dentro del if de tags");
     return renderByTag();
   }
-  if (page == "/listado.html") {
+  if (page == "/list") {
     console.log("dentro del if de categorias");
     return renderByCat();
   }
