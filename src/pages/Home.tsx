@@ -5,6 +5,7 @@ import { ProductList } from "../components/ProductList";
 import TagList from "../components/TagList";
 import type { Products, Tag, Category } from "../api/interfaces/interfaces";
 import cargaGif from "../assets/images/carga.gif";
+import CartView from "../components/CartView";
 
 function Home() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
@@ -85,6 +86,7 @@ function Home() {
     return (
       <>
         <Header categories={arrayCategories}></Header>
+        <CartView />
         <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
           <TagList tags={arrayTags}></TagList>
         </div>

@@ -6,6 +6,7 @@ import CategoriesList from "../components/CategoriesList";
 import { ProductList } from "../components/ProductList";
 import Footer from "../components/layout/Footer";
 import cargaGif from "../assets/images/carga.gif";
+import CartView from "../components/CartView";
 
 export function Listado() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -65,6 +66,7 @@ export function Listado() {
     return (
       <>
         <Header categories={categories}></Header>
+        <CartView />
         <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
           <CategoriesList categorias={categories}></CategoriesList>
         </div>

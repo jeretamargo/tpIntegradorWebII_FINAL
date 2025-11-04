@@ -35,6 +35,7 @@ export function ProductList({ products }: Props) {
               {products.map((producto: Products) => {
                 return (
                   <ProductCard
+                    key={producto.id}
                     title={producto.title}
                     picture={`"http://161.35.104.211:8000"${producto.pictures[0]}`}
                     price={producto.price * 1000}
@@ -63,6 +64,7 @@ export function ProductList({ products }: Props) {
               {filteredProducts.map((producto: Products) => {
                 return (
                   <ProductCard
+                    key={producto.id}
                     title={producto.title}
                     picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
                     price={producto.price * 1000}
@@ -93,6 +95,7 @@ export function ProductList({ products }: Props) {
               {products.map((producto: Products) => {
                 return (
                   <ProductCard
+                    key={producto.id}
                     title={producto.title}
                     picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
                     price={producto.price * 1000}

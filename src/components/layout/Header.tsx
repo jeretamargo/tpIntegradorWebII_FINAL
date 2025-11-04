@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import cartIcon from "../../assets/images/carro.png";
 import type { Category } from "../../api/interfaces/interfaces";
+import CartView from "../CartView";
+import { CartContext } from "../../context/CartContext";
 interface Props {
   categories: Category[];
 }
 
 function Header({ categories }: Props) {
+  const { totalQuantity, toggleCart } = useContext(CartContext);
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
@@ -81,12 +84,10 @@ function Header({ categories }: Props) {
               </div>
 
               {/* Carrito Button (triggers modal) */}
-              <button
-                className="relative cursor-pointer" /* onClick={onOpenCart} */
-              >
+              <button className="relative cursor-pointer" onClick={toggleCart}>
                 <img src={cartIcon} alt="Cart" className="w-8 cursor-pointer" />
                 <span className="text-center absolute bottom-0 right-0 z-10 bg-red-600/90 rounded-full h-5 w-5 text-white text-xs flex items-center justify-center">
-                  {/* {cartCount} */}
+                  {totalQuantity}
                 </span>
               </button>
             </div>

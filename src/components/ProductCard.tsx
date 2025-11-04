@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import type { CartItem } from "../api/interfaces/interfaces";
 interface Props {
   title: string;
   picture: string;
@@ -8,6 +10,7 @@ interface Props {
 }
 
 function ProductCard({ title, picture, description, price, productId }: Props) {
+  const { addItem } = useContext(CartContext);
   return (
     <div className="sm:h-[480px] h-[300px] grid grid-cols-2 sm:grid-cols-1 gap-4 rounded-xl bg-white shadow-md p-4 hover:shadow-lg transition">
       <div className="sm:h-[200px] h-[300px] overflow-hidden flex items-center justify-center py-6">
@@ -21,7 +24,7 @@ function ProductCard({ title, picture, description, price, productId }: Props) {
       </div>
       <div>
         <a
-          href={`http://localhost:5173/ficha.html?product-id=${productId}`}
+          href={`http://localhost:5173/product?product-id=${productId}`}
           className="group block overflow-hidden"
         >
           <div className="h-[40px] relative bg-white pt-3">
@@ -42,12 +45,19 @@ function ProductCard({ title, picture, description, price, productId }: Props) {
         <div className="mt-2 flex flex-row gap-4 m-3 items-center">
           <a
             className="flex-1 text-grow hover:underline"
-            href={`http://localhost:5173/ficha.html?product-id=${productId}`}
+            href={`http://localhost:5173/product?product-id=${productId}`}
           >
             Ver mas
           </a>
           <button
-            /* onClick={addToCart} */
+            onClick={() =>
+              addItem({
+                id: productId,
+                name: title,
+                price: price,
+                picture: picture,
+              } as CartItem)
+            }
             className="inline-flex items-center rounded-full border border-indigo-600 p-3 text-indigo-600 hover:bg-indigo-300 hover:text-white focus:ring-3 focus:outline-hidden cursor-pointer"
           >
             <span className="sr-only"> Add To Cart </span>

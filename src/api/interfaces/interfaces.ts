@@ -36,3 +36,11 @@ export interface Product {
   };
   tags: [];
 }
+
+export interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  picture: string;
+  quantity: number;
+}

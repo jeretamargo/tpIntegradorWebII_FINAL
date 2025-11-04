@@ -8,6 +8,7 @@ import Header from "../components/layout/Header";
 import TagList from "../components/TagList";
 import type { Category, Products, Tag } from "../api/interfaces/interfaces";
 import cargaGif from "../assets/images/carga.gif";
+import CartView from "../components/CartView";
 
 interface Props {
   title: string;
@@ -76,6 +77,7 @@ function Ficha() {
     return (
       <>
         <Header categories={categories}></Header>
+        <CartView />
         <ProductDetail {...product} />
         <Footer></Footer>
       </>

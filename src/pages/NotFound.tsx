@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import type { Category } from "../api/interfaces/interfaces";
+import CartView from "../components/CartView";
 
 function NotFound() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -30,6 +31,7 @@ function NotFound() {
   return (
     <>
       <Header categories={categories}></Header>
+      <CartView />
       <main className="grid min-h-full place-items-center bg-gray-200 px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
           <h1 className="text-lg font-semibold text-black">404</h1>
