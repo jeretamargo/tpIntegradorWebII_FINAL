@@ -58,7 +58,6 @@ export function Listado() {
   } else {
     return (
       <>
-        <Header></Header>
         <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
           <CategoriesList categorias={categories}></CategoriesList>
         </div>

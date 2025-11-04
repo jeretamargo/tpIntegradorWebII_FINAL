@@ -8,7 +8,7 @@ import Ficha from "./pages/Ficha";
 function App() {
   return (
     <div>
-      <Ficha id={162}></Ficha>
+      <Home></Home>
     </div>
   );
 }
