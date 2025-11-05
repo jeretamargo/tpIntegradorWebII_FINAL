@@ -27,12 +27,21 @@ export function CartProvider({ children }: PropsWithChildren) {
   const [productos, setProductos] = useState<CartItem[]>([]);
 
   useEffect(() => {
+    calcTotalVal();
+  }, [productos]);
+
+  useEffect(() => {
     setProductos(
       JSON.parse(localStorage.getItem("carrito") || "[]") as CartItem[]
     );
     const cantidad = localStorage.getItem("cant_total");
     setTotalQuantity(cantidad ? parseInt(cantidad) : 0);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(productos));
+    localStorage.setItem("cant_total", totalQuantity.toString());
+  }, [productos, totalQuantity]);
 
   function toggleCart() {
     setIsOpen(!isOpen);
@@ -51,13 +60,8 @@ export function CartProvider({ children }: PropsWithChildren) {
       setProductos([...productos, { ...item, quantity: 1 }]);
       setTotalQuantity(totalQuantity + 1);
     }
-    localStorage.setItem("carrito", JSON.stringify(productos));
-    localStorage.setItem("cant_total", totalQuantity.toString());
-    window.dispatchEvent(
-      new CustomEvent("cart-count-changed", {
-        detail: { count: totalQuantity },
-      })
-    );
+    /*  localStorage.setItem("carrito", JSON.stringify(productos));
+    localStorage.setItem("cant_total", totalQuantity.toString()); */
   }
   function removeItem(item: CartItem) {
     setProductos(
@@ -68,21 +72,20 @@ export function CartProvider({ children }: PropsWithChildren) {
 
     setTotalQuantity(productos.reduce((acc, i) => acc + i.quantity, 0));
 
-    localStorage.setItem("carrito", JSON.stringify(productos));
-    localStorage.setItem("cant_total", totalQuantity.toString());
+    /*  localStorage.setItem("carrito", JSON.stringify(productos));
+    localStorage.setItem("cant_total", totalQuantity.toString()); */
   }
   function emptyCart() {
     setProductos([]);
     setTotalQuantity(0);
-    localStorage.setItem("carrito", JSON.stringify([]));
-    localStorage.setItem("cant_total", "0");
-    window.dispatchEvent(
-      new CustomEvent("cart-count-changed", { detail: { count: 0 } })
-    );
+    /* localStorage.setItem("carrito", JSON.stringify([]));
+    localStorage.setItem("cant_total", "0"); */
   }
   function calcTotalVal() {
     let auxValorTotal: number = 0;
-    productos.forEach((p) => (auxValorTotal = totalVal + p.price * p.quantity));
+    productos.forEach(
+      (p) => (auxValorTotal = auxValorTotal + p.price * p.quantity)
+    );
     setTotalVal(auxValorTotal);
   }
 

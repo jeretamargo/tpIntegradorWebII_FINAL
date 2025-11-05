@@ -45,8 +45,8 @@ function ProductDetail(props: Props) {
                 addItem({
                   id: props.productId,
                   name: props.title,
-                  price: props.price,
-                  picture: props.picture,
+                  price: props.price * 1000,
+                  picture: `http://161.35.104.211:8000${props.picture}`,
                 } as CartItem)
               }
             >

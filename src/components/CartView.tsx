@@ -53,7 +53,10 @@ function CartView() {
               </p>
             ) : (
               productos.map((item) => (
-                <li className="list-none flex flex-row text-white">
+                <li
+                  className="list-none flex flex-row text-white"
+                  key={item.id}
+                >
                   <img
                     src={item.picture}
                     className="h-12 flex align-middle shadow-2xs rounded-full"
