@@ -2,8 +2,8 @@ import React from "react";
 
 function Tabs() {
   return (
-    <div>
-      <ul className="flex flex-wrap text-sm font-medium text-center text-black border-b border-gray-400">
+    <div className=" flex justify-between">
+      <ul className=" flex  text-sm font-medium text-center text-black  border-gray-400 mx-30">
         <li className="me-2">
           <button
             aria-current="page"
@@ -23,6 +23,9 @@ function Tabs() {
           </button>
         </li>
       </ul>
+      <button className="  p-4 mx-30  hover:scale-110 transition-all shadow-2xl">
+        <img src="src/assets/images/add-crud.png" className="flex w-10  "></img>
+      </button>
     </div>
   );
 }

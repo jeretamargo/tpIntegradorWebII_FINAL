@@ -3,11 +3,13 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import Tabs from "../components/CRUD/Tabs";
 import Table from "../components/CRUD/Table";
+import AddButton from "../components/CRUD/AddButton";
 
 function CRUD() {
   return (
     <div>
       <Header categories={[]}></Header>
+
       <Tabs></Tabs>
       <Table></Table>
       <Footer></Footer>

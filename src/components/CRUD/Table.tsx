@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { Category, Products, Tag } from "../../api/interfaces/interfaces";
+import AddButton from "./AddButton";
 
 function Table() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
@@ -71,8 +72,8 @@ function Table() {
   }, []);
   return (
     <div>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-black">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+        <table className="w-full text-sm text-left rtl:text-right text-black  ">
           <thead className="text-xs text-black uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3 ">
@@ -112,7 +113,15 @@ function Table() {
                   <td className="px-6 py-4">{product.id}</td>
                   <td className="px-6 py-4">
                     {product.tags?.map((tag) => (
-                      <p className="py-2 font-bold text-blue-500">
+                      <p
+                        className={`py-2 font-bold ${
+                          tag.id === 25
+                            ? " text-green-500"
+                            : tag.id === 24
+                            ? " text-orange-500"
+                            : "text-blue-500"
+                        }`}
+                      >
                         {tag.title}
                       </p>
                     ))}
@@ -128,13 +137,19 @@ function Table() {
                       href="#"
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline px-2"
                     >
-                      Editar
+                      <img
+                        src="src/assets/images/edit-crud.png"
+                        className="flex w-8"
+                      ></img>
                     </a>
                     <a
                       href="#"
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
-                      Eliminar
+                      <img
+                        src="src/assets/images/delete-crud.png"
+                        className="flex w-8"
+                      ></img>
                     </a>
                   </td>
                 </tr>
