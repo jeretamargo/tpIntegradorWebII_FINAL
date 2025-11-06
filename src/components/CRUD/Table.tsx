@@ -110,8 +110,18 @@ function Table() {
                     />
                   </td>
                   <td className="px-6 py-4">{product.id}</td>
-                  <td className="px-6 py-4">tag</td>
-                  <td className="px-6 py-4">{product.category_id}</td>
+                  <td className="px-6 py-4">
+                    {product.tags?.map((tag) => (
+                      <p className="py-2 font-bold text-blue-500">
+                        {tag.title}
+                      </p>
+                    ))}
+                  </td>
+                  <td className="px-6 py-4">
+                    {arrayCategories.map((cat) =>
+                      cat.id === product.category_id ? cat.title : ""
+                    )}
+                  </td>
                   <td className="px-6 py-4">{product.price * 1000}</td>
                   <td className="px-6 py-4">
                     <a
