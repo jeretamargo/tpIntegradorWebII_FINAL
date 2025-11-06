@@ -7,6 +7,7 @@ import Ficha from "./pages/Ficha";
 import { Route, Routes } from "react-router";
 import NotFound from "./pages/NotFound";
 import { CartProvider } from "./context/CartContext";
+import CRUD from "./pages/CRUD";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/list" element={<Listado />} />
           <Route path="/product" element={<Ficha />} />
+          <Route path="/admin" element={<CRUD />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </CartProvider>
