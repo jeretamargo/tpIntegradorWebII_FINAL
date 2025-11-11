@@ -4,6 +4,7 @@ import Footer from "../components/layout/Footer";
 import Tabs from "../components/CRUD/Tabs";
 import Table from "../components/CRUD/Table";
 import AddButton from "../components/CRUD/AddButton";
+import DeleteWarning from "../components/CRUD/DeleteWarning";
 
 function CRUD() {
   return (

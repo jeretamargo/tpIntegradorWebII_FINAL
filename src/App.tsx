@@ -8,18 +8,21 @@ import { Route, Routes } from "react-router";
 import NotFound from "./pages/NotFound";
 import { CartProvider } from "./context/CartContext";
 import CRUD from "./pages/CRUD";
+import CrudProvider from "./components/CRUD/CrudContext";
 
 function App() {
   return (
     <div>
       <CartProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/list" element={<Listado />} />
-          <Route path="/product" element={<Ficha />} />
-          <Route path="/admin" element={<CRUD />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <CrudProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/list" element={<Listado />} />
+            <Route path="/product" element={<Ficha />} />
+            <Route path="/admin" element={<CRUD />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </CrudProvider>
       </CartProvider>
     </div>
   );
