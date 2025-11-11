@@ -44,3 +44,7 @@ export interface CartItem {
   picture: string;
   quantity: number;
 }
+export interface SelectedProduct {
+  title: string;
+  id: number;
+}

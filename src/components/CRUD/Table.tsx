@@ -9,12 +9,14 @@ function Table() {
   const [arrayTags, setTags] = useState<Tag[]>([]);
   const [arrayCategories, setCategories] = useState<Category[]>([]);
 
-  function renderDeleteModal(prop_title: string, prop_id: string) {
-    return <DeleteWarning title={prop_title} id={prop_id}></DeleteWarning>;
-  }
-
-  const { ProductTabOpen, CategorieTabOpen, TagTabOpen } =
-    useContext(CrudContext);
+  const {
+    ProductTabOpen,
+    CategorieTabOpen,
+    TagTabOpen,
+    setSelectedProduct,
+    setIsWarningOpen,
+    handleDeleteModal,
+  } = useContext(CrudContext);
 
   useEffect(() => {
     async function fetchCategories(): Promise<Category[]> {
@@ -113,7 +115,10 @@ function Table() {
             <tbody>
               {arrayProducts.map((product: Products) => {
                 return (
-                  <tr className="odd:bg-white even:bg-gray-200 border-b  border-gray-200">
+                  <tr
+                    className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
+                    key={product.id}
+                  >
                     <td className="px-6 py-4  ">{product.title}</td>
                     <td className="px-6 py-4">
                       <img
@@ -152,16 +157,17 @@ function Table() {
                       </button>
                       <button
                         onClick={() =>
-                          renderDeleteModal(
-                            product.title,
-                            product.id.toString()
-                          )
+                          handleDeleteModal({
+                            title: product.title,
+                            id: product.id,
+                          })
                         }
                         className="px-2 cursor-pointer"
                       >
                         <img
                           src="src/assets/images/delete-crud.png"
                           className="flex w-8"
+                          onClick={() => setIsWarningOpen(true)}
                         ></img>
                       </button>
                     </td>
@@ -200,7 +206,10 @@ function Table() {
             <tbody>
               {arrayCategories.map((categorie: Category) => {
                 return (
-                  <tr className="odd:bg-white even:bg-gray-200 border-b  border-gray-200">
+                  <tr
+                    className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
+                    key={categorie.id}
+                  >
                     <td className="px-6 py-4  ">{categorie.title}</td>
                     <td className="px-6 py-4">
                       <img
@@ -254,7 +263,10 @@ function Table() {
             <tbody>
               {arrayTags.map((tag: Tag) => {
                 return (
-                  <tr className="odd:bg-white even:bg-gray-200 border-b  border-gray-200">
+                  <tr
+                    className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
+                    key={tag.id}
+                  >
                     <td className="px-6 py-4  ">{tag.title}</td>
 
                     <td className="px-6 py-4">{tag.id}</td>
