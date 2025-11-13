@@ -16,6 +16,12 @@ function Table() {
     setSelectedProduct,
     setIsWarningOpen,
     handleDeleteModal,
+    isAddingProd,
+    isAddingCat,
+    isAddingTag,
+    setIsAddingProd,
+    setIsAddingCat,
+    setIsAddingTag,
   } = useContext(CrudContext);
 
   useEffect(() => {
@@ -92,6 +98,9 @@ function Table() {
                 <th scope="col" className="px-6 py-3 ">
                   Producto
                 </th>
+                <th scope="col" className="px-6 py-3 ">
+                  Descripción
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Imagen
                 </th>
@@ -113,6 +122,87 @@ function Table() {
               </tr>
             </thead>
             <tbody>
+              {isAddingProd && (
+                <tr className="">
+                  <td className="px-6 py-4 ">
+                    {" "}
+                    <label className="block">Nombre: </label>
+                    <input
+                      className=" border border-black rounded-sm"
+                      type="text"
+                      name="product_name"
+                    ></input>
+                  </td>
+                  <td className="px-6 py-4 ">
+                    <label className="block">Breve descripcion: </label>
+                    <textarea
+                      className="border border-black resize-none rounded-sm"
+                      rows={2}
+                      cols={25}
+                    ></textarea>
+                  </td>
+                  <td className="px-6 py-4">
+                    {" "}
+                    <input
+                      className="border  border-black rounded-sm"
+                      type="file"
+                      name="product_image"
+                    ></input>
+                  </td>{" "}
+                  <td className="px-6 py-4 text-gray-500">
+                    <p>ID automatico</p>
+                  </td>
+                  <td className="px-6 py-4 flex flex-col">
+                    {" "}
+                    {arrayTags.map((tag: Tag) => {
+                      return (
+                        <div>
+                          <input
+                            type="checkbox"
+                            id={tag.title}
+                            name={tag.title}
+                            value={tag.id}
+                          ></input>
+                          <label form="vehicle1"> {tag.title}</label>
+                        </div>
+                      );
+                    })}
+                  </td>
+                  <td className="px-6 py-4">
+                    <select name="categories" id="categories">
+                      {arrayCategories.map((cat: Category) => {
+                        return <option value={cat.id}>{cat.title}</option>;
+                      })}
+                    </select>
+                  </td>
+                  <td className="px-6 py-4 ">
+                    <label className="block">Valor:</label>
+                    <input
+                      className="border  border-black rounded-sm"
+                      type="number"
+                      name="precio"
+                    ></input>
+                  </td>
+                  <td className="px-6 py-4 ">
+                    {" "}
+                    <button className="px-2 cursor-pointer">
+                      <img
+                        src="src\assets\images\upload-crud.png"
+                        className="flex w-8"
+                      ></img>
+                    </button>
+                    <button
+                      className="px-2 cursor-pointer"
+                      onClick={() => setIsAddingProd(false)}
+                    >
+                      <img
+                        src="src\assets\images\cancel-crud.png"
+                        className="flex w-8"
+                      ></img>
+                    </button>
+                  </td>
+                </tr>
+              )}
               {arrayProducts.map((product: Products) => {
                 return (
                   <tr
@@ -120,6 +210,7 @@ function Table() {
                     key={product.id}
                   >
                     <td className="px-6 py-4  ">{product.title}</td>
+                    <td className="px-6 py-4  ">{product.description}</td>
                     <td className="px-6 py-4">
                       <img
                         src={`http://161.35.104.211:8000${product.pictures[0]}`}
@@ -190,11 +281,12 @@ function Table() {
                   Categoría
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Imagen
-                </th>
-                <th scope="col" className="px-6 py-3">
                   Descripcion
                 </th>
+                <th scope="col" className="px-6 py-3">
+                  Imagen
+                </th>
+
                 <th scope="col" className="px-6 py-3">
                   Id
                 </th>
@@ -204,6 +296,56 @@ function Table() {
               </tr>
             </thead>
             <tbody>
+              {isAddingCat && (
+                <tr className="">
+                  <td className="px-6 py-4 ">
+                    {" "}
+                    <label className="block">Nombre: </label>
+                    <input
+                      className=" border border-black"
+                      type="text"
+                      name="product_name"
+                    ></input>
+                  </td>
+                  <td className="px-6 py-4 ">
+                    <label className="block">Breve descripcion: </label>
+                    <textarea
+                      className="border border-black resize-none rounded-sm"
+                      rows={2}
+                      cols={25}
+                    ></textarea>
+                  </td>
+                  <td className="px-6 py-4">
+                    {" "}
+                    <input
+                      className="border  border-black"
+                      type="file"
+                      name="product_image"
+                    ></input>
+                  </td>{" "}
+                  <td className="px-6 py-4 text-gray-500">
+                    <p>ID automatico</p>
+                  </td>
+                  <td className="px-6 py-4 ">
+                    {" "}
+                    <button className="px-2 cursor-pointer">
+                      <img
+                        src="src\assets\images\upload-crud.png"
+                        className="flex w-8"
+                      ></img>
+                    </button>
+                    <button
+                      className="px-2 cursor-pointer"
+                      onClick={() => setIsAddingCat(false)}
+                    >
+                      <img
+                        src="src\assets\images\cancel-crud.png"
+                        className="flex w-8"
+                      ></img>
+                    </button>
+                  </td>
+                </tr>
+              )}
               {arrayCategories.map((categorie: Category) => {
                 return (
                   <tr
@@ -211,13 +353,14 @@ function Table() {
                     key={categorie.id}
                   >
                     <td className="px-6 py-4  ">{categorie.title}</td>
+                    <td className="px-6 py-4">{categorie.description}</td>
                     <td className="px-6 py-4">
                       <img
                         src={`http://161.35.104.211:8000${categorie.picture}`}
                         className="object-contain max-h-30 max-w-30 min-h-[150px] min-w-[80px] m-auto"
                       />
                     </td>
-                    <td className="px-6 py-4">{categorie.description}</td>
+
                     <td className="px-6 py-4">{categorie.id}</td>
 
                     <td className="px-6 py-4">

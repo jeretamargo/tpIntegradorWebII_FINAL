@@ -7,7 +7,6 @@ import React, {
 
 import DeleteWarning from "./DeleteWarning";
 import type { SelectedProduct } from "../../api/interfaces/interfaces";
-import { useNavigate } from "react-router";
 
 interface CrudContextProps {
   ProductTabOpen: boolean;
@@ -15,6 +14,12 @@ interface CrudContextProps {
   TagTabOpen: boolean;
   selectedProduct: SelectedProduct;
   isWarningOpen: boolean;
+  isAddingProd: boolean;
+  isAddingCat: boolean;
+  isAddingTag: boolean;
+  setIsAddingProd: (state: boolean) => void;
+  setIsAddingCat: (state: boolean) => void;
+  setIsAddingTag: (state: boolean) => void;
   deleteProduct: (id: number) => void;
   handleDeleteModal: (product: SelectedProduct) => void;
   setIsWarningOpen: (value: boolean) => void;
@@ -65,11 +70,13 @@ function CrudProvider({ children }: PropsWithChildren) {
   const [CategorieTabOpen, setCategorieTabOpen] = useState(false);
   const [TagTabOpen, setTagTabOpen] = useState(false);
   const [isWarningOpen, setIsWarningOpen] = useState(false);
+  const [isAddingProd, setIsAddingProd] = useState(false);
+  const [isAddingCat, setIsAddingCat] = useState(false);
+  const [isAddingTag, setIsAddingTag] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: "",
     id: 0,
   });
-  const navigate = useNavigate();
 
   return (
     <div>
@@ -80,6 +87,12 @@ function CrudProvider({ children }: PropsWithChildren) {
           CategorieTabOpen: CategorieTabOpen,
           TagTabOpen: TagTabOpen,
           isWarningOpen: isWarningOpen,
+          isAddingProd: isAddingProd,
+          isAddingCat: isAddingCat,
+          isAddingTag: isAddingTag,
+          setIsAddingProd: setIsAddingProd,
+          setIsAddingCat: setIsAddingCat,
+          setIsAddingTag: setIsAddingTag,
           setIsWarningOpen: setIsWarningOpen,
           ToggleTab: ToggleTab,
           setSelectedProduct: setSelectedProduct,
