@@ -1,19 +1,41 @@
 import React, { useContext, useEffect, useState } from "react";
-import type { Category, Products, Tag } from "../../api/interfaces/interfaces";
+import type {
+  Category,
+  Products,
+  Tag,
+  ProdFormFields,
+} from "../../api/interfaces/interfaces";
 import AddButton from "./AddButton";
 import { CrudContext } from "./CrudContext";
 import DeleteWarning from "./DeleteWarning";
+import { useForm, type SubmitHandler } from "react-hook-form";
+
+{
+  /*este codigo es un quilombo barbaro*/
+}
 
 function Table() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
   const [arrayTags, setTags] = useState<Tag[]>([]);
   const [arrayCategories, setCategories] = useState<Category[]>([]);
 
+  const { register: registerProd, handleSubmit: prodHandleSubmit } =
+    useForm<ProdFormFields>();
+  const onProdSubmit: SubmitHandler<ProdFormFields> = (product) => {
+    const parsedProduct = {
+      ...product,
+      price: Number(product.price),
+      category_id: Number(product.category_id),
+      tag_ids: product.tag_ids?.map((tag) => Number(tag)) ?? [],
+    };
+
+    uploadProduct(parsedProduct);
+  };
+
   const {
     ProductTabOpen,
     CategorieTabOpen,
     TagTabOpen,
-    setSelectedProduct,
     setIsWarningOpen,
     handleDeleteModal,
     isAddingProd,
@@ -22,6 +44,13 @@ function Table() {
     setIsAddingProd,
     setIsAddingCat,
     setIsAddingTag,
+    editingProd,
+    editingCat,
+    editingTag,
+    setEditingProd,
+    setEditingCat,
+    setEditingTag,
+    uploadProduct,
   } = useContext(CrudContext);
 
   useEffect(() => {
@@ -130,7 +159,7 @@ function Table() {
                     <input
                       className=" border border-black rounded-sm"
                       type="text"
-                      name="product_name"
+                      {...registerProd("title")}
                     ></input>
                   </td>
                   <td className="px-6 py-4 ">
@@ -139,6 +168,7 @@ function Table() {
                       className="border border-black resize-none rounded-sm"
                       rows={2}
                       cols={25}
+                      {...registerProd("description")}
                     ></textarea>
                   </td>
                   <td className="px-6 py-4">
@@ -146,7 +176,7 @@ function Table() {
                     <input
                       className="border  border-black rounded-sm"
                       type="file"
-                      name="product_image"
+                      {...registerProd("image")}
                     ></input>
                   </td>{" "}
                   <td className="px-6 py-4 text-gray-500">
@@ -160,8 +190,8 @@ function Table() {
                           <input
                             type="checkbox"
                             id={tag.title}
-                            name={tag.title}
                             value={tag.id}
+                            {...registerProd("tag_ids")}
                           ></input>
                           <label form="vehicle1"> {tag.title}</label>
                         </div>
@@ -169,7 +199,7 @@ function Table() {
                     })}
                   </td>
                   <td className="px-6 py-4">
-                    <select name="categories" id="categories">
+                    <select id="categories" {...registerProd("category_id")}>
                       {arrayCategories.map((cat: Category) => {
                         return <option value={cat.id}>{cat.title}</option>;
                       })}
@@ -180,7 +210,7 @@ function Table() {
                     <input
                       className="border  border-black rounded-sm"
                       type="number"
-                      name="precio"
+                      {...registerProd("price")}
                     ></input>
                   </td>
                   <td className="px-6 py-4 ">
@@ -189,6 +219,7 @@ function Table() {
                       <img
                         src="src\assets\images\upload-crud.png"
                         className="flex w-8"
+                        onClick={prodHandleSubmit(onProdSubmit)}
                       ></img>
                     </button>
                     <button
@@ -204,6 +235,96 @@ function Table() {
                 </tr>
               )}
               {arrayProducts.map((product: Products) => {
+                if (editingProd === product.id) {
+                  return (
+                    <tr className="">
+                      <td className="px-6 py-4 ">
+                        {" "}
+                        <label className="block">Nombre: </label>
+                        <input
+                          className=" border border-black rounded-sm"
+                          type="text"
+                          value={product.title}
+                          {...registerProd("title")}
+                        ></input>
+                      </td>
+                      <td className="px-6 py-4 ">
+                        <label className="block">Breve descripcion: </label>
+                        <textarea
+                          className="border border-black resize-none rounded-sm"
+                          rows={2}
+                          cols={25}
+                          value={product.description}
+                          {...registerProd("description")}
+                        ></textarea>
+                      </td>
+                      <td className="px-6 py-4">
+                        {" "}
+                        <input
+                          className="border  border-black rounded-sm"
+                          type="file"
+                          {...registerProd("image")}
+                        ></input>
+                      </td>{" "}
+                      <td className="px-6 py-4 text-gray-500">
+                        <p>ID automatico</p>
+                      </td>
+                      <td className="px-6 py-4 flex flex-col">
+                        {" "}
+                        {arrayTags.map((tag: Tag) => {
+                          return (
+                            <div>
+                              <input
+                                type="checkbox"
+                                id={tag.title}
+                                value={tag.id}
+                                {...registerProd("tag_ids")}
+                              ></input>
+                              <label form={tag.title}> {tag.title}</label>
+                            </div>
+                          );
+                        })}
+                      </td>
+                      <td className="px-6 py-4">
+                        <select
+                          id="categories"
+                          {...registerProd("category_id")}
+                        >
+                          {arrayCategories.map((cat: Category) => {
+                            return <option value={cat.id}>{cat.title}</option>;
+                          })}
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 ">
+                        <label className="block">Valor:</label>
+                        <input
+                          className="border  border-black rounded-sm"
+                          type="number"
+                          value={product.price}
+                          {...registerProd("price")}
+                        ></input>
+                      </td>
+                      <td className="px-6 py-4 ">
+                        {" "}
+                        <button className="px-2 cursor-pointer">
+                          <img
+                            src="src\assets\images\upload-crud.png"
+                            className="flex w-8"
+                          ></img>
+                        </button>
+                        <button
+                          className="px-2 cursor-pointer"
+                          onClick={() => setEditingProd(0)}
+                        >
+                          <img
+                            src="src\assets\images\cancel-crud.png"
+                            className="flex w-8"
+                          ></img>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                }
                 return (
                   <tr
                     className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
@@ -244,6 +365,7 @@ function Table() {
                         <img
                           src="src/assets/images/edit-crud.png"
                           className="flex w-8"
+                          onClick={() => setEditingProd(product.id)}
                         ></img>
                       </button>
                       <button
@@ -347,6 +469,60 @@ function Table() {
                 </tr>
               )}
               {arrayCategories.map((categorie: Category) => {
+                if (editingCat === categorie.id) {
+                  return (
+                    <tr className="">
+                      <td className="px-6 py-4 ">
+                        {" "}
+                        <label className="block">Nombre: </label>
+                        <input
+                          className=" border border-black"
+                          type="text"
+                          name="product_name"
+                          value={categorie.title}
+                        ></input>
+                      </td>
+                      <td className="px-6 py-4 ">
+                        <label className="block">Breve descripcion: </label>
+                        <textarea
+                          className="border border-black resize-none rounded-sm"
+                          rows={2}
+                          cols={25}
+                          value={categorie.description}
+                        ></textarea>
+                      </td>
+                      <td className="px-6 py-4">
+                        {" "}
+                        <input
+                          className="border  border-black"
+                          type="file"
+                          name="product_image"
+                        ></input>
+                      </td>{" "}
+                      <td className="px-6 py-4 text-gray-500">
+                        <p>ID automatico</p>
+                      </td>
+                      <td className="px-6 py-4 ">
+                        {" "}
+                        <button className="px-2 cursor-pointer">
+                          <img
+                            src="src\assets\images\upload-crud.png"
+                            className="flex w-8"
+                          ></img>
+                        </button>
+                        <button
+                          className="px-2 cursor-pointer"
+                          onClick={() => setEditingCat(0)}
+                        >
+                          <img
+                            src="src\assets\images\cancel-crud.png"
+                            className="flex w-8"
+                          ></img>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                }
                 return (
                   <tr
                     className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
@@ -368,6 +544,7 @@ function Table() {
                         <img
                           src="src/assets/images/edit-crud.png"
                           className="flex w-8"
+                          onClick={() => setEditingCat(categorie.id)}
                         ></img>
                       </a>
                       <a href="#" className="px-2">
@@ -404,7 +581,80 @@ function Table() {
               </tr>
             </thead>
             <tbody>
+              {isAddingTag && (
+                <tr className="">
+                  <td className="px-6 py-4 ">
+                    {" "}
+                    <label className="block">Nombre: </label>
+                    <input
+                      className=" border border-black"
+                      type="text"
+                      name="product_name"
+                    ></input>
+                  </td>
+
+                  <td className="px-6 py-4 text-gray-500">
+                    <p>ID automatico</p>
+                  </td>
+                  <td className="px-6 py-4 ">
+                    {" "}
+                    <button className="px-2 cursor-pointer">
+                      <img
+                        src="src\assets\images\upload-crud.png"
+                        className="flex w-8"
+                      ></img>
+                    </button>
+                    <button
+                      className="px-2 cursor-pointer"
+                      onClick={() => setIsAddingTag(false)}
+                    >
+                      <img
+                        src="src\assets\images\cancel-crud.png"
+                        className="flex w-8"
+                      ></img>
+                    </button>
+                  </td>
+                </tr>
+              )}
               {arrayTags.map((tag: Tag) => {
+                if (editingTag === tag.id) {
+                  return (
+                    <tr className="">
+                      <td className="px-6 py-4 ">
+                        {" "}
+                        <label className="block">Nombre: </label>
+                        <input
+                          className=" border border-black"
+                          type="text"
+                          name="product_name"
+                          value={tag.title}
+                        ></input>
+                      </td>
+
+                      <td className="px-6 py-4 text-gray-500">
+                        <p>ID automatico</p>
+                      </td>
+                      <td className="px-6 py-4 ">
+                        {" "}
+                        <button className="px-2 cursor-pointer">
+                          <img
+                            src="src\assets\images\upload-crud.png"
+                            className="flex w-8"
+                          ></img>
+                        </button>
+                        <button
+                          className="px-2 cursor-pointer"
+                          onClick={() => setEditingTag(0)}
+                        >
+                          <img
+                            src="src\assets\images\cancel-crud.png"
+                            className="flex w-8"
+                          ></img>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                }
                 return (
                   <tr
                     className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
@@ -419,6 +669,7 @@ function Table() {
                         <img
                           src="src/assets/images/edit-crud.png"
                           className="flex w-8"
+                          onClick={() => setEditingTag(tag.id)}
                         ></img>
                       </a>
                       <a href="#" className="px-2">

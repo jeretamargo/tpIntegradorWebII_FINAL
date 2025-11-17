@@ -1,6 +1,6 @@
 import type { Product } from "../interfaces/interfaces";
 
-async function fetchProducts(): Promise<object[]> {
+async function fetchProducts(): Promise<Product[]> {
   try {
     const res = await fetch(`http://161.35.104.211:8000/products/`, {
       headers: {
@@ -35,7 +35,7 @@ async function fetchProductByID(id: number): Promise<Product> {
     throw error;
   }
 }
- /*export interface Product {
+/*export interface Product {
   title: string;
   pictures: string[];
   price: number;

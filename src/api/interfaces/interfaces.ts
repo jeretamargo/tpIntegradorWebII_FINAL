@@ -48,3 +48,12 @@ export interface SelectedProduct {
   title: string;
   id: number;
 }
+
+export interface ProdFormFields {
+  title: string;
+  description: string;
+  image: File;
+  tag_ids?: number[];
+  category_id: number;
+  price: number;
+}
