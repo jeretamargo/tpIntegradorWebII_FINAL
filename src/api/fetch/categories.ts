@@ -1,4 +1,6 @@
-async function getCategories(): Promise<object[]> {
+import type { Category } from "../interfaces/interfaces";
+
+async function getCategories(): Promise<Category[]> {
   try {
     const res = await fetch("http://161.35.104.211:8000/categories", {
       headers: {
@@ -14,7 +16,7 @@ async function getCategories(): Promise<object[]> {
   }
 }
 
-async function getCategorieByID(id: number): Promise<object[]> {
+async function getCategorieByID(id: number): Promise<Category[]> {
   try {
     const res = await fetch(`http://161.35.104.211:8000/categories/${id}`, {
       headers: {

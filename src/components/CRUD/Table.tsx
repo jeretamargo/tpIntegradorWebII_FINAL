@@ -4,6 +4,7 @@ import type {
   Products,
   Tag,
   ProdFormFields,
+  CatFormFields,
 } from "../../api/interfaces/interfaces";
 import AddButton from "./AddButton";
 import { CrudContext } from "./CrudContext";
@@ -19,18 +20,65 @@ function Table() {
   const [arrayTags, setTags] = useState<Tag[]>([]);
   const [arrayCategories, setCategories] = useState<Category[]>([]);
 
+  {
+    /* metodos de react hook form para la carga de productos */
+  }
+
   const { register: registerProd, handleSubmit: prodHandleSubmit } =
     useForm<ProdFormFields>();
-  const onProdSubmit: SubmitHandler<ProdFormFields> = (product) => {
+  const onProdCreateSubmit: SubmitHandler<ProdFormFields> = (product) => {
     const parsedProduct = {
       ...product,
       price: Number(product.price),
       category_id: Number(product.category_id),
-      tag_ids: product.tag_ids?.map((tag) => Number(tag)) ?? [],
+      /* tag_ids: product.tag_ids?.map((tag) => Number(tag)) ?? [], */
+
+      tag_ids: product.tag_ids
+        ? product.tag_ids?.map((tag) => Number(tag))
+        : [],
     };
 
     uploadProduct(parsedProduct);
   };
+
+  const onProdEditSubmit: SubmitHandler<ProdFormFields> = (product) => {
+    const parsedProduct = {
+      ...product,
+      price: Number(product.price),
+      category_id: Number(product.category_id),
+      tag_ids: product.tag_ids
+        ? product.tag_ids?.map((tag) => Number(tag))
+        : [],
+    };
+
+    updateProduct(parsedProduct);
+  };
+
+  {
+    /* metodos de react hook form para la carga de categorias */
+  }
+
+  const { register: registerCat, handleSubmit: catHandleSubmit } =
+    useForm<CatFormFields>();
+  const onCatCreateSubmit: SubmitHandler<CatFormFields> = (category) => {
+    /* const parsedCategory = {
+      ...product,
+    }; */
+
+    uploadCategory(category);
+  };
+
+  const onCatEditSubmit: SubmitHandler<CatFormFields> = (product) => {
+    /*  const parsedCategory = {
+      ...product,
+    };
+ */
+    updateCategory(product);
+  };
+
+  {
+    /*funciones y variables globales del context*/
+  }
 
   const {
     ProductTabOpen,
@@ -51,7 +99,15 @@ function Table() {
     setEditingCat,
     setEditingTag,
     uploadProduct,
+    updateProduct,
+    uploadCategory,
+    updateCategory,
+    deleteCategory,
   } = useContext(CrudContext);
+
+  {
+    /*fetchs*/
+  }
 
   useEffect(() => {
     async function fetchCategories(): Promise<Category[]> {
@@ -117,6 +173,14 @@ function Table() {
       .catch((err) => console.error(err));
   }, []);
 
+  {
+    /*empieza el render del componente tabla*/
+  }
+
+  {
+    /*tabla productos*/
+  }
+
   if (ProductTabOpen)
     return (
       <div>
@@ -150,6 +214,7 @@ function Table() {
                 </th>
               </tr>
             </thead>
+            {/* si se quiere agregar un producto*/}
             <tbody>
               {isAddingProd && (
                 <tr className="">
@@ -201,7 +266,11 @@ function Table() {
                   <td className="px-6 py-4">
                     <select id="categories" {...registerProd("category_id")}>
                       {arrayCategories.map((cat: Category) => {
-                        return <option value={cat.id}>{cat.title}</option>;
+                        return (
+                          <option defaultValue={44} value={cat.id}>
+                            {cat.title}
+                          </option>
+                        );
                       })}
                     </select>
                   </td>
@@ -219,7 +288,7 @@ function Table() {
                       <img
                         src="src\assets\images\upload-crud.png"
                         className="flex w-8"
-                        onClick={prodHandleSubmit(onProdSubmit)}
+                        onClick={prodHandleSubmit(onProdCreateSubmit)}
                       ></img>
                     </button>
                     <button
@@ -234,6 +303,7 @@ function Table() {
                   </td>
                 </tr>
               )}
+              {/* render condicional si se quiere editar un producto y renderizado de los productos actuales*/}
               {arrayProducts.map((product: Products) => {
                 if (editingProd === product.id) {
                   return (
@@ -244,7 +314,7 @@ function Table() {
                         <input
                           className=" border border-black rounded-sm"
                           type="text"
-                          value={product.title}
+                          defaultValue={product.title}
                           {...registerProd("title")}
                         ></input>
                       </td>
@@ -254,7 +324,7 @@ function Table() {
                           className="border border-black resize-none rounded-sm"
                           rows={2}
                           cols={25}
-                          value={product.description}
+                          defaultValue={product.description}
                           {...registerProd("description")}
                         ></textarea>
                       </td>
@@ -267,7 +337,13 @@ function Table() {
                         ></input>
                       </td>{" "}
                       <td className="px-6 py-4 text-gray-500">
-                        <p>ID automatico</p>
+                        <input
+                          className=" border border-black  text-gray-400 rounded-sm"
+                          type="number"
+                          disabled={true}
+                          defaultValue={product.id}
+                          {...registerProd("id")}
+                        ></input>
                       </td>
                       <td className="px-6 py-4 flex flex-col">
                         {" "}
@@ -291,7 +367,11 @@ function Table() {
                           {...registerProd("category_id")}
                         >
                           {arrayCategories.map((cat: Category) => {
-                            return <option value={cat.id}>{cat.title}</option>;
+                            return (
+                              <option defaultValue={44} value={cat.id}>
+                                {cat.title}
+                              </option>
+                            );
                           })}
                         </select>
                       </td>
@@ -300,7 +380,7 @@ function Table() {
                         <input
                           className="border  border-black rounded-sm"
                           type="number"
-                          value={product.price}
+                          defaultValue={product.price}
                           {...registerProd("price")}
                         ></input>
                       </td>
@@ -310,6 +390,7 @@ function Table() {
                           <img
                             src="src\assets\images\upload-crud.png"
                             className="flex w-8"
+                            onClick={prodHandleSubmit(onProdEditSubmit)}
                           ></img>
                         </button>
                         <button
@@ -371,6 +452,7 @@ function Table() {
                       <button
                         onClick={() =>
                           handleDeleteModal({
+                            type: "product",
                             title: product.title,
                             id: product.id,
                           })
@@ -392,6 +474,10 @@ function Table() {
         </div>
       </div>
     );
+
+  {
+    /*si se quiere agregar una categoria*/
+  }
   if (CategorieTabOpen)
     return (
       <div>
@@ -426,7 +512,7 @@ function Table() {
                     <input
                       className=" border border-black"
                       type="text"
-                      name="product_name"
+                      {...registerCat("title")}
                     ></input>
                   </td>
                   <td className="px-6 py-4 ">
@@ -435,6 +521,7 @@ function Table() {
                       className="border border-black resize-none rounded-sm"
                       rows={2}
                       cols={25}
+                      {...registerCat("description")}
                     ></textarea>
                   </td>
                   <td className="px-6 py-4">
@@ -442,7 +529,7 @@ function Table() {
                     <input
                       className="border  border-black"
                       type="file"
-                      name="product_image"
+                      {...registerCat("image")}
                     ></input>
                   </td>{" "}
                   <td className="px-6 py-4 text-gray-500">
@@ -454,6 +541,7 @@ function Table() {
                       <img
                         src="src\assets\images\upload-crud.png"
                         className="flex w-8"
+                        onClick={catHandleSubmit(onCatCreateSubmit)}
                       ></img>
                     </button>
                     <button
@@ -468,6 +556,7 @@ function Table() {
                   </td>
                 </tr>
               )}
+              {/* render condicional si se quiere editar una categoria y renderizado de las categorias actuales*/}
               {arrayCategories.map((categorie: Category) => {
                 if (editingCat === categorie.id) {
                   return (
@@ -478,8 +567,8 @@ function Table() {
                         <input
                           className=" border border-black"
                           type="text"
-                          name="product_name"
                           value={categorie.title}
+                          {...registerCat("title")}
                         ></input>
                       </td>
                       <td className="px-6 py-4 ">
@@ -489,6 +578,7 @@ function Table() {
                           rows={2}
                           cols={25}
                           value={categorie.description}
+                          {...registerCat("description")}
                         ></textarea>
                       </td>
                       <td className="px-6 py-4">
@@ -496,11 +586,17 @@ function Table() {
                         <input
                           className="border  border-black"
                           type="file"
-                          name="product_image"
+                          {...registerCat("image")}
                         ></input>
                       </td>{" "}
                       <td className="px-6 py-4 text-gray-500">
-                        <p>ID automatico</p>
+                        <input
+                          className=" border border-black  text-gray-400 rounded-sm"
+                          type="number"
+                          disabled={true}
+                          defaultValue={categorie.id}
+                          {...registerCat("id")}
+                        ></input>
                       </td>
                       <td className="px-6 py-4 ">
                         {" "}
@@ -508,6 +604,7 @@ function Table() {
                           <img
                             src="src\assets\images\upload-crud.png"
                             className="flex w-8"
+                            onClick={catHandleSubmit(onCatEditSubmit)}
                           ></img>
                         </button>
                         <button
@@ -547,12 +644,22 @@ function Table() {
                           onClick={() => setEditingCat(categorie.id)}
                         ></img>
                       </a>
-                      <a href="#" className="px-2">
+                      <button
+                        onClick={() =>
+                          handleDeleteModal({
+                            type: "categorie",
+                            title: categorie.title,
+                            id: categorie.id,
+                          })
+                        }
+                        className="px-2 cursor-pointer"
+                      >
                         <img
                           src="src/assets/images/delete-crud.png"
                           className="flex w-8"
+                          onClick={() => setIsWarningOpen(true)}
                         ></img>
-                      </a>
+                      </button>
                     </td>
                   </tr>
                 );

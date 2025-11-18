@@ -44,16 +44,26 @@ export interface CartItem {
   picture: string;
   quantity: number;
 }
-export interface SelectedProduct {
+
+export interface SelectedItem {
+  type: string;
   title: string;
   id: number;
 }
 
 export interface ProdFormFields {
+  id: number;
   title: string;
   description: string;
   image: File;
   tag_ids?: number[];
   category_id: number;
   price: number;
+}
+
+export interface CatFormFields {
+  id: number;
+  title: string;
+  description: string;
+  image: File;
 }

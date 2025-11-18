@@ -7,18 +7,20 @@ import React, {
 
 import DeleteWarning from "./DeleteWarning";
 import type {
+  CatFormFields,
   ProdFormFields,
   Product,
-  SelectedProduct,
+  SelectedItem,
 } from "../../api/interfaces/interfaces";
 
 import { fetchProducts } from "../../api/fetch/products";
+import { getCategories } from "../../api/fetch/categories";
 
 interface CrudContextProps {
   ProductTabOpen: boolean;
   CategorieTabOpen: boolean;
   TagTabOpen: boolean;
-  selectedProduct: SelectedProduct;
+  selectedItem: SelectedItem;
   isWarningOpen: boolean;
   isAddingProd: boolean;
   isAddingCat: boolean;
@@ -33,10 +35,14 @@ interface CrudContextProps {
   setEditingCat: (categorie: number) => void;
   setEditingTag: (tag: number) => void;
   uploadProduct: (product: ProdFormFields) => void;
+  updateProduct: (product: ProdFormFields) => void;
   deleteProduct: (id: number) => void;
-  handleDeleteModal: (product: SelectedProduct) => void;
+  uploadCategory: (product: CatFormFields) => void;
+  updateCategory: (product: CatFormFields) => void;
+  deleteCategory: (id: number) => void;
+  handleDeleteModal: (product: SelectedItem) => void;
   setIsWarningOpen: (value: boolean) => void;
-  setSelectedProduct: (product: SelectedProduct) => void;
+  setSelectedItem: (product: SelectedItem) => void;
   ToggleTab: (value: string) => void;
 }
 
@@ -69,7 +75,7 @@ function CrudProvider({ children }: PropsWithChildren) {
   }
 
   async function uploadProduct(product: ProdFormFields) {
-    await fetch(`https://ecommerce.fedegonzalez.com/products/`, {
+    const data = await fetch(`https://ecommerce.fedegonzalez.com/products/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,23 +88,18 @@ function CrudProvider({ children }: PropsWithChildren) {
         category_id: product.category_id,
         tag_ids: product.tag_ids,
       }),
-    }).then((data) => console.log(data.status));
-    console.log(
-      JSON.stringify({
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        category_id: product.category_id,
-        tag_ids: product.tag_ids,
-      })
-    );
+    });
+    const response = await data.json();
+    console.log(response);
+    console.log(product.image);
+
     const prods = await fetchProducts();
-    const filteredProd = prods.find((p) => p.title === product.title);
+    const filteredProd = prods.find((p) => p.id === response.id);
 
     const fileData = new FormData();
     fileData.append("files", product.image[0]);
 
-    await fetch(
+    const image_data = await fetch(
       `https://ecommerce.fedegonzalez.com/products/${filteredProd.id}/pictures`,
       {
         method: "POST",
@@ -107,8 +108,50 @@ function CrudProvider({ children }: PropsWithChildren) {
         },
         body: fileData,
       }
-    ).then((data) => console.log(data.status));
+    );
+    const image_response = await image_data.json();
+    console.log(image_response);
   }
+
+  async function updateProduct(product: ProdFormFields) {
+    const response = await fetch(
+      `https://ecommerce.fedegonzalez.com/products/${product.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer jeremias01",
+        },
+        body: JSON.stringify({
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          category_id: product.category_id,
+          tag_ids: product.tag_ids,
+        }),
+      }
+    ).then((res) => res.json);
+
+    if (product.image) {
+      const prods = await fetchProducts();
+      const filteredProd = prods.find((p) => p.id === response.id);
+
+      const fileData = new FormData();
+      fileData.append("files", product.image[0]);
+
+      await fetch(
+        `https://ecommerce.fedegonzalez.com/products/${product.id}/pictures`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer jeremias01",
+          },
+          body: fileData,
+        }
+      ).then((data) => console.log(data.status));
+    }
+  }
+
   async function deleteProduct(id: number) {
     await fetch(`https://ecommerce.fedegonzalez.com/products/${id}`, {
       method: "DELETE",
@@ -119,9 +162,95 @@ function CrudProvider({ children }: PropsWithChildren) {
     window.location.reload();
   }
 
-  function handleDeleteModal(product: SelectedProduct) {
+  {
+    /* ACCIONES HTTP PARA CATEGORIAS */
+  }
+
+  async function uploadCategory(categorie: CatFormFields) {
+    const data = await fetch(`https://ecommerce.fedegonzalez.com/categories/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer jeremias01",
+      },
+      body: JSON.stringify({
+        title: categorie.title,
+        description: categorie.description,
+      }),
+    });
+    const response = await data.json();
+    console.log(response);
+    console.log(categorie.image);
+
+    const cats = await getCategories();
+    const filteredCat = cats.find((c) => c.id === response.id);
+
+    const fileData = new FormData();
+    fileData.append("files", categorie.image[0]);
+
+    const image_data = await fetch(
+      `https://ecommerce.fedegonzalez.com/categories/${filteredCat.id}/pictures`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer jeremias01",
+        },
+        body: fileData,
+      }
+    );
+    const image_response = await image_data.json();
+    console.log(image_response);
+  }
+
+  async function updateCategory(categorie: CatFormFields) {
+    const response = await fetch(
+      `https://ecommerce.fedegonzalez.com/categories/${categorie.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer jeremias01",
+        },
+        body: JSON.stringify({
+          title: categorie.title,
+          description: categorie.description,
+        }),
+      }
+    ).then((res) => res.json);
+
+    if (categorie.image) {
+      const prods = await fetchProducts();
+      const filteredProd = prods.find((p) => p.id === response.id);
+
+      const fileData = new FormData();
+      fileData.append("files", categorie.image[0]);
+
+      await fetch(
+        `https://ecommerce.fedegonzalez.com/products/${categorie.id}/pictures`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer jeremias01",
+          },
+          body: fileData,
+        }
+      ).then((data) => console.log(data.status));
+    }
+  }
+
+  async function deleteCategory(id: number) {
+    await fetch(`https://ecommerce.fedegonzalez.com/categorie/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer jeremias01",
+      },
+    }).then((data) => console.log(data.status));
+    window.location.reload();
+  }
+
+  function handleDeleteModal(product: SelectedItem) {
     setIsWarningOpen(true);
-    setSelectedProduct(product);
+    setSelectedItem(product);
   }
 
   const [ProductTabOpen, setProductTabOpen] = useState(true);
@@ -134,7 +263,8 @@ function CrudProvider({ children }: PropsWithChildren) {
   const [editingProd, setEditingProd] = useState(0);
   const [editingCat, setEditingCat] = useState(0);
   const [editingTag, setEditingTag] = useState(0);
-  const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
+  const [selectedItem, setSelectedItem] = useState<SelectedItem>({
+    type: "",
     title: "",
     id: 0,
   });
@@ -143,7 +273,7 @@ function CrudProvider({ children }: PropsWithChildren) {
     <div>
       <CrudContext
         value={{
-          selectedProduct: selectedProduct,
+          selectedItem: selectedItem,
           ProductTabOpen: ProductTabOpen,
           CategorieTabOpen: CategorieTabOpen,
           TagTabOpen: TagTabOpen,
@@ -162,10 +292,14 @@ function CrudProvider({ children }: PropsWithChildren) {
           setIsAddingTag: setIsAddingTag,
           setIsWarningOpen: setIsWarningOpen,
           ToggleTab: ToggleTab,
-          setSelectedProduct: setSelectedProduct,
+          setSelectedItem: setSelectedItem,
           handleDeleteModal: handleDeleteModal,
           deleteProduct: deleteProduct,
           uploadProduct: uploadProduct,
+          updateProduct: updateProduct,
+          uploadCategory: uploadCategory,
+          updateCategory: updateCategory,
+          deleteCategory: deleteCategory,
         }}
       >
         {children}
