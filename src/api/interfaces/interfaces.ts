@@ -67,3 +67,8 @@ export interface CatFormFields {
   description: string;
   image: File;
 }
+
+export interface TagFormFields {
+  id: number;
+  title: string;
+}

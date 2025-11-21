@@ -11,6 +11,7 @@ import type {
   ProdFormFields,
   Product,
   SelectedItem,
+  TagFormFields,
 } from "../../api/interfaces/interfaces";
 
 import { fetchProducts } from "../../api/fetch/products";
@@ -40,6 +41,9 @@ interface CrudContextProps {
   uploadCategory: (product: CatFormFields) => void;
   updateCategory: (product: CatFormFields) => void;
   deleteCategory: (id: number) => void;
+  uploadTag: (tag: TagFormFields) => void;
+  updateTag: (tag: TagFormFields) => void;
+  deleteTag: (id: number) => void;
   handleDeleteModal: (product: SelectedItem) => void;
   setIsWarningOpen: (value: boolean) => void;
   setSelectedItem: (product: SelectedItem) => void;
@@ -111,6 +115,7 @@ function CrudProvider({ children }: PropsWithChildren) {
     );
     const image_response = await image_data.json();
     console.log(image_response);
+    window.location.reload();
   }
 
   async function updateProduct(product: ProdFormFields) {
@@ -132,7 +137,7 @@ function CrudProvider({ children }: PropsWithChildren) {
       }
     ).then((res) => res.json);
 
-    if (product.image) {
+    /*  if (product.image) {
       const prods = await fetchProducts();
       const filteredProd = prods.find((p) => p.id === response.id);
 
@@ -149,7 +154,8 @@ function CrudProvider({ children }: PropsWithChildren) {
           body: fileData,
         }
       ).then((data) => console.log(data.status));
-    }
+    } */
+    window.location.reload();
   }
 
   async function deleteProduct(id: number) {
@@ -186,10 +192,10 @@ function CrudProvider({ children }: PropsWithChildren) {
     const filteredCat = cats.find((c) => c.id === response.id);
 
     const fileData = new FormData();
-    fileData.append("files", categorie.image[0]);
+    fileData.append("file", categorie.image[0]);
 
     const image_data = await fetch(
-      `https://ecommerce.fedegonzalez.com/categories/${filteredCat.id}/pictures`,
+      `https://ecommerce.fedegonzalez.com/categories/${filteredCat.id}/picture`,
       {
         method: "POST",
         headers: {
@@ -200,6 +206,7 @@ function CrudProvider({ children }: PropsWithChildren) {
     );
     const image_response = await image_data.json();
     console.log(image_response);
+    window.location.reload();
   }
 
   async function updateCategory(categorie: CatFormFields) {
@@ -218,28 +225,79 @@ function CrudProvider({ children }: PropsWithChildren) {
       }
     ).then((res) => res.json);
 
-    if (categorie.image) {
-      const prods = await fetchProducts();
-      const filteredProd = prods.find((p) => p.id === response.id);
+    /*  if (categorie.image) {
+      const cats = await getCategories();
+      const filteredCat = cats.find((p) => p.id === response.id);
 
       const fileData = new FormData();
+    
       fileData.append("files", categorie.image[0]);
+     
 
       await fetch(
-        `https://ecommerce.fedegonzalez.com/products/${categorie.id}/pictures`,
+        `https://ecommerce.fedegonzalez.com/categories/${filteredCat.id}/picture`,
         {
           method: "POST",
           headers: {
             Authorization: "Bearer jeremias01",
+            "Content-Type": "multipart/form-data",
           },
           body: fileData,
         }
       ).then((data) => console.log(data.status));
-    }
+    } */
+    window.location.reload();
   }
 
   async function deleteCategory(id: number) {
-    await fetch(`https://ecommerce.fedegonzalez.com/categorie/${id}`, {
+    await fetch(`https://ecommerce.fedegonzalez.com/categories/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer jeremias01",
+      },
+    }).then((data) => console.log(data.status));
+    window.location.reload();
+  }
+
+  {
+    /* ACCIONES HTTP PARA TAGS */
+  }
+  async function uploadTag(tag: TagFormFields) {
+    const data = await fetch(`https://ecommerce.fedegonzalez.com/tags/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer jeremias01",
+      },
+      body: JSON.stringify({
+        title: tag.title,
+      }),
+    });
+    const response = await data.json();
+    console.log(response);
+    window.location.reload();
+  }
+  async function updateTag(tag: TagFormFields) {
+    const data = await fetch(
+      `https://ecommerce.fedegonzalez.com/tags/${tag.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer jeremias01",
+        },
+        body: JSON.stringify({
+          title: tag.title,
+        }),
+      }
+    );
+    const response = await data.json();
+    console.log(response);
+    window.location.reload();
+  }
+
+  async function deleteTag(id: number) {
+    await fetch(`https://ecommerce.fedegonzalez.com/tags/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer jeremias01",
@@ -300,6 +358,9 @@ function CrudProvider({ children }: PropsWithChildren) {
           uploadCategory: uploadCategory,
           updateCategory: updateCategory,
           deleteCategory: deleteCategory,
+          uploadTag: uploadTag,
+          updateTag: updateTag,
+          deleteTag: deleteTag,
         }}
       >
         {children}

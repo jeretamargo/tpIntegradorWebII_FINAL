@@ -24,8 +24,11 @@ function Table() {
     /* metodos de react hook form para la carga de productos */
   }
 
-  const { register: registerProd, handleSubmit: prodHandleSubmit } =
-    useForm<ProdFormFields>();
+  const {
+    register: registerProd,
+    handleSubmit: prodHandleSubmit,
+    reset: resetProd,
+  } = useForm<ProdFormFields>();
   const onProdCreateSubmit: SubmitHandler<ProdFormFields> = (product) => {
     const parsedProduct = {
       ...product,
@@ -58,8 +61,11 @@ function Table() {
     /* metodos de react hook form para la carga de categorias */
   }
 
-  const { register: registerCat, handleSubmit: catHandleSubmit } =
-    useForm<CatFormFields>();
+  const {
+    register: registerCat,
+    handleSubmit: catHandleSubmit,
+    reset: resetCat,
+  } = useForm<CatFormFields>();
   const onCatCreateSubmit: SubmitHandler<CatFormFields> = (category) => {
     /* const parsedCategory = {
       ...product,
@@ -68,13 +74,53 @@ function Table() {
     uploadCategory(category);
   };
 
-  const onCatEditSubmit: SubmitHandler<CatFormFields> = (product) => {
+  const onCatEditSubmit: SubmitHandler<CatFormFields> = (category) => {
     /*  const parsedCategory = {
       ...product,
     };
  */
-    updateCategory(product);
+    updateCategory(category);
   };
+
+  {
+    /* metodos de react hook form para la carga de tags */
+  }
+
+  const {
+    register: registerTag,
+    handleSubmit: tagHandleSubmit,
+    reset: resetTag,
+  } = useForm<CatFormFields>();
+  const onTagCreateSubmit: SubmitHandler<CatFormFields> = (tag) => {
+    /* const parsedCategory = {
+      ...product,
+    }; */
+
+    uploadTag(tag);
+  };
+
+  const onTagEditSubmit: SubmitHandler<CatFormFields> = (tag) => {
+    /*  const parsedCategory = {
+      ...product,
+    };
+ */
+    updateTag(tag);
+  };
+
+  function handleEditProd(id: number) {
+    resetProd();
+    setEditingProd(id);
+  }
+
+  function handleEditCat(id: number) {
+    resetCat();
+    setEditingCat(id);
+  }
+
+  function handleEditTag(id: number) {
+    resetTag();
+    setEditingTag(id);
+  }
 
   {
     /*funciones y variables globales del context*/
@@ -102,7 +148,8 @@ function Table() {
     updateProduct,
     uploadCategory,
     updateCategory,
-    deleteCategory,
+    updateTag,
+    uploadTag,
   } = useContext(CrudContext);
 
   {
@@ -171,7 +218,13 @@ function Table() {
     fetchProducts()
       .then((products) => setProducts(products))
       .catch((err) => console.error(err));
-  }, []);
+  }, [editingProd, editingCat, editingTag]);
+
+  useEffect(() => {
+    resetProd();
+    resetTag();
+    resetCat();
+  }, [isAddingProd, isAddingCat, isAddingTag]);
 
   {
     /*empieza el render del componente tabla*/
@@ -183,8 +236,8 @@ function Table() {
 
   if (ProductTabOpen)
     return (
-      <div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+      <div className=" ">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
           <table className="w-full text-sm text-left rtl:text-right text-black  ">
             <thead className="text-xs text-black uppercase bg-gray-50">
               <tr>
@@ -218,9 +271,11 @@ function Table() {
             <tbody>
               {isAddingProd && (
                 <tr className="">
-                  <td className="px-6 py-4 ">
+                  <td className="px-6 py-4  ">
                     {" "}
-                    <label className="block">Nombre: </label>
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Nombre:
+                    </label>
                     <input
                       className=" border border-black rounded-sm"
                       type="text"
@@ -228,7 +283,9 @@ function Table() {
                     ></input>
                   </td>
                   <td className="px-6 py-4 ">
-                    <label className="block">Breve descripcion: </label>
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Breve Descripción:
+                    </label>
                     <textarea
                       className="border border-black resize-none rounded-sm"
                       rows={2}
@@ -237,9 +294,11 @@ function Table() {
                     ></textarea>
                   </td>
                   <td className="px-6 py-4">
-                    {" "}
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Cargar archivo
+                    </label>{" "}
                     <input
-                      className="border  border-black rounded-sm"
+                      className="border  border-black rounded-sm w-40"
                       type="file"
                       {...registerProd("image")}
                     ></input>
@@ -247,7 +306,7 @@ function Table() {
                   <td className="px-6 py-4 text-gray-500">
                     <p>ID automatico</p>
                   </td>
-                  <td className="px-6 py-4 flex flex-col">
+                  <td className="px-6 py-4 flex flex-col  ">
                     {" "}
                     {arrayTags.map((tag: Tag) => {
                       return (
@@ -256,6 +315,7 @@ function Table() {
                             type="checkbox"
                             id={tag.title}
                             value={tag.id}
+                            key={tag.id}
                             {...registerProd("tag_ids")}
                           ></input>
                           <label form="vehicle1"> {tag.title}</label>
@@ -267,7 +327,7 @@ function Table() {
                     <select id="categories" {...registerProd("category_id")}>
                       {arrayCategories.map((cat: Category) => {
                         return (
-                          <option defaultValue={44} value={cat.id}>
+                          <option defaultValue={44} value={cat.id} key={cat.id}>
                             {cat.title}
                           </option>
                         );
@@ -275,7 +335,9 @@ function Table() {
                     </select>
                   </td>
                   <td className="px-6 py-4 ">
-                    <label className="block">Valor:</label>
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Valor:
+                    </label>
                     <input
                       className="border  border-black rounded-sm"
                       type="number"
@@ -307,10 +369,11 @@ function Table() {
               {arrayProducts.map((product: Products) => {
                 if (editingProd === product.id) {
                   return (
-                    <tr className="">
+                    <tr key={product.id}>
                       <td className="px-6 py-4 ">
-                        {" "}
-                        <label className="block">Nombre: </label>
+                        <label className="block mb-2.5 text-sm font-medium text-heading">
+                          Nombre
+                        </label>
                         <input
                           className=" border border-black rounded-sm"
                           type="text"
@@ -319,7 +382,9 @@ function Table() {
                         ></input>
                       </td>
                       <td className="px-6 py-4 ">
-                        <label className="block">Breve descripcion: </label>
+                        <label className="block mb-2.5 text-sm font-medium text-heading">
+                          Breve Descripcion
+                        </label>
                         <textarea
                           className="border border-black resize-none rounded-sm"
                           rows={2}
@@ -329,16 +394,18 @@ function Table() {
                         ></textarea>
                       </td>
                       <td className="px-6 py-4">
-                        {" "}
-                        <input
-                          className="border  border-black rounded-sm"
+                        <label className="block mb-2.5 text-sm text-gray-400 font-medium text-heading">
+                          No es posible editar la imagen
+                        </label>
+                        {/* <input
+                          className="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block shadow-xs placeholder:text-body w-40"
                           type="file"
                           {...registerProd("image")}
-                        ></input>
-                      </td>{" "}
+                        ></input> */}
+                      </td>
                       <td className="px-6 py-4 text-gray-500">
                         <input
-                          className=" border border-black  text-gray-400 rounded-sm"
+                          className=" text-gray-400 rounded-sm"
                           type="number"
                           disabled={true}
                           defaultValue={product.id}
@@ -346,14 +413,16 @@ function Table() {
                         ></input>
                       </td>
                       <td className="px-6 py-4 flex flex-col">
-                        {" "}
                         {arrayTags.map((tag: Tag) => {
                           return (
-                            <div>
+                            <div key={tag.id}>
                               <input
                                 type="checkbox"
                                 id={tag.title}
                                 value={tag.id}
+                                checked={product.tags?.some(
+                                  (prodTag) => prodTag.id === tag.id
+                                )}
                                 {...registerProd("tag_ids")}
                               ></input>
                               <label form={tag.title}> {tag.title}</label>
@@ -365,10 +434,11 @@ function Table() {
                         <select
                           id="categories"
                           {...registerProd("category_id")}
+                          defaultValue={product.category_id}
                         >
                           {arrayCategories.map((cat: Category) => {
                             return (
-                              <option defaultValue={44} value={cat.id}>
+                              <option value={cat.id} key={cat.id}>
                                 {cat.title}
                               </option>
                             );
@@ -376,7 +446,9 @@ function Table() {
                         </select>
                       </td>
                       <td className="px-6 py-4 ">
-                        <label className="block">Valor:</label>
+                        <label className="block mb-2.5 text-sm font-medium text-heading">
+                          Valor:
+                        </label>
                         <input
                           className="border  border-black rounded-sm"
                           type="number"
@@ -385,7 +457,6 @@ function Table() {
                         ></input>
                       </td>
                       <td className="px-6 py-4 ">
-                        {" "}
                         <button className="px-2 cursor-pointer">
                           <img
                             src="src\assets\images\upload-crud.png"
@@ -411,16 +482,16 @@ function Table() {
                     className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
                     key={product.id}
                   >
-                    <td className="px-6 py-4  ">{product.title}</td>
-                    <td className="px-6 py-4  ">{product.description}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4  w-12">{product.title}</td>
+                    <td className="px-6 py-4  w-50">{product.description}</td>
+                    <td className="px-6 py-4 w-50">
                       <img
                         src={`http://161.35.104.211:8000${product.pictures[0]}`}
-                        className="object-contain max-h-30 max-w-30 min-h-[150px] min-w-[80px] m-auto"
+                        className="object-contain  h-28 w-28 m-auto"
                       />
                     </td>
-                    <td className="px-6 py-4">{product.id}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 w-10">{product.id}</td>
+                    <td className="px-6 py-4 w-12 ">
                       {product.tags?.map((tag) => (
                         <p
                           className={`py-2 font-bold ${
@@ -430,23 +501,32 @@ function Table() {
                               ? " text-orange-500"
                               : "text-blue-500"
                           }`}
+                          key={tag.id}
                         >
                           {tag.title}
                         </p>
                       ))}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 w-12">
                       {arrayCategories.map((cat) =>
-                        cat.id === product.category_id ? cat.title : ""
+                        cat.id === product.category_id ? (
+                          <p key={cat.id}> {cat.title}</p>
+                        ) : (
+                          ""
+                        )
                       )}
+                      <p></p>
                     </td>
-                    <td className="px-6 py-4">${product.price * 1000}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 w-10 ">${product.price * 1000}</td>
+                    <td className="px-6 py-4 w-12">
                       <button className="px-2 cursor-pointer">
                         <img
                           src="src/assets/images/edit-crud.png"
-                          className="flex w-8"
-                          onClick={() => setEditingProd(product.id)}
+                          className="w-8 h-8 object-contain"
+                          onClick={
+                            /* () => setEditingProd(product.id) */
+                            () => handleEditProd(product.id)
+                          }
                         ></img>
                       </button>
                       <button
@@ -461,7 +541,7 @@ function Table() {
                       >
                         <img
                           src="src/assets/images/delete-crud.png"
-                          className="flex w-8"
+                          className="w-8 h-8 object-contain"
                           onClick={() => setIsWarningOpen(true)}
                         ></img>
                       </button>
@@ -481,15 +561,15 @@ function Table() {
   if (CategorieTabOpen)
     return (
       <div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
-          <table className="w-full text-sm text-left rtl:text-right text-black  ">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left rtl:text-right text-black whitespace-normal">
             <thead className="text-xs text-black uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3 ">
                   Categoría
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Descripcion
+                  Descripción
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Imagen
@@ -507,8 +587,9 @@ function Table() {
               {isAddingCat && (
                 <tr className="">
                   <td className="px-6 py-4 ">
-                    {" "}
-                    <label className="block">Nombre: </label>
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Nombre:
+                    </label>
                     <input
                       className=" border border-black"
                       type="text"
@@ -516,7 +597,9 @@ function Table() {
                     ></input>
                   </td>
                   <td className="px-6 py-4 ">
-                    <label className="block">Breve descripcion: </label>
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Breve Descripción:
+                    </label>
                     <textarea
                       className="border border-black resize-none rounded-sm"
                       rows={2}
@@ -525,18 +608,19 @@ function Table() {
                     ></textarea>
                   </td>
                   <td className="px-6 py-4">
-                    {" "}
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Cargar archivo
+                    </label>
                     <input
-                      className="border  border-black"
+                      className="border w-40 border-black"
                       type="file"
                       {...registerCat("image")}
                     ></input>
-                  </td>{" "}
+                  </td>
                   <td className="px-6 py-4 text-gray-500">
                     <p>ID automatico</p>
                   </td>
                   <td className="px-6 py-4 ">
-                    {" "}
                     <button className="px-2 cursor-pointer">
                       <img
                         src="src\assets\images\upload-crud.png"
@@ -560,38 +644,43 @@ function Table() {
               {arrayCategories.map((categorie: Category) => {
                 if (editingCat === categorie.id) {
                   return (
-                    <tr className="">
+                    <tr key={categorie.id}>
                       <td className="px-6 py-4 ">
-                        {" "}
-                        <label className="block">Nombre: </label>
+                        <label className="block mb-2.5 text-sm font-medium text-heading">
+                          Nombre:
+                        </label>{" "}
                         <input
                           className=" border border-black"
                           type="text"
-                          value={categorie.title}
+                          defaultValue={categorie.title}
                           {...registerCat("title")}
                         ></input>
                       </td>
                       <td className="px-6 py-4 ">
-                        <label className="block">Breve descripcion: </label>
+                        <label className="block mb-2.5 text-sm font-medium text-heading">
+                          Breve Descripción:
+                        </label>
                         <textarea
                           className="border border-black resize-none rounded-sm"
                           rows={2}
                           cols={25}
-                          value={categorie.description}
+                          defaultValue={categorie.description}
                           {...registerCat("description")}
                         ></textarea>
                       </td>
                       <td className="px-6 py-4">
-                        {" "}
-                        <input
-                          className="border  border-black"
+                        <label className="block mb-2.5 text-sm text-gray-400 font-medium text-heading">
+                          No es posible editar la imagen
+                        </label>
+                        {/*  <input
+                          className="border w-40  border-black"
                           type="file"
                           {...registerCat("image")}
-                        ></input>
-                      </td>{" "}
+                        ></input> */}
+                      </td>
                       <td className="px-6 py-4 text-gray-500">
                         <input
-                          className=" border border-black  text-gray-400 rounded-sm"
+                          className="  text-gray-400 rounded-sm"
                           type="number"
                           disabled={true}
                           defaultValue={categorie.id}
@@ -599,7 +688,6 @@ function Table() {
                         ></input>
                       </td>
                       <td className="px-6 py-4 ">
-                        {" "}
                         <button className="px-2 cursor-pointer">
                           <img
                             src="src\assets\images\upload-crud.png"
@@ -625,25 +713,25 @@ function Table() {
                     className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
                     key={categorie.id}
                   >
-                    <td className="px-6 py-4  ">{categorie.title}</td>
-                    <td className="px-6 py-4">{categorie.description}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 w-12">{categorie.title}</td>
+                    <td className="px-6 py-4 w-30">{categorie.description}</td>
+                    <td className="px-6 py-4 w-30">
                       <img
                         src={`http://161.35.104.211:8000${categorie.picture}`}
-                        className="object-contain max-h-30 max-w-30 min-h-[150px] min-w-[80px] m-auto"
+                        className="object-contain  h-28 w-28 m-auto"
                       />
                     </td>
 
-                    <td className="px-6 py-4">{categorie.id}</td>
+                    <td className="px-6 py-4 w-10">{categorie.id}</td>
 
-                    <td className="px-6 py-4">
-                      <a href="#" className="px-2">
+                    <td className="px-6 py-4 w-10">
+                      <button className="px-2">
                         <img
                           src="src/assets/images/edit-crud.png"
-                          className="flex w-8"
-                          onClick={() => setEditingCat(categorie.id)}
+                          className="w-8 h-8 object-contain"
+                          onClick={() => handleEditCat(categorie.id)}
                         ></img>
-                      </a>
+                      </button>
                       <button
                         onClick={() =>
                           handleDeleteModal({
@@ -656,7 +744,7 @@ function Table() {
                       >
                         <img
                           src="src/assets/images/delete-crud.png"
-                          className="flex w-8"
+                          className="w-8 h-8 object-contain"
                           onClick={() => setIsWarningOpen(true)}
                         ></img>
                       </button>
@@ -673,7 +761,7 @@ function Table() {
     return (
       <div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
-          <table className="w-full text-sm text-left rtl:text-right text-black  ">
+          <table className="w-full text-sm text-left rtl:text-right text-black ">
             <thead className="text-xs text-black uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3 ">
@@ -691,12 +779,13 @@ function Table() {
               {isAddingTag && (
                 <tr className="">
                   <td className="px-6 py-4 ">
-                    {" "}
-                    <label className="block">Nombre: </label>
+                    <label className="block mb-2.5 text-sm font-medium text-heading">
+                      Nombre:
+                    </label>
                     <input
                       className=" border border-black"
                       type="text"
-                      name="product_name"
+                      {...registerTag("title")}
                     ></input>
                   </td>
 
@@ -704,11 +793,11 @@ function Table() {
                     <p>ID automatico</p>
                   </td>
                   <td className="px-6 py-4 ">
-                    {" "}
                     <button className="px-2 cursor-pointer">
                       <img
                         src="src\assets\images\upload-crud.png"
                         className="flex w-8"
+                        onClick={tagHandleSubmit(onTagCreateSubmit)}
                       ></img>
                     </button>
                     <button
@@ -726,27 +815,34 @@ function Table() {
               {arrayTags.map((tag: Tag) => {
                 if (editingTag === tag.id) {
                   return (
-                    <tr className="">
+                    <tr key={tag.id}>
                       <td className="px-6 py-4 ">
-                        {" "}
-                        <label className="block">Nombre: </label>
+                        <label className="block mb-2.5 text-sm font-medium text-heading">
+                          Nombre:
+                        </label>
                         <input
                           className=" border border-black"
                           type="text"
-                          name="product_name"
-                          value={tag.title}
+                          defaultValue={tag.title}
+                          {...registerTag("title")}
                         ></input>
                       </td>
 
                       <td className="px-6 py-4 text-gray-500">
-                        <p>ID automatico</p>
+                        <input
+                          className="   text-gray-400 rounded-sm"
+                          type="number"
+                          disabled={true}
+                          defaultValue={tag.id}
+                          {...registerTag("id")}
+                        ></input>
                       </td>
                       <td className="px-6 py-4 ">
-                        {" "}
                         <button className="px-2 cursor-pointer">
                           <img
                             src="src\assets\images\upload-crud.png"
                             className="flex w-8"
+                            onClick={tagHandleSubmit(onTagEditSubmit)}
                           ></img>
                         </button>
                         <button
@@ -767,24 +863,34 @@ function Table() {
                     className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
                     key={tag.id}
                   >
-                    <td className="px-6 py-4  ">{tag.title}</td>
+                    <td className="px-6 py-4 w-12 ">{tag.title}</td>
 
-                    <td className="px-6 py-4">{tag.id}</td>
+                    <td className="px-6 py-4 w-12">{tag.id}</td>
 
-                    <td className="px-6 py-4">
-                      <a href="#" className=" px-2">
+                    <td className="px-6 py-4 w-12">
+                      <button className=" px-2">
                         <img
                           src="src/assets/images/edit-crud.png"
-                          className="flex w-8"
-                          onClick={() => setEditingTag(tag.id)}
+                          className="w-8 h-8 object-contain"
+                          onClick={() => handleEditTag(tag.id)}
                         ></img>
-                      </a>
-                      <a href="#" className="px-2">
+                      </button>
+                      <button
+                        className=" px-2 cursor-pointer"
+                        onClick={() =>
+                          handleDeleteModal({
+                            type: "tag",
+                            title: tag.title,
+                            id: tag.id,
+                          })
+                        }
+                      >
                         <img
                           src="src/assets/images/delete-crud.png"
-                          className="flex w-8"
+                          className="w-8 h-8 object-contain"
+                          onClick={() => setIsWarningOpen(true)}
                         ></img>
-                      </a>
+                      </button>
                     </td>
                   </tr>
                 );
