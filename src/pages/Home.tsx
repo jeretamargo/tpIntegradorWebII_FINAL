@@ -6,6 +6,7 @@ import TagList from "../components/TagList";
 import type { Products, Tag, Category } from "../api/interfaces/interfaces";
 import cargaGif from "../assets/images/carga.gif";
 import CartView from "../components/CartView";
+import Carousel from "../components/Carousel";
 
 function Home() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
@@ -75,6 +76,7 @@ function Home() {
       .then((products) => setProducts(products))
       .catch((err) => console.error(err));
   }, []);
+
   if (arrayProducts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
@@ -87,6 +89,7 @@ function Home() {
       <>
         <Header categories={arrayCategories}></Header>
         <CartView />
+        <Carousel></Carousel>
         <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
           <TagList tags={arrayTags}></TagList>
         </div>

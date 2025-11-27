@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-nuevo.png";
 import cartIcon from "../../assets/images/carro.png";
 import type { Category } from "../../api/interfaces/interfaces";
 import CartView from "../CartView";
@@ -15,7 +15,7 @@ function Header({ categories }: Props) {
 
   return (
     <div>
-      <header className="bg-gradient-to-t from-blue-800 via-blue-700 to-blue-50 sticky top-0 z-50">
+      <header className="bg-gray-200 sticky top-0 z-50">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
@@ -32,7 +32,7 @@ function Header({ categories }: Props) {
               <div className="hidden md:relative md:block">
                 <button
                   type="button"
-                  className="overflow-hidden px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 hover:text-gray-700 focus:relative divide-gray-300 rounded border border-gray-300 bg-white shadow-sm"
+                  className="overflow-hidden px-3 py-2 text-sm font-medium text-gray-900 transition-colors  focus:relative "
                   onClick={() => setShowCategories(!showCategories)}
                 >
                   <span className="sr-only">Toggle dashboard menu</span>

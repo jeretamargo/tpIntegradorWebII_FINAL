@@ -9,28 +9,37 @@ function TagList({ tags }: Props) {
     <>
       <section className=" flex  flex-wrap items-center justify-center">
         <div className=" mx-auto max-w-screen-xl px-2 py-4 sm:px-6 sm:py-12 lg:px-8 ">
-          <header className="inline">
-            <h2 className="text-xl text-center  py-8 font-bold text-gray-900 sm:text-3xl">
-              Buscá por Tags
-            </h2>
-          </header>
+          <header className="inline"></header>
 
           {tags.map((tag) => {
             return (
               <a
-                className="inline-block rounded-sm bg-blue-800 px-8  py-2 mx-5 text-sm   font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
+                className="inline-block rounded-sm  text-sm   font-medium text-black transition hover:scale-110 focus:ring-3 focus:outline-hidden px-15"
                 href={`http://localhost:5173/?tag=${tag.id}`}
                 key={tag.id}
               >
-                {tag.title}
+                <img
+                  className="w-40"
+                  src={
+                    tag.id === 24
+                      ? `src/assets/images/oferta-WEB.png`
+                      : tag.id === 25
+                      ? `src/assets/images/organico-web.png`
+                      : tag.id === 26
+                      ? `src/assets/images/producto-local.png`
+                      : ``
+                  }
+                ></img>
+                <p className="place-self-center flex">{tag.title}</p>
               </a>
             );
           })}
           <a
-            className="inline-block rounded-sm bg-blue-800 px-8  py-2 mx-5 text-sm   font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
+            className="inline-block rounded-sm text-sm   font-medium text-black transition hover:scale-110  focus:ring-3 focus:outline-hidden px-15"
             href="http://localhost:5173/"
           >
-            Mostrar Todo
+            <img className="w-40 " src="src/assets/images/todos-web.png"></img>
+            <p className="place-self-center flex">Mostrar Todo</p>
           </a>
         </div>
       </section>

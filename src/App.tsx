@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import { CartProvider } from "./context/CartContext";
 import CRUD from "./pages/CRUD";
 import CrudProvider from "./components/CRUD/CrudContext";
+import "flowbite";
 
 function App() {
   return (
