@@ -84,7 +84,7 @@ export function ProductList({ products }: Props) {
 
     if (tagId == "") {
       return (
-        <section>
+        <section className="p-0 m-0">
           <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 bg-gray-100">
             <header>
               <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">

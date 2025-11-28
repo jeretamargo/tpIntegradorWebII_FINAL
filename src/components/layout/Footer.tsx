@@ -5,8 +5,8 @@ import logo from "../../assets/images/logo-nuevo.png"; // Asegúrate de que esta
 const Footer = () => {
   return (
     <footer className="bg-white">
-      <div className="bg-white h-20 px-6 py-2 flex flex-col items-center justify-center gap-6 text-teal-600 w-full">
-        <img src={logo} className="w-40 pt-4 inline" alt="Logo" />
+      <div className="bg-white  m-0 p-0 flex flex-col items-center justify-center  w-full">
+        <img src={logo} className="w-40  m-0 p-0 flex" alt="Logo" />
         <p className="text-xs text-gray-400 inline">
           2025. El Mejor Super. Todos los derechos reservados.
         </p>
@@ -108,9 +108,11 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div className="col-span-2 sm:col-span-1  self-center place-self-center">
-                <h2 className="font-normal text-3xl text-gray-900">Legal</h2>
-                <ul className="mt-6 space-y-4 text-sm">
+              <div className="col-span-2 sm:col-span-1  ">
+                <h2 className="font-normal text-3xl text-gray-900 self-center place-self-center">
+                  Legal
+                </h2>
+                <ul className="mt-6 space-y-4 text-sm self-center place-self-center">
                   <li>
                     <a
                       href="#"
