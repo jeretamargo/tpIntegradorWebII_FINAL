@@ -1,109 +1,75 @@
 import React from "react";
 /* import SocialIcons from './SocialIcons'; */
-import logo from "../../assets/images/logo.png"; // Asegúrate de que esta ruta sea correcta
+import logo from "../../assets/images/logo-nuevo.png"; // Asegúrate de que esta ruta sea correcta
 
 const Footer = () => {
   return (
     <footer className="bg-white">
-      <div className="bg-gray-500 h-20 px-6 py-2 flex items-center justify-center gap-6 text-teal-600 w-full">
-        <img src={logo} className="w-40 pt-4" alt="Logo" />
+      <div className="bg-white h-20 px-6 py-2 flex flex-col items-center justify-center gap-6 text-teal-600 w-full">
+        <img src={logo} className="w-40 pt-4 inline" alt="Logo" />
+        <p className="text-xs text-gray-400 inline">
+          2025. El Mejor Super. Todos los derechos reservados.
+        </p>
         <ul className="flex text-sm gap-6"></ul>
       </div>
 
-      <div className="mt-2 border-t border-gray-100 pt-2">
-        <div className="sm:flex sm:justify-center gap-4">
-          <p className="text-xs text-gray-500">
-            &copy; 2025. El Mejor Super. Todos los derechos reservados.
-          </p>
-          <ul className="mt-8 flex flex-wrap justify-start gap-4 text-xs sm:mt-0 lg:justify-end">
-            <li>
-              <a href="#" className="text-gray-500 transition hover:opacity-75">
-                Términos & Condiciones
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-500 transition hover:opacity-75">
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-500 transition hover:opacity-75">
-                Cookies
-              </a>
-            </li>
-          </ul>
-        </div>
-
+      <div className="mt-2 border-t bg-blue-400 border-gray-100 pt-2">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="lg:flex lg:items-start lg:gap-8">
-            <div className="mt-8 p-5 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
-              <div className="col-span-2">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    ¡Suscribite y recibí un decuento en tu próxima compra!
-                  </h2>
+            <div className="mt-8 p-5 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-4 lg:gap-y-16">
+              <div className="col-span-2 sm:col-span-1  ">
+                <h2 className="font-normal text-3xl text-gray-900  self-center place-self-center">
+                  Contactanos
+                </h2>
+                <div className="py-2">
+                  <p className="font-bold text-sm"> Whatsapp</p>
+                  <h1 className="font-bold text-2xl">+54 11 3292 1100</h1>
+                </div>
+                <div className="py-2">
+                  <img
+                    className="w-6"
+                    src="src/assets/images/phone-icon.png"
+                  ></img>
+                  <h1 className="font-bold text-2xl">0800 777 0222</h1>
+                </div>
+
+                <div className="flex flex-row align-middle justify-center py-2 ">
+                  <img
+                    className="w-6"
+                    src="src/assets/images/email-icon.png"
+                  ></img>
+                  <p className="px-2">atencionalcliente@reactmarket.com</p>
+                </div>
+                <div className="flex flex-row justify-center place-content-around py-2 ">
+                  <div className="px-2">
+                    <img
+                      className="w-6  h-auto object-contain"
+                      src="src/assets/images/instagram-icon.png"
+                    ></img>
+                  </div>
+                  <div className="px-2">
+                    <img
+                      className="w-6 h-auto object-contain"
+                      src="src/assets/images/facebook-icon.png"
+                    ></img>
+                  </div>
+                  <div className="px-2">
+                    <img
+                      className="w-6 h-auto object-contain"
+                      src="src/assets/images/linkedin-icon.png"
+                    ></img>
+                  </div>
+                  <div className="px-2">
+                    <img
+                      className="w-6 h-auto object-contain"
+                      src="src\assets\images\youtube-icon.png"
+                    ></img>
+                  </div>
                 </div>
               </div>
 
-              <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
-                <form className="w-full">
-                  <label htmlFor="UserEmail" className="sr-only">
-                    Email
-                  </label>
-                  <div className="border border-gray-100 p-2 focus-within:ring-3 sm:flex sm:items-center sm:gap-4">
-                    <input
-                      type="email"
-                      id="UserEmail"
-                      placeholder="tuemail@gmail.com"
-                      className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm"
-                    />
-                    <button className="mt-1 w-full bg-blue-800 px-6 py-3 text-sm font-bold tracking-wide text-white uppercase transition-none hover:bg-teal-600 sm:mt-0 sm:w-auto sm:shrink-0">
-                      Sign Up
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              <div className="col-span-2 sm:col-span-1">
-                <p className="font-medium text-gray-900">Podría interesarte</p>
-                <ul className="mt-6 space-y-4 text-sm">
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Sucursales
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Hot Sale 2026
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Préstamos
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Tarjeta Super
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="col-span-2 sm:col-span-1">
-                <p className="font-medium text-gray-900">La Empresa</p>
+              <div className="col-span-2 sm:col-span-1 mx-7">
+                <h2 className="font-normal text-3xl text-gray-900">Compañia</h2>
                 <ul className="mt-6 space-y-4 text-sm">
                   <li>
                     <a
@@ -118,7 +84,15 @@ const Footer = () => {
                       href="#"
                       className="text-gray-700 transition hover:opacity-75"
                     >
-                      Conocé al equipo
+                      Sucursales
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="text-gray-700 transition hover:opacity-75"
+                    >
+                      Trabajá con nosotros
                     </a>
                   </li>
                   <li>
@@ -133,44 +107,14 @@ const Footer = () => {
               </div>
 
               <div className="col-span-2 sm:col-span-1">
-                <p className="font-medium text-gray-900">Links de ayuda</p>
+                <h2 className="font-normal text-3xl text-gray-900">Legal</h2>
                 <ul className="mt-6 space-y-4 text-sm">
                   <li>
                     <a
                       href="#"
                       className="text-gray-700 transition hover:opacity-75"
                     >
-                      Contacto
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Preguntas frecuentes
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Chat
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="col-span-2 sm:col-span-1">
-                <p className="font-medium text-gray-900">Legal</p>
-                <ul className="mt-6 space-y-4 text-sm">
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Boton de arrepentimiento
+                      Boton de Arrepentimiento
                     </a>
                   </li>
                   <li>
@@ -194,32 +138,38 @@ const Footer = () => {
                       href="#"
                       className="text-gray-700 transition hover:opacity-75"
                     >
-                      Defensa de los consumidores
+                      Defensa del consumidor
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="text-gray-700 transition hover:opacity-75"
+                    >
+                      Acuerdo ACYMA
                     </a>
                   </li>
                 </ul>
               </div>
 
-              <div className="col-span-2 sm:col-span-1">
-                <p className="font-medium text-gray-900">Downloads</p>
-                <ul className="mt-6 space-y-4 text-sm">
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      Marketing Calendar
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-gray-700 transition hover:opacity-75"
-                    >
-                      SEO Infographics
-                    </a>
-                  </li>
-                </ul>
+              <div className="col-span-2 sm:col-span-1 justify-center justify-items-center ">
+                <h2 className="font-normal text-3xl text-gray-900 align-middle inline">
+                  Suscribite al Boletín
+                </h2>
+
+                <p className="py-2 text-center">
+                  ¡Suscribite y recibí un decuento en tu próxima compra!
+                </p>
+
+                <input
+                  type="text"
+                  placeholder="tuemail@mail.com"
+                  className="rounded-3xl my-2 flex justify-items-center self-center"
+                  size={35}
+                ></input>
+                <button className="px-8 py-2 bg-blue-500 text-white rounded-3xl flex self-center">
+                  Enviar
+                </button>
               </div>
             </div>
           </div>
