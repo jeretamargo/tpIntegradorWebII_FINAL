@@ -17,15 +17,15 @@ const Footer = () => {
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="lg:flex lg:items-start lg:gap-8">
             <div className="mt-8 p-5 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-4 lg:gap-y-16">
-              <div className="col-span-2 sm:col-span-1  ">
+              <div className="col-span-2 sm:col-span-1 ">
                 <h2 className="font-normal text-3xl text-gray-900  self-center place-self-center">
                   Contactanos
                 </h2>
-                <div className="py-2">
+                <div className="py-2  self-center place-self-center">
                   <p className="font-bold text-sm"> Whatsapp</p>
                   <h1 className="font-bold text-2xl">+54 11 3292 1100</h1>
                 </div>
-                <div className="py-2">
+                <div className="py-2  self-center place-self-center">
                   <img
                     className="w-6"
                     src="src/assets/images/phone-icon.png"
@@ -68,9 +68,11 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="col-span-2 sm:col-span-1 mx-7">
-                <h2 className="font-normal text-3xl text-gray-900">Compañia</h2>
-                <ul className="mt-6 space-y-4 text-sm">
+              <div className="col-span-2 sm:col-span-1 ">
+                <h2 className="font-normal text-3xl text-gray-900  self-center place-self-center">
+                  Compañia
+                </h2>
+                <ul className="mt-6 space-y-4 text-sm  self-center place-self-center">
                   <li>
                     <a
                       href="#"
@@ -106,7 +108,7 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div className="col-span-2 sm:col-span-1">
+              <div className="col-span-2 sm:col-span-1  self-center place-self-center">
                 <h2 className="font-normal text-3xl text-gray-900">Legal</h2>
                 <ul className="mt-6 space-y-4 text-sm">
                   <li>
@@ -153,7 +155,7 @@ const Footer = () => {
               </div>
 
               <div className="col-span-2 sm:col-span-1 justify-center justify-items-center ">
-                <h2 className="font-normal text-3xl text-gray-900 align-middle inline">
+                <h2 className="font-normal text-3xl text-gray-900 align-middle  flex self-center place-self-center">
                   Suscribite al Boletín
                 </h2>
 
