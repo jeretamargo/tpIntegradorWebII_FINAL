@@ -30,11 +30,11 @@ function ProductCard({
             picture: picture,
           } as CartItem)
         }
-        className="rounded-xl absolute cursor-pointer p-2  -top-3 -right-3 bg-gray-300 hover:scale-110 transition-all  "
+        className="rounded-xl absolute cursor-pointer p-2  -top-3 -right-3 bg-gray-300 hover:scale-110 transition-all shadow-lg "
       >
         <img src="src\assets\images\add-to-cart-icon.png" className="w-10" />
       </button>
-      <div className="h-70 w-auto grid grid-cols-2 sm:grid-cols-1 gap-4 rounded-xl  bg-gray-200 shadow-md px-4 hover:shadow-lg transition">
+      <div className="h-auto sm:min-h-120  w-auto grid grid-cols-2 sm:grid-cols-1 gap-4 rounded-xl  bg-gray-200 shadow-lg px-4 hover:shadow-lg transition">
         <div className=" h-auto overflow-hidden flex items-center justify-center">
           <a
             href={`http://localhost:5173/product?product-id=${productId}`}
@@ -44,7 +44,7 @@ function ProductCard({
           </a>
         </div>
         <div className="pt-10 md:pt-3 flex flex-col sm:grid sm:grid-cols-2  ">
-          <div className="h-[40px] relative  ">
+          <div className="  ">
             <h3 className="text-lg font-semibold text-gray-800 group-hover:underline group-hover:underline-offset-4">
               {title}
             </h3>

@@ -7,10 +7,8 @@ interface Props {
 function TagList({ tags }: Props) {
   return (
     <>
-      <section className=" flex  flex-wrap items-center justify-center">
-        <div className=" mx-auto max-w-screen-xl px-2 py-4 sm:px-6 sm:py-12 lg:px-8 ">
-          <header className="inline"></header>
-
+      <section className="grid grid-cols-1 ">
+        <div className=" mx-auto max-w-screen-xl px-2 py-4 sm:px-6 sm:py-12 lg:px-8 self-center grid  grid-cols-2  lg:grid-cols-4">
           {tags.map((tag) => {
             return (
               <a

@@ -24,14 +24,14 @@ export function ProductList({ products }: Props) {
     if (catId == "") {
       console.log("renderizando por categorias");
       return (
-        <section className="bg-gray-200">
+        <section className="bg-gray-200 ">
           <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 bg-gray-200">
             <header>
               <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
                 Productos
               </h2>
             </header>
-            <ul className="mt-8 grid gap-4 sm:grid-cols-3 p lg:grid-cols-4 ">
+            <ul className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
               {products.map((producto: Products) => {
                 return (
                   <ProductCard

@@ -90,9 +90,9 @@ function Home() {
         <Header categories={arrayCategories}></Header>
         <CartView />
         <Carousel></Carousel>
-        <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
-          <TagList tags={arrayTags}></TagList>
-        </div>
+
+        <TagList tags={arrayTags}></TagList>
+
         <ProductList products={arrayProducts}></ProductList>
         <Footer></Footer>
       </>
