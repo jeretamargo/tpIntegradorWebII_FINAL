@@ -1,7 +1,7 @@
 import ProductDetail from "../components/layout/ProductDetail";
 import { fetchProductByID } from "../api/fetch/products";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+
 import { useSearchParams } from "react-router";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
@@ -9,6 +9,7 @@ import TagList from "../components/TagList";
 import type { Category, Products, Tag } from "../api/interfaces/interfaces";
 import cargaGif from "../assets/images/carga.gif";
 import CartView from "../components/CartView";
+import { useParams } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -16,13 +17,16 @@ interface Props {
   description: string;
   price: number;
   productId: number;
+  tags?: Tag[];
+  category?: Category;
 }
 
 function Ficha() {
+  const { idProduct } = useParams<{ idProduct: string }>();
   const [product, setProduct] = useState<Props | null>(null);
-  const [idProduct] = useSearchParams(); //useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
-  const idP = idProduct.get("product-id");
-  const id: number = Number(idP);
+ // const [idProduct] = useSearchParams(); //useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
+  //const idP = idProduct.get("product-id");
+  //const id: number = Number(idP);
   console.log(idProduct);
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -49,7 +53,9 @@ function Ficha() {
       .catch((err) => console.error(err));
 
     async function loadProduct() {
+      if (!idProduct) return;
       try {
+         const id = parseInt(idProduct);
         const p = await fetchProductByID(id); //funcion de la carpeta fetch
 
         setProduct({
@@ -58,13 +64,15 @@ function Ficha() {
           description: p.description,
           price: p.price,
           productId: p.id,
+          tags: p.tags,
+           category: p.category,
         });
       } catch (error) {
         console.error(error);
       }
     }
     loadProduct();
-  }, [id]);
+  }, [idProduct]);
   if (!product) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">

@@ -1,172 +1,122 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import type { Products } from "../api/interfaces/interfaces";
 import ProductCard from "./ProductCard";
+import { SearchContext } from "../context/SearchContext";
 
 interface Props {
   products: Products[];
 }
 
 export function ProductList({ products }: Props) {
+  const location = useLocation();
+  const { searchText, setSearchText } = useContext(SearchContext);
   const [catId, setCatId] = useState("");
   const [tagId, setTagId] = useState("");
-  const page = window.location.pathname;
 
-  //los set de states nunca van dentro de returns, hay que colocarlos en use state, sino provacarian renders infinitos, necesitamos que estos parametros cambien solo si cambia la barra de busqueda que mostrara ids de categorias o tags
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const categoria = params.get("cat") ?? "";
-    const tag = params.get("tag") ?? "";
-    setCatId(categoria);
-    setTagId(tag);
-  }, [window.location.search]);
+    const params = new URLSearchParams(location.search);
+    setCatId(params.get("cat") ?? "");
+    setTagId(params.get("tag") ?? "");
+  }, [location.search]);
+
+  const productosBuscados = products.filter((prod) =>
+    prod.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  // Barra de búsqueda mobile
+  function renderSearchBar() {
+    return (
+      <div className="w-full max-w-xl mx-auto mt-4 block md:hidden">
+        <input
+          type="text"
+          placeholder="Buscar productos..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          className="w-full p-3 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-indigo-300"
+        />
+      </div>
+    );
+  }
 
   function renderByCat() {
-    if (catId == "") {
-      console.log("renderizando por categorias");
-      return (
-        <section className="  bg-gray-200 ">
-          <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 ">
-            <header>
-              <h2 className="text-xl font-bold text-black sm:text-3xl">
-                Productos
-              </h2>
-            </header>
-            <ul className="mt-8  grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-              {products.map((producto: Products) => {
-                return (
-                  <ProductCard
-                    key={producto.id}
-                    title={producto.title}
-                    picture={`"http://161.35.104.211:8000"${producto.pictures[0]}`}
-                    price={producto.price * 1000}
-                    description={producto.description}
-                    productId={producto.id}
-                    tags={producto.tags}
-                  ></ProductCard>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-      );
-    } else {
-      const filteredProducts = products.filter((prod) => {
-        return parseInt(catId) == prod.category.id;
-      });
-      return (
-        <section className=" bg-gray-200">
-          <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 ">
-            <header>
-              <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                Productos
-              </h2>
-            </header>
-            <ul className="mt-8 grid gap-4 sm:grid-cols-2 p lg:grid-cols-6 ">
-              {filteredProducts.map((producto: Products) => {
-                return (
-                  <ProductCard
-                    key={producto.id}
-                    title={producto.title}
-                    picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
-                    price={producto.price * 1000}
-                    description={producto.description}
-                    productId={producto.id}
-                    tags={producto.tags}
-                  ></ProductCard>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-      );
-    }
-  }
-  function renderByTag() {
-    console.log("renderizando por tags");
-
-    if (tagId == "") {
-      return (
-        <section className=" bg-gray-200">
-          <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-            <header>
-              <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                Productos
-              </h2>
-            </header>
-            <ul className="mt-8 grid gap-4 sm:grid-cols-3 p lg:grid-cols-6 ">
-              {products.map((producto: Products) => {
-                return (
-                  <ProductCard
-                    key={producto.id}
-                    title={producto.title}
-                    picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
-                    price={producto.price * 1000}
-                    description={producto.description}
-                    productId={producto.id}
-                    tags={producto.tags}
-                  ></ProductCard>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-      );
-    } else {
-      const taggedProducts = products.filter((prod) => {
-        return prod.tags?.length;
-      });
-
-      const filteredProducts = taggedProducts.filter((prod) => {
-        console.log(prod.tags?.[0].id);
-        if (prod.tags?.length == 1) {
-          return parseInt(tagId) == prod.tags?.[0].id;
-        }
-        if (prod.tags?.length > 1) {
-          return (
-            parseInt(tagId) == prod.tags?.[0].id ||
-            parseInt(tagId) == prod.tags?.[1].id
+    const productosFiltrados =
+      catId === ""
+        ? productosBuscados
+        : productosBuscados.filter(
+            (prod) => parseInt(catId) === prod.category.id
           );
-        }
-      });
 
-      console.log(tagId);
-      console.log(filteredProducts);
-      return (
-        <section className=" bg-gray-200">
-          <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-            <header>
-              <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                Productos
-              </h2>
-            </header>
-            <ul className="mt-8 grid gap-4 sm:grid-cols-2 p lg:grid-cols-6 ">
-              {filteredProducts.map((producto: Products) => {
-                return (
-                  <ProductCard
-                    key={producto.id}
-                    title={producto.title}
-                    picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
-                    price={producto.price * 1000}
-                    description={producto.description}
-                    productId={producto.id}
-                    tags={producto.tags}
-                  ></ProductCard>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-      );
-    }
+    return (
+      <section className="bg-gray-200">
+        <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+          <header>
+            <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
+              Productos
+            </h2>
+          </header>
+
+          {renderSearchBar()}
+
+          <ul className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {productosFiltrados.map((producto: Products) => (
+              <ProductCard
+                key={producto.id}
+                title={producto.title}
+                picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
+                price={producto.price * 1000}
+                description={producto.description}
+                productId={producto.id}
+                tags={producto.tags}
+              />
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
   }
 
-  if (page == "/" || page.endsWith("index.html")) {
-    console.log("dentro del if de tags");
-    return renderByTag();
+  function renderByTag() {
+    const productosTagFiltrados =
+      tagId === ""
+        ? productosBuscados
+        : productosBuscados.filter((prod) =>
+            prod.tags?.some((t) => t.id === parseInt(tagId))
+          );
+
+    return (
+      <section className="bg-gray-100">
+        <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+          <header>
+            <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
+              Productos
+            </h2>
+          </header>
+
+          {renderSearchBar()}
+
+          <ul className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {productosTagFiltrados.map((producto: Products) => (
+              <ProductCard
+                key={producto.id}
+                title={producto.title}
+                picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
+                price={producto.price * 1000}
+                description={producto.description}
+                productId={producto.id}
+                tags={producto.tags}
+              />
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
   }
-  if (page == "/list") {
-    console.log("dentro del if de categorias");
-    return renderByCat();
-  }
-  return;
+
+  const page = location.pathname;
+
+  if (page === "/" || page.endsWith("index.html")) return renderByTag();
+  if (page === "/list") return renderByCat();
+
+  return null;
 }

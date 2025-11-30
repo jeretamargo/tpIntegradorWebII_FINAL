@@ -9,22 +9,25 @@ import NotFound from "./pages/NotFound";
 import { CartProvider } from "./context/CartContext";
 import CRUD from "./pages/CRUD";
 import CrudProvider from "./components/CRUD/CrudContext";
+import { SearchProvider } from "./context/SearchContext";
 import "flowbite";
 
 function App() {
   return (
     <div>
+       <SearchProvider>
       <CartProvider>
         <CrudProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/list" element={<Listado />} />
-            <Route path="/product" element={<Ficha />} />
+            <Route path="/product/:idProduct" element={<Ficha />} />
             <Route path="/admin" element={<CRUD />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </CrudProvider>
       </CartProvider>
+      </SearchProvider>
     </div>
   );
 }

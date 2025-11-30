@@ -1,61 +1,147 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import type { CartItem } from "../../api/interfaces/interfaces";
+import type { CartItem, Tag, Category } from "../../api/interfaces/interfaces";
+import { Link } from "react-router";
 
-//forma que quiero que tenga el parametro de la funcion
 interface Props {
   title: string;
   picture: string;
   description: string;
   price: number;
   productId: number;
+   category?: {
+    id: number;
+    title: string;
+  };
+  tags?: Tag[];
 }
 
-function ProductDetail(props: Props) {
-  const { addItem } = useContext(CartContext);
+function ProductDetail({
+  title,
+  picture,
+  description,
+  price,
+  productId,
+  tags,
+  category,
+}: Props) {
+  const { addItem,openCart } = useContext(CartContext);
+
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="max-w-[720px] mx-auto">
-        <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
-          <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-96">
-            <img
-              src={`http://161.35.104.211:8000${props.picture}`}
-              alt={props.title}
-              className="object-cover w-full "
-            />
-          </div>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-2">
-              <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
-                {props.title}
-              </p>
-              <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
-                ${props.price * 1000}
-              </p>
+    
+    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+  {/* Breadcrumb de tags */}
+      <nav className="mb-4 w-full max-w-3xl text-gray-600 text-sm">
+        <div className="flex flex-wrap gap-1 items-center">
+          <Link to="/" className="hover:text-red-700">Home</Link>
+          <span>/</span>
+          <Link to="/list" className="hover:text-red-700">Productos</Link>
+
+          {category && (
+            <>
+              <span>/</span>
+              <Link
+                to={`/list?cat=${category.id}`}
+                className="hover:text-red-700"
+              >
+                {category.title}
+              </Link>
+            </>
+          )}
+
+          {tags && tags.length > 0 && tags.map((tag) => (
+            <span key={tag.id} className="flex items-center">
+              <span>/</span>
+              <Link
+                to={`/?tag=${tag.id}`}
+                className="hover:text-red-700"
+              >
+                {tag.title}
+              </Link>
+            </span>
+          ))}
+        </div>
+      </nav>
+      <div className="w-full max-w-3xl bg-gray-200 shadow-lg rounded-2xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        {/* Imagen */}
+        <div className="flex justify-center items-center">
+          <img
+            src={`http://161.35.104.211:8000${picture}`}
+            alt={title}
+            className="rounded-3xl w-full object-cover"
+          />
+        </div>
+
+        {/* Info derecha */}
+        <div className="flex flex-col justify-between">
+          
+          {/* Título y precio */}
+          <div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+              {title}
+            </h2>
+
+            <span className="tracking-wider text-gray-800 font-bold text-3xl">
+              $ {price * 1000}
+            </span>
+
+            {/* Tags con mismos colores que ProductCard */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {tags?.map((tag) => (
+                <span
+                  key={tag.id}
+                  className={`py-1 px-4 text-white rounded-lg ${
+                    tag.id === 24
+                      ? "bg-red-500"
+                      : tag.id === 25
+                      ? "bg-green-500"
+                      : tag.id === 26
+                      ? "bg-orange-500"
+                      : "bg-gray-500"
+                  }`}
+                >
+                  {tag.id === 24
+                    ? "Promo"
+                    : tag.id === 25
+                    ? "Orgánico"
+                    : tag.id === 26
+                    ? "Local"
+                    : tag.title}
+                </span>
+              ))}
             </div>
-            <p className="block font-sans text-sm antialiased font-normal leading-normal text-gray-700 opacity-75">
-              {props.description}
+
+            {/* Descripción */}
+            <p className="text-gray-700 mt-6 leading-relaxed">
+              {description}
             </p>
           </div>
-          <div className="p-6 pt-0">
-            <button
-              className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg shadow-gray-900/10 hover:shadow-gray-900/20 focus:opacity-[0.85] active:opacity-[0.85] active:shadow-none block w-full bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-              type="button"
-              onClick={() =>
-                addItem({
-                  id: props.productId,
-                  name: props.title,
-                  price: props.price * 1000,
-                  picture: `http://161.35.104.211:8000${props.picture}`,
-                } as CartItem)
-              }
-            >
-              Agregar al carrito
-            </button>
-          </div>
+
+          {/* Botón agregar al carrito */}
+          <button
+            onClick={() =>{
+              addItem({
+                id: productId,
+                name: title,
+                price: price * 1000,
+                picture: `http://161.35.104.211:8000${picture}`,
+              } as CartItem);
+                openCart();
+              }}
+            className="mt-8 w-full bg-gray-300 rounded-xl p-3 text-gray-800 font-bold
+                       shadow-lg hover:scale-110 hover:cursor-pointer transition-all flex justify-center"
+          >
+            <img
+              src="/src/assets/images/add-to-cart-icon.png"
+              className="w-8 mr-2"
+            />
+            Agregar al carrito
+          </button>
         </div>
       </div>
     </div>
   );
 }
+
 export default ProductDetail;
