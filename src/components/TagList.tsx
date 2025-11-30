@@ -7,12 +7,12 @@ interface Props {
 function TagList({ tags }: Props) {
   return (
     <>
-      <section className="grid grid-cols-1 ">
+      <section className="grid grid-cols-1  bg-gray-200">
         <div className=" mx-auto max-w-screen-xl px-2 py-4 sm:px-6 sm:py-12 lg:px-8 self-center grid  grid-cols-2  lg:grid-cols-4">
           {tags.map((tag) => {
             return (
               <a
-                className="inline-block rounded-sm  text-sm   font-medium text-black transition hover:scale-110 focus:ring-3 focus:outline-hidden px-15"
+                className="inline-block rounded-sm  text-sm   font-medium text-black transition hover:scale-110  px-15"
                 href={`http://localhost:5173/?tag=${tag.id}`}
                 key={tag.id}
               >
@@ -33,7 +33,7 @@ function TagList({ tags }: Props) {
             );
           })}
           <a
-            className="inline-block rounded-sm text-sm   font-medium text-black transition hover:scale-110  focus:ring-3 focus:outline-hidden px-15"
+            className="inline-block rounded-sm text-sm   font-medium text-black transition hover:scale-110   px-15"
             href="http://localhost:5173/"
           >
             <img className="w-40 " src="src/assets/images/todos-web.png"></img>

@@ -15,7 +15,7 @@ function Header({ categories }: Props) {
 
   return (
     <div>
-      <header className="bg-gray-200 sticky top-0 z-50">
+      <header className="bg-white sticky top-0 z-50">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}

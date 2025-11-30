@@ -67,7 +67,7 @@ export function Listado() {
       <>
         <Header categories={categories}></Header>
         <CartView />
-        <div className=" flex  flex-wrap items-center justify-center bg-gray-200">
+        <div className=" ">
           <CategoriesList categorias={categories}></CategoriesList>
         </div>
         <ProductList products={products}></ProductList>

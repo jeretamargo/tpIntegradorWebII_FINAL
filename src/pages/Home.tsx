@@ -92,8 +92,9 @@ function Home() {
         <Carousel></Carousel>
 
         <TagList tags={arrayTags}></TagList>
-
-        <ProductList products={arrayProducts}></ProductList>
+        <div className=" ">
+          <ProductList products={arrayProducts}></ProductList>
+        </div>
         <Footer></Footer>
       </>
     );
