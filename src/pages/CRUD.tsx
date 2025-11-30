@@ -5,7 +5,7 @@ import Tabs from "../components/CRUD/Tabs";
 import Table from "../components/CRUD/Table";
 import AddButton from "../components/CRUD/AddButton";
 import DeleteWarning from "../components/CRUD/DeleteWarning";
-import { CrudContext } from "../components/CRUD/CrudContext";
+import { CrudContext } from "../context/CrudContext";
 
 function CRUD() {
   return (

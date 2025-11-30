@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CrudContext } from "../CRUD/CrudContext";
+import { CrudContext } from "../../context/CrudContext";
 
 function AddButton() {
   const {
@@ -9,19 +9,25 @@ function AddButton() {
     ProductTabOpen,
     CategorieTabOpen,
     TagTabOpen,
+    editingCat,
+    editingProd,
+    editingTag,
   } = useContext(CrudContext);
+
+  function handleClickAdd() {
+    if (editingCat || editingProd || editingTag) return;
+    if (ProductTabOpen) {
+      setIsAddingProd(true);
+    } else if (CategorieTabOpen) {
+      setIsAddingCat(true);
+    } else if (TagTabOpen) {
+      setIsAddingTag(true);
+    }
+  }
   return (
     <div
-      className=" mx-2 flex z-100 hover:scale-110 transition-all rounded-2xl "
-      onClick={
-        ProductTabOpen
-          ? () => setIsAddingProd(true)
-          : CategorieTabOpen
-          ? () => setIsAddingCat(true)
-          : TagTabOpen
-          ? () => setIsAddingTag(true)
-          : () => {}
-      }
+      className=" mx-2 flex z-10 hover:scale-110 transition-all rounded-2xl "
+      onClick={() => handleClickAdd()}
     >
       <button className=" cursor-pointer ">
         <img

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import AddButton from "./AddButton";
-import { CrudContext } from "./CrudContext";
+import { CrudContext } from "../../context/CrudContext";
 
 function Tabs() {
   const { ToggleTab, ProductTabOpen, CategorieTabOpen, TagTabOpen } =

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CrudContext } from "./CrudContext";
+import { CrudContext } from "../../context/CrudContext";
 import type { JSX } from "react/jsx-runtime";
 
 function DeleteWarning() {
