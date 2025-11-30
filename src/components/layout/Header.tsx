@@ -32,10 +32,10 @@ function Header({ categories }: Props) {
 <div className="hidden md:block md:flex-1 md:mx-4">
   <input
     type="text"
-    placeholder="Buscar productos..."
+    placeholder="Buscá tu producto"
     value={searchText}
     onChange={(e) => setSearchText(e.target.value)}
-    className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-indigo-300"
+    className="w-full p-2 border border-gray-600 shadow-md bg-gray-300  rounded-lg shadow focus:outline-none focus:ring focus:ring-indigo-100"
   />
 </div>
           {/* Menú + Carrito */}
