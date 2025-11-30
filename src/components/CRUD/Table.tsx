@@ -7,7 +7,7 @@ import type {
   CatFormFields,
 } from "../../api/interfaces/interfaces";
 import AddButton from "./AddButton";
-import { CrudContext } from "./CrudContext";
+import { CrudContext } from "../../context/CrudContext";
 import DeleteWarning from "./DeleteWarning";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
@@ -122,6 +122,15 @@ function Table() {
     setEditingTag(id);
   }
 
+  function handleCancelEdit() {
+    resetProd();
+    resetCat();
+    resetTag();
+    setEditingCat(0);
+    setEditingProd(0);
+    setEditingTag(0);
+  }
+
   {
     /*funciones y variables globales del context*/
   }
@@ -220,12 +229,6 @@ function Table() {
       .catch((err) => console.error(err));
   }, [editingProd, editingCat, editingTag]);
 
-  useEffect(() => {
-    resetProd();
-    resetTag();
-    resetCat();
-  }, [isAddingProd, isAddingCat, isAddingTag]);
-
   {
     /*empieza el render del componente tabla*/
   }
@@ -272,7 +275,6 @@ function Table() {
               {isAddingProd && (
                 <tr className="">
                   <td className="px-6 py-4  ">
-                    {" "}
                     <label className="block mb-2.5 text-sm font-medium text-heading">
                       Nombre:
                     </label>
@@ -302,20 +304,18 @@ function Table() {
                       type="file"
                       {...registerProd("image")}
                     ></input>
-                  </td>{" "}
+                  </td>
                   <td className="px-6 py-4 text-gray-500">
                     <p>ID automatico</p>
                   </td>
                   <td className="px-6 py-4 flex flex-col  ">
-                    {" "}
                     {arrayTags.map((tag: Tag) => {
                       return (
-                        <div>
+                        <div key={tag.id}>
                           <input
                             type="checkbox"
                             id={tag.title}
                             value={tag.id}
-                            key={tag.id}
                             {...registerProd("tag_ids")}
                           ></input>
                           <label form="vehicle1"> {tag.title}</label>
@@ -394,7 +394,7 @@ function Table() {
                         ></textarea>
                       </td>
                       <td className="px-6 py-4">
-                        <label className="block mb-2.5 text-sm text-gray-400 font-medium text-heading">
+                        <label className="block mb-2.5 text-sm text-gray-400 font-medium ">
                           No es posible editar la imagen
                         </label>
                         {/* <input
@@ -419,8 +419,8 @@ function Table() {
                               <input
                                 type="checkbox"
                                 id={tag.title}
-                                value={tag.id}
-                                checked={product.tags?.some(
+                                defaultValue={tag.id}
+                                defaultChecked={product.tags?.some(
                                   (prodTag) => prodTag.id === tag.id
                                 )}
                                 {...registerProd("tag_ids")}
@@ -466,7 +466,7 @@ function Table() {
                         </button>
                         <button
                           className="px-2 cursor-pointer"
-                          onClick={() => setEditingProd(0)}
+                          onClick={() => handleCancelEdit()}
                         >
                           <img
                             src="src\assets\images\cancel-crud.png"
@@ -697,7 +697,7 @@ function Table() {
                         </button>
                         <button
                           className="px-2 cursor-pointer"
-                          onClick={() => setEditingCat(0)}
+                          onClick={() => handleCancelEdit()}
                         >
                           <img
                             src="src\assets\images\cancel-crud.png"
@@ -847,7 +847,7 @@ function Table() {
                         </button>
                         <button
                           className="px-2 cursor-pointer"
-                          onClick={() => setEditingTag(0)}
+                          onClick={() => handleCancelEdit()}
                         >
                           <img
                             src="src\assets\images\cancel-crud.png"

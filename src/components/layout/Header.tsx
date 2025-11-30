@@ -15,7 +15,7 @@ function Header({ categories }: Props) {
   const { totalQuantity, toggleCart } = useContext(CartContext);
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-   const { searchText, setSearchText } = useContext(SearchContext);
+  const { searchText, setSearchText } = useContext(SearchContext);
 
   return (
     <header className="bg-gray-200 sticky top-0 z-50">
@@ -29,28 +29,27 @@ function Header({ categories }: Props) {
             </Link>
           </div>
           {/* Barra de búsqueda desktop */}
-<div className="hidden md:block md:flex-1 md:mx-4">
-  <input
-    type="text"
-    placeholder="Buscá tu producto"
-    value={searchText}
-    onChange={(e) => setSearchText(e.target.value)}
-    className="w-full p-2 border border-gray-600 shadow-md bg-gray-300  rounded-lg shadow focus:outline-none focus:ring focus:ring-indigo-100"
-  />
-</div>
+          <div className="hidden md:block md:flex-1 md:mx-4">
+            <input
+              type="text"
+              placeholder="Buscá tu producto"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              className="w-full p-2 border border-gray-600 shadow-md bg-gray-300  rounded-lg shadow focus:outline-none focus:ring focus:ring-indigo-100"
+            />
+          </div>
           {/* Menú + Carrito */}
           <div className="flex items-center gap-4">
-           
-           {/* Categorías (desktop) */}
-<div className="hidden md:relative md:block">
-  <button
-    type="button"
-    className="overflow-hidden px-3 py-2 text-sm font-medium text-gray-900 transition-colors cursor-pointer focus:relative"
-    onClick={() => setShowCategories(!showCategories)}
-  >
-    <span className="sr-only">Toggle dashboard menu</span>
-    Categorías
-  </button>
+            {/* Categorías (desktop) */}
+            <div className="hidden md:relative md:block">
+              <button
+                type="button"
+                className="overflow-hidden px-3 py-2 text-sm font-medium text-gray-900 transition-colors cursor-pointer focus:relative"
+                onClick={() => setShowCategories(!showCategories)}
+              >
+                <span className="sr-only">Toggle dashboard menu</span>
+                Categorías
+              </button>
 
   {showCategories && (
     <div
@@ -88,7 +87,11 @@ function Header({ categories }: Props) {
                   stroke="currentColor"
                   strokeWidth="2"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               </button>
             </div>

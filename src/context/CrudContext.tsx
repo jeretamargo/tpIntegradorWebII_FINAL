@@ -5,17 +5,17 @@ import React, {
   type PropsWithChildren,
 } from "react";
 
-import DeleteWarning from "./DeleteWarning";
+import DeleteWarning from "../components/CRUD/DeleteWarning";
 import type {
   CatFormFields,
   ProdFormFields,
   Product,
   SelectedItem,
   TagFormFields,
-} from "../../api/interfaces/interfaces";
+} from "../api/interfaces/interfaces";
 
-import { fetchProducts } from "../../api/fetch/products";
-import { getCategories } from "../../api/fetch/categories";
+import { fetchProducts } from "../api/fetch/products";
+import { getCategories } from "../api/fetch/categories";
 
 interface CrudContextProps {
   ProductTabOpen: boolean;
@@ -225,27 +225,6 @@ function CrudProvider({ children }: PropsWithChildren) {
       }
     ).then((res) => res.json);
 
-    /*  if (categorie.image) {
-      const cats = await getCategories();
-      const filteredCat = cats.find((p) => p.id === response.id);
-
-      const fileData = new FormData();
-    
-      fileData.append("files", categorie.image[0]);
-     
-
-      await fetch(
-        `https://ecommerce.fedegonzalez.com/categories/${filteredCat.id}/picture`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer jeremias01",
-            "Content-Type": "multipart/form-data",
-          },
-          body: fileData,
-        }
-      ).then((data) => console.log(data.status));
-    } */
     window.location.reload();
   }
 

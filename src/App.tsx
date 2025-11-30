@@ -8,7 +8,7 @@ import { Route, Routes } from "react-router";
 import NotFound from "./pages/NotFound";
 import { CartProvider } from "./context/CartContext";
 import CRUD from "./pages/CRUD";
-import CrudProvider from "./components/CRUD/CrudContext";
+import CrudProvider from "./context/CrudContext";
 import { SearchProvider } from "./context/SearchContext";
 import "flowbite";
 

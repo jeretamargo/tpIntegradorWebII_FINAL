@@ -50,9 +50,15 @@ export function Listado() {
       return data;
     }
 
-    fetchCategories().then((data) => setCategories(data)).catch(console.error);
-    fetchTags().then((data) => setTags(data)).catch(console.error);
-    fetchProducts().then((data) => setProducts(data)).catch(console.error);
+    fetchCategories()
+      .then((data) => setCategories(data))
+      .catch(console.error);
+    fetchTags()
+      .then((data) => setTags(data))
+      .catch(console.error);
+    fetchProducts()
+      .then((data) => setProducts(data))
+      .catch(console.error);
   }, []);
 
   if (products.length === 0) {
@@ -76,8 +82,8 @@ export function Listado() {
       <Carousel />
 
       {/* Lista de tags igual que home */}
-      <TagList tags={tags} />
-     
+      <CategoriesList categorias={categories} />
+
       {/* Productos */}
       <ProductList products={productosFiltrados}/>
 
