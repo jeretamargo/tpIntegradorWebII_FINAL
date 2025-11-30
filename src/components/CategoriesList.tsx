@@ -8,13 +8,11 @@ interface Props {
 function CategoriesList({ categorias }: Props) {
   const [selectedCat, setSelectedCat] = useState<Category>();
 
-  const [searchParams] = useSearchParams();
-  const param_cat_id = "";
+  const params = useParams();
 
   useEffect(() => {
-    const param_cat_id = searchParams.get("cat");
     setSelectedCat(
-      categorias.find((cat) => cat.id.toString() === param_cat_id)
+      categorias.find((cat) => cat.id.toString() === params.catId)
     );
   });
 
