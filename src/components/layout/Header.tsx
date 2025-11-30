@@ -5,6 +5,7 @@ import cartIcon from "../../assets/images/carro.png";
 import type { Category } from "../../api/interfaces/interfaces";
 import CategoriesList from "../CategoriesList";
 import { CartContext } from "../../context/CartContext";
+import { SearchContext } from "../../context/SearchContext";
 
 interface Props {
   categories: Category[];
@@ -14,6 +15,7 @@ function Header({ categories }: Props) {
   const { totalQuantity, toggleCart } = useContext(CartContext);
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+   const { searchText, setSearchText } = useContext(SearchContext);
 
   return (
     <header className="bg-gray-200 sticky top-0 z-50">
@@ -26,7 +28,16 @@ function Header({ categories }: Props) {
               <img src={logo} className="max-h-20 max-w-48" alt="Logo" />
             </Link>
           </div>
-
+          {/* Barra de búsqueda desktop */}
+<div className="hidden md:block md:flex-1 md:mx-4">
+  <input
+    type="text"
+    placeholder="Buscar productos..."
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
+    className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-indigo-300"
+  />
+</div>
           {/* Menú + Carrito */}
           <div className="flex items-center gap-4">
            

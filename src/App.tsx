@@ -9,11 +9,13 @@ import NotFound from "./pages/NotFound";
 import { CartProvider } from "./context/CartContext";
 import CRUD from "./pages/CRUD";
 import CrudProvider from "./components/CRUD/CrudContext";
+import { SearchProvider } from "./context/SearchContext";
 import "flowbite";
 
 function App() {
   return (
     <div>
+       <SearchProvider>
       <CartProvider>
         <CrudProvider>
           <Routes>
@@ -25,6 +27,7 @@ function App() {
           </Routes>
         </CrudProvider>
       </CartProvider>
+      </SearchProvider>
     </div>
   );
 }
