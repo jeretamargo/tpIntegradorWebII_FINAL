@@ -61,7 +61,7 @@ function Header({ categories }: Props) {
         {categories.map((cat) => (
           <Link
             key={cat.id}
-            to={`/list?cat=${cat.id}`}
+            to={`/category/${cat.id}`}
             onClick={() => setShowCategories(false)} // cierra el menú al hacer click
             className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
             role="menuitem"
@@ -117,7 +117,7 @@ function Header({ categories }: Props) {
         {categories.map((cat) => (
           <li key={cat.id} className="w-full flex justify-center">
             <Link
-              to={`/list?cat=${cat.id}`}
+              to={`/category/${cat.id}`}
               onClick={() => setShowMobileMenu(false)} // cierra el menú
               className="inline-block w-full text-center rounded-sm bg-[#2892d7] px-4 py-2 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
             >

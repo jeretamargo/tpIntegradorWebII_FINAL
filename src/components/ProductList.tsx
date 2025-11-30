@@ -1,8 +1,9 @@
 import React, { useEffect, useState,useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useParams } from "react-router-dom";
 import type { Products } from "../api/interfaces/interfaces";
 import ProductCard from "./ProductCard";
 import { SearchContext } from "../context/SearchContext";
+
 
 interface Props {
   products: Products[];
@@ -10,15 +11,16 @@ interface Props {
 
 export function ProductList({ products }: Props) {
   const location = useLocation();
+   const { catId: paramCatId } = useParams<{ catId: string }>();
   const { searchText, setSearchText } = useContext(SearchContext);
   const [catId, setCatId] = useState("");
   const [tagId, setTagId] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    setCatId(params.get("cat") ?? "");
+    setCatId(params.get("cat") ?? paramCatId ?? "");
     setTagId(params.get("tag") ?? "");
-  }, [location.search]);
+  }, [location.search, paramCatId]);
 
   const productosBuscados = products.filter((prod) =>
     prod.title.toLowerCase().includes(searchText.toLowerCase())
@@ -116,7 +118,7 @@ export function ProductList({ products }: Props) {
   const page = location.pathname;
 
   if (page === "/" || page.endsWith("index.html")) return renderByTag();
-  if (page === "/list") return renderByCat();
+  if (page.startsWith("/category")) return renderByCat();
 
-  return null;
+return renderByTag();
 }

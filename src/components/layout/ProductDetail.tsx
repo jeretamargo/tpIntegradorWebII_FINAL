@@ -41,7 +41,7 @@ function ProductDetail({
             <>
               <span>/</span>
               <Link
-                to={`/list?cat=${category.id}`}
+                to={`/category/${category.id}`}
                 className="hover:text-red-700"
               >
                 {category.title}
@@ -85,6 +85,7 @@ function ProductDetail({
             <span className="tracking-wider text-gray-800 font-bold text-3xl">
               $ {price * 1000}
             </span>
+        
 
             {/* Tags con mismos colores que ProductCard */}
             <div className="mt-4 flex flex-wrap gap-2">
@@ -113,7 +114,7 @@ function ProductDetail({
             </div>
 
             {/* Descripción */}
-            <p className="text-gray-700 mt-6 leading-relaxed">
+            <p className="text-gray-700 mt-6 leading-relaxed text-xl">
               {description}
             </p>
           </div>

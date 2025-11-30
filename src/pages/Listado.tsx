@@ -8,8 +8,10 @@ import cargaGif from "../assets/images/carga.gif";
 import CartView from "../components/CartView";
 import Carousel from "../components/Carousel";
 import CategoriesList from "../components/CategoriesList";
+import { useParams } from "react-router-dom";
 
 export function Listado() {
+   const { catId } = useParams<{ catId: string }>();
   const [products, setProducts] = useState<Products[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -62,6 +64,11 @@ export function Listado() {
     );
   }
 
+   const productosFiltrados = catId
+    ? products.filter((prod) => prod.category.id === parseInt(catId))
+    : products;
+
+
   return (
     <>
       <Header categories={categories} />
@@ -72,7 +79,7 @@ export function Listado() {
       <TagList tags={tags} />
      
       {/* Productos */}
-      <ProductList products={products} />
+      <ProductList products={productosFiltrados}/>
 
       <Footer />
     </>

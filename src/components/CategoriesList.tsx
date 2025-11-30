@@ -19,7 +19,7 @@ function CategoriesList({ categorias }: Props) {
       {categorias.map((cat) => (
       <li key={cat.id} className="w-full flex justify-center">
   <Link
-    to={`/list?cat=${cat.id}`}
+    to={`/category/${cat.id}`}
     className="inline-block w-full text-center rounded-sm bg-[#2892d7] px-4 py-2 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
   >
     {cat.title}
