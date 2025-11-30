@@ -60,18 +60,17 @@ export function ProductList({ products }: Props) {
 
           {renderSearchBar()}
 
-          <ul className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {productosFiltrados.map((producto: Products) => (
-              <li className="w-full sm:w-80 md:w-96 mx-auto" key={producto.id}>
-                <ProductCard
-                  title={producto.title}
-                  picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
-                  price={producto.price * 1000}
-                  description={producto.description}
-                  productId={producto.id}
-                  tags={producto.tags}
-                />
-              </li>
+           <ul className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {productosFiltrados.map((producto: Products) => (
+            <ProductCard
+              key={producto.id}
+              title={producto.title}
+              picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
+              price={producto.price * 1000}
+              description={producto.description}
+              productId={producto.id}
+              tags={producto.tags}
+            />
             ))}
           </ul>
         </div>
