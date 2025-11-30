@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import type { CartItem, Tag } from "../../api/interfaces/interfaces";
+import { Link } from "react-router";
 
 interface Props {
   title: string;
@@ -22,7 +23,24 @@ function ProductDetail({
   const { addItem,openCart } = useContext(CartContext);
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 p-6">
+    
+    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+  {/* Breadcrumb de tags */}
+      <nav className="mb-4 w-full max-w-3xl text-gray-600 text-sm">
+      <div className="flex flex-wrap gap-1">
+        <Link to="/" className="hover:text-red-700">Home</Link>
+        <span>/</span>
+        <Link to="/productos" className="hover:text-red-700">Productos</Link>
+        {tags && tags.length > 0 && tags.map((tag, index) => (
+          <span key={tag.id} className="flex items-center">
+            <span>/</span>
+            <Link to={`/productos/tag/${tag.id}`} className="hover:text-red-700">
+              {tag.title}
+            </Link>
+          </span>
+        ))}
+      </div>
+    </nav>
       <div className="w-full max-w-3xl bg-gray-200 shadow-lg rounded-2xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Imagen */}
