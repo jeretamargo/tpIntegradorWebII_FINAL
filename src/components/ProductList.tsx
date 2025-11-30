@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import type { Products } from "../api/interfaces/interfaces";
 import ProductCard from "./ProductCard";
 
@@ -7,22 +8,19 @@ interface Props {
 }
 
 export function ProductList({ products }: Props) {
+  const location = useLocation();
   const [catId, setCatId] = useState("");
   const [tagId, setTagId] = useState("");
-  const [searchText, setSearchText] = useState(""); // ← BÚSQUEDA
-  const page = window.location.pathname;
+  const [searchText, setSearchText] = useState(""); // búsqueda
 
+  // Actualiza catId y tagId cada vez que cambian los query params
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const categoria = params.get("cat") ?? "";
-    const tag = params.get("tag") ?? "";
-    setCatId(categoria);
-    setTagId(tag);
-  }, [window.location.search]);
+    const params = new URLSearchParams(location.search);
+    setCatId(params.get("cat") ?? "");
+    setTagId(params.get("tag") ?? "");
+  }, [location.search]);
 
-  // -----------------------------
-  // FILTRO DE BUSQUEDA
-  // -----------------------------
+  // Filtra por texto de búsqueda
   const productosBuscados = products.filter((prod) =>
     prod.title.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -42,9 +40,7 @@ export function ProductList({ products }: Props) {
     );
   }
 
-  // -----------------------------
-  // RENDER POR CATEGORÍA
-  // -----------------------------
+  // Render por categoría
   function renderByCat() {
     const productosFiltrados =
       catId === ""
@@ -54,7 +50,7 @@ export function ProductList({ products }: Props) {
           );
 
     return (
-      <section className="bg-gray-200 ">
+      <section className="bg-gray-200">
         <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 bg-gray-200">
           <header>
             <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
@@ -64,47 +60,36 @@ export function ProductList({ products }: Props) {
 
           {renderSearchBar()}
 
-         <ul className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-  {productosFiltrados.map((producto: Products) => (
-     <li className="w-full sm:w-80 md:w-96 mx-auto" key={producto.id}>
-    <ProductCard
-      key={producto.id}
-      title={producto.title}
-      picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
-      price={producto.price * 1000}
-      description={producto.description}
-      productId={producto.id}
-      tags={producto.tags}
-    />
-    </li>
-  ))}
-</ul>
+          <ul className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {productosFiltrados.map((producto: Products) => (
+              <li className="w-full sm:w-80 md:w-96 mx-auto" key={producto.id}>
+                <ProductCard
+                  title={producto.title}
+                  picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
+                  price={producto.price * 1000}
+                  description={producto.description}
+                  productId={producto.id}
+                  tags={producto.tags}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     );
   }
 
-  // -----------------------------
-  // RENDER POR TAG
-  // -----------------------------
+  // Render por tag
   function renderByTag() {
     const productosTagFiltrados =
       tagId === ""
         ? productosBuscados
-        : productosBuscados.filter((prod) => {
-            if (prod.tags?.length === 1) {
-              return parseInt(tagId) === prod.tags[0].id;
-            }
-            if (prod.tags?.length > 1) {
-              return (
-                parseInt(tagId) === prod.tags[0].id ||
-                parseInt(tagId) === prod.tags[1].id
-              );
-            }
-          });
+        : productosBuscados.filter((prod) =>
+            prod.tags?.some((t) => t.id === parseInt(tagId))
+          );
 
     return (
-      <section className="">
+      <section className="bg-gray-100">
         <div className="m-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 bg-gray-100">
           <header>
             <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
@@ -114,7 +99,7 @@ export function ProductList({ products }: Props) {
 
           {renderSearchBar()}
 
-          <ul className="mt-8 grid gap-4 sm:grid-cols-3 p lg:grid-cols-6 ">
+          <ul className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {productosTagFiltrados.map((producto: Products) => (
               <ProductCard
                 key={producto.id}
@@ -132,9 +117,9 @@ export function ProductList({ products }: Props) {
     );
   }
 
-  // -----------------------------
-  // SELECTOR DE RENDER
-  // -----------------------------
+  // Selector de render según ruta
+  const page = location.pathname;
+
   if (page === "/" || page.endsWith("index.html")) {
     return renderByTag();
   }

@@ -70,8 +70,7 @@ export function Listado() {
 
       {/* Lista de tags igual que home */}
       <TagList tags={tags} />
-      {/* Categorías */}
-      <CategoriesList categorias={categories} />
+     
       {/* Productos */}
       <ProductList products={products} />
 
