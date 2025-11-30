@@ -14,7 +14,7 @@ interface CartContextProps {
   toggleCart: () => void;
   addItem: (item: CartItem) => void;
   removeItem: (item: CartItem) => void;
-
+   openCart: () => void;
   emptyCart: () => void;
 }
 // eslint-disable-next-line react-refresh/only-export-components
@@ -46,7 +46,9 @@ export function CartProvider({ children }: PropsWithChildren) {
   function toggleCart() {
     setIsOpen(!isOpen);
   }
-
+  function openCart() {
+  setIsOpen(true);
+}
   function addItem(item: CartItem) {
     const existing = productos.find((i) => i.id === item.id);
     if (existing) {
@@ -100,6 +102,7 @@ export function CartProvider({ children }: PropsWithChildren) {
         emptyCart: emptyCart,
         toggleCart: toggleCart,
         totalVal: totalVal,
+         openCart: () => setIsOpen(true),
       }}
     >
       {children}

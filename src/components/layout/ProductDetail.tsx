@@ -19,7 +19,7 @@ function ProductDetail({
   productId,
   tags,
 }: Props) {
-  const { addItem } = useContext(CartContext);
+  const { addItem,openCart } = useContext(CartContext);
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-100 p-6">
@@ -81,16 +81,17 @@ function ProductDetail({
 
           {/* Botón agregar al carrito */}
           <button
-            onClick={() =>
+            onClick={() =>{
               addItem({
                 id: productId,
                 name: title,
                 price: price * 1000,
                 picture: `http://161.35.104.211:8000${picture}`,
-              } as CartItem)
-            }
+              } as CartItem);
+                openCart();
+              }}
             className="mt-8 w-full bg-gray-300 rounded-xl p-3 text-gray-800 font-bold
-                       shadow-lg hover:scale-110 transition-all flex justify-center"
+                       shadow-lg hover:scale-110 hover:cursor-pointer transition-all flex justify-center"
           >
             <img
               src="/src/assets/images/add-to-cart-icon.png"
