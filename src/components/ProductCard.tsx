@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import type { CartItem, Tag } from "../api/interfaces/interfaces";
+import { Link } from "react-router-dom";
 interface Props {
   title: string;
   picture: string;
@@ -36,12 +37,12 @@ function ProductCard({
       </button>
       <div className="h-auto sm:min-h-120  w-auto grid grid-cols-2 sm:grid-cols-1 gap-4 rounded-xl  bg-gray-200 shadow-lg px-4 hover:shadow-lg transition">
         <div className=" h-auto overflow-hidden flex items-center justify-center">
-          <a
-            href={`http://localhost:5173/product?product-id=${productId}`}
+          <Link
+            to={`/product/${productId}`} //  cambio aquí
             className="group block overflow-hidden p-4"
           >
-            <img src={picture} alt={title} className="  m-auto rounded-3xl" />
-          </a>
+            <img src={picture} alt={title} className="m-auto rounded-3xl" />
+          </Link>
         </div>
         <div className="pt-10 md:pt-3 flex flex-col sm:grid sm:grid-cols-2  ">
           <div className="  ">
