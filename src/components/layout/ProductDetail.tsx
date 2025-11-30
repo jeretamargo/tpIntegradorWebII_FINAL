@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import type { CartItem, Tag } from "../../api/interfaces/interfaces";
+import type { CartItem, Tag, Category } from "../../api/interfaces/interfaces";
 import { Link } from "react-router";
 
 interface Props {
@@ -9,6 +9,10 @@ interface Props {
   description: string;
   price: number;
   productId: number;
+   category?: {
+    id: number;
+    title: string;
+  };
   tags?: Tag[];
 }
 
@@ -19,6 +23,7 @@ function ProductDetail({
   price,
   productId,
   tags,
+  category,
 }: Props) {
   const { addItem,openCart } = useContext(CartContext);
 
@@ -27,20 +32,36 @@ function ProductDetail({
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
   {/* Breadcrumb de tags */}
       <nav className="mb-4 w-full max-w-3xl text-gray-600 text-sm">
-      <div className="flex flex-wrap gap-1">
-        <Link to="/" className="hover:text-red-700">Home</Link>
-        <span>/</span>
-        <Link to="/productos" className="hover:text-red-700">Productos</Link>
-        {tags && tags.length > 0 && tags.map((tag, index) => (
-          <span key={tag.id} className="flex items-center">
-            <span>/</span>
-            <Link to={`/productos/tag/${tag.id}`} className="hover:text-red-700">
-              {tag.title}
-            </Link>
-          </span>
-        ))}
-      </div>
-    </nav>
+        <div className="flex flex-wrap gap-1 items-center">
+          <Link to="/" className="hover:text-red-700">Home</Link>
+          <span>/</span>
+          <Link to="/list" className="hover:text-red-700">Productos</Link>
+
+          {category && (
+            <>
+              <span>/</span>
+              <Link
+                to={`/list?cat=${category.id}`}
+                className="hover:text-red-700"
+              >
+                {category.title}
+              </Link>
+            </>
+          )}
+
+          {tags && tags.length > 0 && tags.map((tag) => (
+            <span key={tag.id} className="flex items-center">
+              <span>/</span>
+              <Link
+                to={`/?tag=${tag.id}`}
+                className="hover:text-red-700"
+              >
+                {tag.title}
+              </Link>
+            </span>
+          ))}
+        </div>
+      </nav>
       <div className="w-full max-w-3xl bg-gray-200 shadow-lg rounded-2xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Imagen */}
@@ -86,7 +107,7 @@ function ProductDetail({
                     ? "Orgánico"
                     : tag.id === 26
                     ? "Local"
-                    : tag.name}
+                    : tag.title}
                 </span>
               ))}
             </div>

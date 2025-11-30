@@ -17,6 +17,7 @@ interface Props {
   price: number;
   productId: number;
   tags?: Tag[];
+  category?: Category;
 }
 
 function Ficha() {
@@ -60,6 +61,7 @@ function Ficha() {
           price: p.price,
           productId: p.id,
           tags: p.tags,
+           category: p.category,
         });
       } catch (error) {
         console.error(error);
