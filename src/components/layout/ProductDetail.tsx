@@ -35,7 +35,7 @@ function ProductDetail({
         <div className="flex flex-wrap gap-1 items-center">
           <Link to="/" className="hover:text-red-700">Home</Link>
           <span>/</span>
-          <Link to="/list" className="hover:text-red-700">Productos</Link>
+          <p >Productos</p>
 
           {category && (
             <>
@@ -53,11 +53,11 @@ function ProductDetail({
             <span key={tag.id} className="flex items-center">
               <span>/</span>
               <Link
-                to={`/?tag=${tag.id}`}
-                className="hover:text-red-700"
-              >
-                {tag.title}
-              </Link>
+             to={`/tag/${tag.id}`}
+              className="hover:text-red-700"
+            >
+              {tag.title}
+            </Link>
             </span>
           ))}
         </div>

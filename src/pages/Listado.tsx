@@ -80,7 +80,7 @@ export function Listado() {
       <Header categories={categories} />
       <CartView />
       <Carousel />
-
+      <TagList tags={tags} />
       {/* Lista de tags igual que home */}
       <CategoriesList categorias={categories} />
 

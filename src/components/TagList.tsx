@@ -1,5 +1,6 @@
 import React from "react";
 import type { Tag } from "../api/interfaces/interfaces";
+import { Link } from "react-router-dom";
 
 // Importar imágenes directamente
 import ofertaImg from "../assets/images/oferta-WEB.png";
@@ -23,23 +24,23 @@ function TagList({ tags }: Props) {
             else if (tag.id === 26) imgSrc = localImg;
 
             return (
-              <a
-                className="inline-block rounded-sm  text-sm font-medium text-black transition hover:scale-110  px-15"
-                href={`http://localhost:5173/?tag=${tag.id}`}
-                key={tag.id}
-              >
-                <img className="w-40" src={imgSrc} alt={tag.title}></img>
-                <p className="place-self-center flex">{tag.title}</p>
-              </a>
+             <Link
+  to={`/tag/${tag.id}`}
+  className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110 px-15"
+  key={tag.id}
+>
+  <img className="w-40" src={imgSrc} alt={tag.title} />
+  <p className="place-self-center flex">{tag.title}</p>
+</Link>
             );
           })}
-          <a
-            className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110   px-15"
-            href="http://localhost:5173/"
-          >
-            <img className="w-40 " src={todosImg} alt="Mostrar Todo"></img>
-            <p className="place-self-center flex">Mostrar Todo</p>
-          </a>
+         <Link
+  to="/"
+  className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110 px-15"
+>
+  <img className="w-40" src={todosImg} alt="Mostrar Todo" />
+  <p className="place-self-center flex">Mostrar Todo</p>
+</Link>
         </div>
       </section>
     </>
