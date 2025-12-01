@@ -6,6 +6,12 @@ import type { Category } from "../../api/interfaces/interfaces";
 import CategoriesList from "../CategoriesList";
 import { CartContext } from "../../context/CartContext";
 import { SearchContext } from "../../context/SearchContext";
+import { GoogleLogin } from "@react-oauth/google";
+import { AuthContext } from "../../context/AuthContext";
+import {jwtDecode} from "jwt-decode";
+import type {GoogleJwt} from "../../api/interfaces/interfaces"
+import { useGoogleLogin } from "@react-oauth/google";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   categories: Category[];
@@ -16,6 +22,19 @@ function Header({ categories }: Props) {
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { searchText, setSearchText } = useContext(SearchContext);
+   const { user, setUser } = useContext(AuthContext);
+
+   const googleLogin = useGoogleLogin({
+  onSuccess: (cred) => {
+    const decoded = jwtDecode<GoogleJwt>(cred.credential!);
+    setUser({
+      name: decoded.name,
+      email: decoded.email,
+      picture: decoded.picture,
+    });
+  },
+  onError: () => console.log("Error al iniciar sesión"),
+});
 
   return (
     <header className="bg-gray-200 sticky top-0 z-50">
@@ -95,7 +114,22 @@ function Header({ categories }: Props) {
                 </svg>
               </button>
             </div>
-
+           <div>
+  {/* Login */}
+  {user ? (
+    <p className="text-sm text-gray-700">Hola, {user.name}</p>
+  ) : (
+    <button
+      onClick={() => {
+        googleLogin(); // esta función la definimos abajo
+      }}
+      className="flex flex-col items-center gap-1 cursor-pointer"
+    >
+      <UserCircleIcon className="w-10 h-10 text-blue-700" />
+      <span className="text-sm font-medium">Ingresar</span>
+    </button>
+  )}
+</div>
             {/* Carrito */}
             <button className="relative cursor-pointer" onClick={toggleCart}>
               <img src={cartIcon} alt="Cart" className="w-8 cursor-pointer" />
