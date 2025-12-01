@@ -11,6 +11,7 @@ import CRUD from "./pages/CRUD";
 import CrudProvider from "./context/CrudContext";
 import { SearchProvider } from "./context/SearchContext";
 import "flowbite";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/category/:catId" element={<Listado />} />
               <Route path="/product/:idProduct" element={<Ficha />} />
               <Route path="/admin" element={<CRUD />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </CrudProvider>
