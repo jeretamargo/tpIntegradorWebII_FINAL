@@ -4,6 +4,7 @@ import type { Products } from "../api/interfaces/interfaces";
 import ProductCard from "./ProductCard";
 import { SearchContext } from "../context/SearchContext";
 
+
 interface Props {
   products: Products[];
 }

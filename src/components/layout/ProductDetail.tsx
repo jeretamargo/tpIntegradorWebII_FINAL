@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import type { CartItem, Tag, Category } from "../../api/interfaces/interfaces";
 import { Link } from "react-router";
+import RelatedProducts from "../RelatedProducts";
 
 interface Props {
   title: string;
@@ -141,7 +142,10 @@ function ProductDetail({
           </button>
         </div>
       </div>
+      {category && (
+  <RelatedProducts categoryId={category.id}  />)}{/* renderizo RelatedProducts si category ya tiene valor(no es undefined) */}
     </div>
+
   );
 }
 
