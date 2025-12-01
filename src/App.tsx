@@ -20,6 +20,7 @@ function App() {
           <CrudProvider>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/tag/:tagId" element={<Listado />} />
               <Route path="/category/:catId" element={<Listado />} />
               <Route path="/product/:idProduct" element={<Ficha />} />
               <Route path="/admin" element={<CRUD />} />

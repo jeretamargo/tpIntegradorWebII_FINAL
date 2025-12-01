@@ -53,11 +53,11 @@ function ProductDetail({
             <span key={tag.id} className="flex items-center">
               <span>/</span>
               <Link
-                to={`/?tag=${tag.id}`}
-                className="hover:text-red-700"
-              >
-                {tag.title}
-              </Link>
+             to={`/tag/${tag.id}`}
+              className="hover:text-red-700"
+            >
+              {tag.title}
+            </Link>
             </span>
           ))}
         </div>
