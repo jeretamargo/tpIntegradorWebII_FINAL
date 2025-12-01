@@ -39,7 +39,7 @@ function TagList({ tags }: Props) {
   className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110 px-15"
 >
   <img className="w-40" src={todosImg} alt="Mostrar Todo" />
-  <p>Mostrar Todo</p>
+  <p className="place-self-center flex">Mostrar Todo</p>
 </Link>
         </div>
       </section>
