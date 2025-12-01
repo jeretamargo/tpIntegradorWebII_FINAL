@@ -12,6 +12,7 @@ import {jwtDecode} from "jwt-decode";
 import type {GoogleJwt} from "../../api/interfaces/interfaces"
 import { useGoogleLogin } from "@react-oauth/google";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 interface Props {
   categories: Category[];
@@ -24,17 +25,29 @@ function Header({ categories }: Props) {
   const { searchText, setSearchText } = useContext(SearchContext);
    const { user, setUser } = useContext(AuthContext);
 
-   const googleLogin = useGoogleLogin({
-  onSuccess: (cred) => {
-    const decoded = jwtDecode<GoogleJwt>(cred.credential!);
-    setUser({
-      name: decoded.name,
-      email: decoded.email,
-      picture: decoded.picture,
-    });
-  },
-  onError: () => console.log("Error al iniciar sesión"),
-});
+   const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      // Google devuelve tokenResponse.access_token
+      const res = await axios.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        {
+          headers: {
+            Authorization: `Bearer ${tokenResponse.access_token}`,
+          },
+        }
+      );
+
+      const data = res.data;
+
+      setUser({
+        name: data.name,
+        email: data.email,
+        picture: data.picture,
+      });
+    },
+    onError: () => console.log("Error al iniciar sesión"),
+  });
+
 
   return (
     <header className="bg-gray-200 sticky top-0 z-50">
@@ -114,21 +127,27 @@ function Header({ categories }: Props) {
                 </svg>
               </button>
             </div>
+           {/* Login */}
            <div>
-  {/* Login */}
+ 
   {user ? (
-    <p className="text-sm text-gray-700">Hola, {user.name}</p>
-  ) : (
-    <button
-      onClick={() => {
-        googleLogin(); // esta función la definimos abajo
-      }}
-      className="flex flex-col items-center gap-1 cursor-pointer"
-    >
-      <UserCircleIcon className="w-10 h-10 text-blue-700" />
-      <span className="text-sm font-medium">Ingresar</span>
-    </button>
-  )}
+       <button
+          
+          className="flex flex-col items-center gap-1 cursor-pointer"
+        >
+          <UserCircleIcon className="w-10 h-10 text-blue-700" />
+          <p className="text-sm text-gray-700">Hola, {user.name}!</p>
+        </button>
+       
+      ) : (
+        <button
+          onClick={() => login()}
+          className="flex flex-col items-center gap-1 cursor-pointer"
+        >
+          <UserCircleIcon className="w-10 h-10 text-blue-700" />
+          <span className="text-sm font-medium">Ingresar</span>
+        </button>
+      )}
 </div>
             {/* Carrito */}
             <button className="relative cursor-pointer" onClick={toggleCart}>
