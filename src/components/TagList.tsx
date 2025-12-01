@@ -30,7 +30,7 @@ function TagList({ tags }: Props) {
   key={tag.id}
 >
   <img className="w-40" src={imgSrc} alt={tag.title} />
-  <p>{tag.title}</p>
+  <p className="place-self-center flex">{tag.title}</p>
 </Link>
             );
           })}
