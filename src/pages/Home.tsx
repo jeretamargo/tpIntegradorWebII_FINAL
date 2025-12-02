@@ -7,6 +7,7 @@ import type { Products, Tag, Category } from "../api/interfaces/interfaces";
 import cargaGif from "../assets/images/carga.gif";
 import CartView from "../components/CartView";
 import Carousel from "../components/Carousel";
+import Loading from "../components/Loading";
 
 function Home() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
@@ -80,9 +81,12 @@ function Home() {
   if (arrayProducts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
-        <img src={cargaGif} />
-        <p>Cargando Productos</p>
+        <Loading></Loading>
       </div>
+      // <div className="flex flex-col items-center justify-center h-screen">
+      //   <img src={cargaGif} />
+      //   <p>Cargando Productos</p>
+      // </div>
     );
   } else {
     return (

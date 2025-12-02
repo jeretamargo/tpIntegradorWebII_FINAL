@@ -10,6 +10,7 @@ import type { Category, Products, Tag } from "../api/interfaces/interfaces";
 import cargaGif from "../assets/images/carga.gif";
 import CartView from "../components/CartView";
 import { useParams } from "react-router-dom";
+import Loading from "../components/Loading";
 
 interface Props {
   title: string;
@@ -24,7 +25,7 @@ interface Props {
 function Ficha() {
   const { idProduct } = useParams<{ idProduct: string }>();
   const [product, setProduct] = useState<Props | null>(null);
- // const [idProduct] = useSearchParams(); //useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
+  // const [idProduct] = useSearchParams(); //useParams siempre devuelve string o undefined no olvidar que es un metodo ,por eso no funcionaba
   //const idP = idProduct.get("product-id");
   //const id: number = Number(idP);
   console.log(idProduct);
@@ -55,7 +56,7 @@ function Ficha() {
     async function loadProduct() {
       if (!idProduct) return;
       try {
-         const id = parseInt(idProduct);
+        const id = parseInt(idProduct);
         const p = await fetchProductByID(id); //funcion de la carpeta fetch
 
         setProduct({
@@ -65,7 +66,7 @@ function Ficha() {
           price: p.price,
           productId: p.id,
           tags: p.tags,
-           category: p.category,
+          category: p.category,
         });
       } catch (error) {
         console.error(error);
@@ -76,9 +77,13 @@ function Ficha() {
   if (!product) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
-        <img src={cargaGif} />
-        <p>Cargando Productos</p>
+        <Loading></Loading>
       </div>
+
+      // <div className="flex flex-col items-center justify-center h-screen">
+      //   <img src={cargaGif} />
+      //   <p>Cargando Productos</p>
+      // </div>
     );
   } else {
     //... spread operator equivalente a esquibir las props

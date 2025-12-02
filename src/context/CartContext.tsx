@@ -5,6 +5,7 @@ import React, {
   type PropsWithChildren,
 } from "react";
 import type { CartItem } from "../api/interfaces/interfaces";
+import { useNavigate } from "react-router";
 
 interface CartContextProps {
   isOpen: boolean;
@@ -14,7 +15,7 @@ interface CartContextProps {
   toggleCart: () => void;
   addItem: (item: CartItem) => void;
   removeItem: (item: CartItem) => void;
-   openCart: () => void;
+  openCart: () => void;
   emptyCart: () => void;
 }
 // eslint-disable-next-line react-refresh/only-export-components
@@ -25,6 +26,8 @@ export function CartProvider({ children }: PropsWithChildren) {
   const [totalVal, setTotalVal] = useState<number>(0);
   const [totalQuantity, setTotalQuantity] = useState<number>(0);
   const [productos, setProductos] = useState<CartItem[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     calcTotalVal();
@@ -47,8 +50,8 @@ export function CartProvider({ children }: PropsWithChildren) {
     setIsOpen(!isOpen);
   }
   function openCart() {
-  setIsOpen(true);
-}
+    setIsOpen(true);
+  }
   function addItem(item: CartItem) {
     const existing = productos.find((i) => i.id === item.id);
     if (existing) {
@@ -80,6 +83,11 @@ export function CartProvider({ children }: PropsWithChildren) {
   function emptyCart() {
     setProductos([]);
     setTotalQuantity(0);
+    const page = location.pathname;
+
+    if (page === "/checkout") {
+      navigate("/");
+    }
     /* localStorage.setItem("carrito", JSON.stringify([]));
     localStorage.setItem("cant_total", "0"); */
   }
@@ -102,7 +110,7 @@ export function CartProvider({ children }: PropsWithChildren) {
         emptyCart: emptyCart,
         toggleCart: toggleCart,
         totalVal: totalVal,
-         openCart: () => setIsOpen(true),
+        openCart: () => setIsOpen(true),
       }}
     >
       {children}

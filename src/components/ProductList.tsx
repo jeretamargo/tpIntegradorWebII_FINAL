@@ -1,5 +1,5 @@
-import React, { useEffect, useState,useContext } from "react";
-import { useLocation,useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import type { Products } from "../api/interfaces/interfaces";
 import ProductCard from "./ProductCard";
 import { SearchContext } from "../context/SearchContext";
@@ -10,17 +10,18 @@ interface Props {
 }
 
 export function ProductList({ products }: Props) {
-  const location = useLocation();
-   const { catId: paramCatId } = useParams<{ catId: string }>();
-  const { searchText, setSearchText } = useContext(SearchContext);
-  const [catId, setCatId] = useState("");
-  const [tagId, setTagId] = useState("");
+const location = useLocation();
+const { catId: paramCatId, tagId: paramTagId } = useParams();
+const { searchText, setSearchText } = useContext(SearchContext);
+
+const [catId, setCatId] = useState("");
+const [tagId, setTagId] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setCatId(params.get("cat") ?? paramCatId ?? "");
-    setTagId(params.get("tag") ?? "");
-  }, [location.search, paramCatId]);
+    setTagId(params.get("tag") ?? paramTagId ??"");
+  }, [location.search, paramCatId, paramTagId]);
 
   const productosBuscados = products.filter((prod) =>
     prod.title.toLowerCase().includes(searchText.toLowerCase())
@@ -120,5 +121,5 @@ export function ProductList({ products }: Props) {
   if (page === "/" || page.endsWith("index.html")) return renderByTag();
   if (page.startsWith("/category")) return renderByCat();
 
-return renderByTag();
+  return renderByTag();
 }
