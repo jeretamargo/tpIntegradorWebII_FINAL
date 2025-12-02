@@ -10,6 +10,7 @@ import AddButton from "./AddButton";
 import { CrudContext } from "../../context/CrudContext";
 import DeleteWarning from "./DeleteWarning";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import Loading from "../Loading";
 
 {
   /*este codigo es un quilombo barbaro*/
@@ -236,7 +237,13 @@ function Table() {
   {
     /*tabla productos*/
   }
-
+  if (arrayProducts.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <Loading></Loading>
+      </div>
+    );
+  }
   if (ProductTabOpen)
     return (
       <div className=" ">

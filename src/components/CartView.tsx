@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import type { CartItem } from "../api/interfaces/interfaces";
+import { Link, useNavigate } from "react-router-dom";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 function CartView() {
   const {
@@ -13,15 +15,56 @@ function CartView() {
     emptyCart,
     totalVal,
   } = useContext(CartContext);
+  const navigate = useNavigate();
 
+  const notify = () =>
+    toast.error(
+      "Debe agregar almenos 1 elemento a su carrito para continuar con el pago.",
+      {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      }
+    );
+
+  function handleFinalizarCompra() {
+    if (totalQuantity < 1) {
+      notify();
+    } else {
+      navigate("/checkout");
+    }
+  }
   return (
     <>
       <div
         className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-gray-500 z-50 px-4 py-8 transform transition-transform duration-300 ease-in-out
-                    ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
+                    ${
+                      isOpen
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-full opacity-0 pointer-events-none"
+                    }`}
         aria-modal="true"
         role="dialog"
       >
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
         {/* BOTÓN CERRAR */}
         <button
           onClick={toggleCart}
@@ -36,7 +79,11 @@ function CartView() {
             stroke="currentColor"
             className="w-6 h-6"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
 
@@ -45,7 +92,9 @@ function CartView() {
 
         <div className="mt-4 space-y-6 flex flex-col overflow-y-auto overflow-x-hidden max-h-8/12">
           {productos.length === 0 ? (
-            <p className="text-white text-center">No hay productos en el carrito</p>
+            <p className="text-white text-center">
+              No hay productos en el carrito
+            </p>
           ) : (
             productos.map((item) => (
               <li className="list-none flex flex-row text-white" key={item.id}>
@@ -57,7 +106,9 @@ function CartView() {
                   <p className="text-sm col-span-2 mx-2">{item.name}</p>
 
                   <div>
-                    <p className="font-bold text-sm col-span-1">X{item.quantity}</p>
+                    <p className="font-bold text-sm col-span-1">
+                      X{item.quantity}
+                    </p>
                     <p className="font-bold text-green-500 text-sm col-span-1">
                       ${item.price * item.quantity}
                     </p>
@@ -111,9 +162,13 @@ function CartView() {
         </div>
 
         <div className="space-y-4 text-center">
-          <button className="inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-600 cursor-pointer">
+          <button
+            className="inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-600 cursor-pointer"
+            onClick={() => handleFinalizarCompra()}
+          >
             Finalizar Compra
           </button>
+
           <button
             onClick={emptyCart}
             className="inline rounded-sm bg-red-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-red-600 cursor-pointer"

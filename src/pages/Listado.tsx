@@ -9,9 +9,10 @@ import CartView from "../components/CartView";
 import Carousel from "../components/Carousel";
 import CategoriesList from "../components/CategoriesList";
 import { useParams } from "react-router-dom";
+import Loading from "../components/Loading";
 
 export function Listado() {
-   const { catId } = useParams<{ catId: string }>();
+  const { catId } = useParams<{ catId: string }>();
   const [products, setProducts] = useState<Products[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -64,16 +65,18 @@ export function Listado() {
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
-        <img src={cargaGif} />
-        <p>Cargando Productos</p>
+        <Loading></Loading>
       </div>
+      // <div className="flex flex-col items-center justify-center h-screen">
+      //   <img src={cargaGif} />
+      //   <p>Cargando Productos</p>
+      // </div>
     );
   }
 
-   const productosFiltrados = catId
+  const productosFiltrados = catId
     ? products.filter((prod) => prod.category.id === parseInt(catId))
     : products;
-
 
   return (
     <>
@@ -85,7 +88,7 @@ export function Listado() {
       <CategoriesList categorias={categories} />
 
       {/* Productos */}
-      <ProductList products={productosFiltrados}/>
+      <ProductList products={productosFiltrados} />
 
       <Footer />
     </>
