@@ -20,9 +20,9 @@ function Header({ categories }: Props) {
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { searchText, setSearchText } = useContext(SearchContext);
-   const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
-   const login = useGoogleLogin({
+  const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       // Google devuelve tokenResponse.access_token
       const res = await axios.get(
@@ -44,7 +44,6 @@ function Header({ categories }: Props) {
     },
     onError: () => console.log("Error al iniciar sesión"),
   });
-
 
   return (
     <header className="bg-gray-200 sticky top-0 z-50   ">
@@ -124,23 +123,34 @@ function Header({ categories }: Props) {
                 </svg>
               </button>
             </div>
-           {/* Login */}
-                        <div>
-              
-                          {user ? (
-                          <button className="flex  items-center gap-1 cursor-pointer">
-                          <UserCircleIcon className="w-10 h-10 text-blue-700" />
-                          <p className="text-sm text-gray-700 whitespace-nowrap">Hola, {user.name}!</p>
-                            </button>) : (
-                            <button
-                              onClick={() => login()}
-                              className="flex flex-col items-center gap-1 cursor-pointer"
-                            >
-                              <UserCircleIcon className="w-10 h-10 text-blue-700" />
-                              <span className="text-sm font-medium">Ingresar</span>
-                            </button>
-                    )}
-              </div>
+            {/* Login */}
+            <div>
+              {user ? (
+                <button className="flex  items-center gap-1 cursor-pointer">
+                  <UserCircleIcon className="w-10 h-10 text-blue-700" />
+                  <p className="text-sm text-gray-700 whitespace-nowrap">
+                    Hola, {user.name}!
+                  </p>
+                </button>
+              ) : (
+                <button
+                  onClick={() => login()}
+                  className="flex flex-col items-center gap-1 cursor-pointer"
+                >
+                  <UserCircleIcon className="w-10 h-10 text-blue-700" />
+                  <span className="text-sm font-medium">Ingresar</span>
+                </button>
+              )}
+            </div>
+
+            <div>
+              <Link to="/admin">
+                <button className=" not-sm:hidden    inline-block rounded-sm bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl">
+                  Admin
+                </button>
+              </Link>
+            </div>
+
             {/* Carrito */}
             <button
               className="relative cursor-pointer flex-shrink-0 flex"
