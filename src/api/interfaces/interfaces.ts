@@ -56,7 +56,7 @@ export interface ProdFormFields {
   title: string;
   description: string;
   image: File;
-  tag_ids?: number[];
+  tag_ids?: (string | number)[];
   category_id: number;
   price: number;
 }

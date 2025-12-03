@@ -24,23 +24,23 @@ function TagList({ tags }: Props) {
             else if (tag.id === 26) imgSrc = localImg;
 
             return (
-             <Link
-  to={`/tag/${tag.id}`}
-  className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110 px-15"
-  key={tag.id}
->
-  <img className="w-40" src={imgSrc} alt={tag.title} />
-  <p className="place-self-center flex">{tag.title}</p>
-</Link>
+              <Link
+                to={`/tag/${tag.id}`}
+                className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110 px-15"
+                key={tag.id}
+              >
+                <img className="w-40" src={imgSrc} alt={tag.title} />
+                <p className="place-self-center flex">{tag.title}</p>
+              </Link>
             );
           })}
-         <Link
-  to="/"
-  className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110 px-15"
->
-  <img className="w-40" src={todosImg} alt="Mostrar Todo" />
-  <p className="place-self-center flex">Mostrar Todo</p>
-</Link>
+          <Link
+            to="/"
+            className="inline-block rounded-sm text-sm font-medium text-black transition hover:scale-110 px-15"
+          >
+            <img className="w-40" src={todosImg} alt="Mostrar Todo" />
+            <p className="place-self-center flex">Mostrar Todo</p>
+          </Link>
         </div>
       </section>
     </>

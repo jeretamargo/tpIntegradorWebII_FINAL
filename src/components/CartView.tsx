@@ -161,9 +161,9 @@ function CartView() {
           </span>
         </div>
 
-        <div className="space-y-4 text-center">
+        <div className="space-y-4 text-center ">
           <button
-            className="inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-600 cursor-pointer"
+            className="inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-600 cursor-pointer gap-2"
             onClick={() => handleFinalizarCompra()}
           >
             Finalizar Compra

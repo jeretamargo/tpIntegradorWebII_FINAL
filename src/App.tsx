@@ -12,6 +12,7 @@ import CrudProvider from "./context/CrudContext";
 import { SearchProvider } from "./context/SearchContext";
 import "flowbite";
 import Checkout from "./pages/Checkout";
+import { PaginationProvider } from "./context/PaginationContext";
 
 function App() {
   return (
@@ -19,15 +20,17 @@ function App() {
       <SearchProvider>
         <CartProvider>
           <CrudProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/tag/:tagId" element={<Listado />} />
-              <Route path="/category/:catId" element={<Listado />} />
-              <Route path="/product/:idProduct" element={<Ficha />} />
-              <Route path="/admin" element={<CRUD />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <PaginationProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/tag/:tagId" element={<Listado />} />
+                <Route path="/category/:catId" element={<Listado />} />
+                <Route path="/product/:idProduct" element={<Ficha />} />
+                <Route path="/admin" element={<CRUD />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </PaginationProvider>
           </CrudProvider>
         </CartProvider>
       </SearchProvider>

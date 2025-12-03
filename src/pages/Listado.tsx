@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { ProductList } from "../components/ProductList";
@@ -10,6 +10,8 @@ import Carousel from "../components/Carousel";
 import CategoriesList from "../components/CategoriesList";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
+import { PaginationContext } from "../context/PaginationContext";
+import Pagination from "../components/Pagination";
 
 export function Listado() {
   const { catId } = useParams<{ catId: string }>();
@@ -82,8 +84,8 @@ export function Listado() {
     <>
       <Header categories={categories} />
       <CartView />
-      <Carousel />
 
+      <TagList tags={tags} />
       {/* Lista de tags igual que home */}
       <CategoriesList categorias={categories} />
 

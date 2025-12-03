@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { ProductList } from "../components/ProductList";
@@ -8,11 +8,14 @@ import cargaGif from "../assets/images/carga.gif";
 import CartView from "../components/CartView";
 import Carousel from "../components/Carousel";
 import Loading from "../components/Loading";
+import Pagination from "../components/Pagination";
+import { PaginationContext } from "../context/PaginationContext";
 
 function Home() {
   const [arrayProducts, setProducts] = useState<Products[]>([]);
   const [arrayTags, setTags] = useState<Tag[]>([]);
   const [arrayCategories, setCategories] = useState<Category[]>([]);
+  const { pagination } = useContext(PaginationContext);
 
   useEffect(() => {
     async function fetchCategories(): Promise<Category[]> {
@@ -57,12 +60,15 @@ function Home() {
 
     async function fetchProducts(): Promise<Products[]> {
       try {
-        const res = await fetch(`http://161.35.104.211:8000/products/`, {
-          headers: {
-            accept: "application/json",
-            Authorization: "Bearer jeremias01",
-          },
-        });
+        const res = await fetch(
+          `http://161.35.104.211:8000/products/${pagination}`,
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: "Bearer jeremias01",
+            },
+          }
+        );
 
         const data = await res.json();
         return data;
@@ -76,7 +82,7 @@ function Home() {
     fetchProducts()
       .then((products) => setProducts(products))
       .catch((err) => console.error(err));
-  }, []);
+  }, [pagination]);
 
   if (arrayProducts.length === 0) {
     return (
@@ -98,7 +104,10 @@ function Home() {
         <TagList tags={arrayTags}></TagList>
         <div className=" ">
           <ProductList products={arrayProducts}></ProductList>
+
+          <Pagination></Pagination>
         </div>
+
         <Footer></Footer>
       </>
     );

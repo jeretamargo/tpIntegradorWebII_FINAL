@@ -11,6 +11,8 @@ import { CrudContext } from "../../context/CrudContext";
 import DeleteWarning from "./DeleteWarning";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import Loading from "../Loading";
+import { PaginationContext } from "../../context/PaginationContext";
+import Pagination from "../Pagination";
 
 {
   /*este codigo es un quilombo barbaro*/
@@ -37,22 +39,21 @@ function Table() {
       category_id: Number(product.category_id),
       /* tag_ids: product.tag_ids?.map((tag) => Number(tag)) ?? [], */
 
-      tag_ids: product.tag_ids
-        ? product.tag_ids?.map((tag) => Number(tag))
-        : [],
+      tag_ids: product.tag_ids ? product.tag_ids.map((tag) => Number(tag)) : [],
     };
 
     uploadProduct(parsedProduct);
   };
 
   const onProdEditSubmit: SubmitHandler<ProdFormFields> = (product) => {
+    const rawTags = product.tag_ids ?? product["tag_ids"] ?? [];
     const parsedProduct = {
       ...product,
       price: Number(product.price),
       category_id: Number(product.category_id),
-      tag_ids: product.tag_ids
-        ? product.tag_ids?.map((tag) => Number(tag))
-        : [],
+      tag_ids: Array.isArray(rawTags)
+        ? rawTags.map((t) => Number(t))
+        : [Number(rawTags)],
     };
 
     updateProduct(parsedProduct);
@@ -162,6 +163,7 @@ function Table() {
     uploadTag,
   } = useContext(CrudContext);
 
+  const { pagination } = useContext(PaginationContext);
   {
     /*fetchs*/
   }
@@ -209,12 +211,15 @@ function Table() {
 
     async function fetchProducts(): Promise<Products[]> {
       try {
-        const res = await fetch(`http://161.35.104.211:8000/products/`, {
-          headers: {
-            accept: "application/json",
-            Authorization: "Bearer jeremias01",
-          },
-        });
+        const res = await fetch(
+          `http://161.35.104.211:8000/products/${pagination}`,
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: "Bearer jeremias01",
+            },
+          }
+        );
 
         const data = await res.json();
         return data;
@@ -228,7 +233,7 @@ function Table() {
     fetchProducts()
       .then((products) => setProducts(products))
       .catch((err) => console.error(err));
-  }, [editingProd, editingCat, editingTag]);
+  }, [editingProd, editingCat, editingTag, pagination]);
 
   {
     /*empieza el render del componente tabla*/
@@ -321,11 +326,11 @@ function Table() {
                         <div key={tag.id}>
                           <input
                             type="checkbox"
-                            id={tag.title}
+                            id={`tag_${tag.id}`}
                             value={tag.id}
                             {...registerProd("tag_ids")}
                           ></input>
-                          <label form="vehicle1"> {tag.title}</label>
+                          <label htmlFor={`tag_${tag.id}`}>{tag.title}</label>
                         </div>
                       );
                     })}
@@ -425,14 +430,17 @@ function Table() {
                             <div key={tag.id}>
                               <input
                                 type="checkbox"
-                                id={tag.title}
-                                defaultValue={tag.id}
-                                defaultChecked={product.tags?.some(
-                                  (prodTag) => prodTag.id === tag.id
-                                )}
+                                value={tag.id}
                                 {...registerProd("tag_ids")}
-                              ></input>
-                              <label form={tag.title}> {tag.title}</label>
+                                checked={product.tags?.some(
+                                  (t) => t.id === tag.id
+                                )}
+                                onChange={() => {}} // evitar controlled-to-uncontrolled warnings
+                              />
+
+                              <label htmlFor={`tag_${tag.id}`}>
+                                {tag.title}
+                              </label>
                             </div>
                           );
                         })}
@@ -559,6 +567,7 @@ function Table() {
             </tbody>
           </table>
         </div>
+        <Pagination></Pagination>
       </div>
     );
 
@@ -676,7 +685,7 @@ function Table() {
                         ></textarea>
                       </td>
                       <td className="px-6 py-4">
-                        <label className="block mb-2.5 text-sm text-gray-400 font-medium text-heading">
+                        <label className="block mb-2.5 text-sm text-gray-400 font-medium ">
                           No es posible editar la imagen
                         </label>
                         {/*  <input
