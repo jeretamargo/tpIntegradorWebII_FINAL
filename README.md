@@ -48,6 +48,49 @@ Incluye estilos con Tailwind CSS y herramientas modernas del ecosistema JavaScri
 Está pensado para ser escalable, modular y fácil de mantener.
 
 <br>
+## Demostración
+
+A continuación se muestran las principales funcionalidades del proyecto a través de capturas animadas.
+
+---
+
+### Página principal y barra de búsqueda
+
+En la vista inicial se muestran los productos destacados y la barra de búsqueda, que permite filtrar resultados en tiempo real según el texto ingresado por el usuario.
+
+<img src="./src/assets/images/busqueda.gif" width="700">
+
+---
+
+### Sección de categorías
+
+La sección de categorías organiza los productos por tipo, permitiendo una navegación más clara y rápida dentro del catálogo.
+
+<img src="./src/assets/images/categoria.gif" width="700">
+
+---
+
+### Detalle de producto, carrito y productos sugeridos
+
+Al seleccionar un producto se accede a su vista de detalle, donde se puede:
+
+- Ver información completa del artículo  
+- Agregarlo al carrito  
+- Ver recomendaciones en el carrusel de productos sugeridos  
+
+<img src="./src/assets/images/product-detail.gif" width="700">
+
+---
+
+### Inicio de sesión y proceso de compra
+
+El usuario puede autenticarse mediante Google para continuar su experiencia.  
+Una vez logueado, desde el carrito es posible acceder al checkout desde el botón “Finalizar compra”.
+
+<img src="./src/assets/images/login.gif" width="700">
+
+---
+
 
 <h2>Tecnologías Utilizadas</h2>
 
