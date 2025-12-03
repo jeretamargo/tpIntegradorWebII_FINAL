@@ -6,8 +6,6 @@ function Pagination() {
     useContext(PaginationContext);
 
   useEffect(() => {
-    const page = location.pathname;
-
     getProdsQuantity();
   });
   return (

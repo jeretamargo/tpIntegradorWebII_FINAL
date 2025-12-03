@@ -6,7 +6,7 @@ function Tabs() {
   const { ToggleTab, ProductTabOpen, CategorieTabOpen, TagTabOpen } =
     useContext(CrudContext);
   return (
-    <div className=" flex not-md:justify-self-center">
+    <div className=" flex not-md:justify-self-center md:ml-30">
       <ul className=" flex  text-sm font-medium text-center text-black  border-gray-400 ">
         <li className="me-2">
           <button

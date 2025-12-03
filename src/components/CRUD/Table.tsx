@@ -251,9 +251,9 @@ function Table() {
   }
   if (ProductTabOpen)
     return (
-      <div className="  ">
+      <div className="flex  justify-center  ">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
-          <table className="w-full text-sm text-left rtl:text-right text-black  ">
+          <table className="w-auto text-sm text-left rtl:text-right text-black  ">
             <thead className="text-xs text-black uppercase bg-gray-50 ">
               <tr>
                 <th scope="col" className="px-6 py-3 ">
@@ -492,6 +492,7 @@ function Table() {
                     </tr>
                   );
                 }
+
                 return (
                   <tr
                     className="odd:bg-white even:bg-gray-200 border-b  border-gray-200"
@@ -566,8 +567,8 @@ function Table() {
               })}
             </tbody>
           </table>
+          <Pagination></Pagination>;
         </div>
-        <Pagination></Pagination>
       </div>
     );
 
@@ -576,9 +577,9 @@ function Table() {
   }
   if (CategorieTabOpen)
     return (
-      <div className="">
+      <div className="flex justify-center">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left rtl:text-right text-black whitespace-normal">
+          <table className="w-250 not-sm:w-auto text-sm text-left rtl:text-right text-black whitespace-normal">
             <thead className="text-xs text-black uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3 ">
@@ -775,9 +776,9 @@ function Table() {
     );
   if (TagTabOpen) {
     return (
-      <div className=" md:mx-40 ">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
-          <table className="w-full text-sm text-left rtl:text-right text-black ">
+      <div className="flex justify-center">
+        <div className="relative  overflow-x-auto shadow-md sm:rounded-lg  ">
+          <table className="w-150 not-sm:w-auto text-sm text-center rtl:text-right text-black ">
             <thead className="text-xs text-black uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3 ">
