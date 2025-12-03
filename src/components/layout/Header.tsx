@@ -6,10 +6,7 @@ import type { Category } from "../../api/interfaces/interfaces";
 import CategoriesList from "../CategoriesList";
 import { CartContext } from "../../context/CartContext";
 import { SearchContext } from "../../context/SearchContext";
-import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "../../context/AuthContext";
-import {jwtDecode} from "jwt-decode";
-import type {GoogleJwt} from "../../api/interfaces/interfaces"
 import { useGoogleLogin } from "@react-oauth/google";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
@@ -128,27 +125,22 @@ function Header({ categories }: Props) {
               </button>
             </div>
            {/* Login */}
-           <div>
- 
-  {user ? (
-       <button
-          
-          className="flex flex-col items-center gap-1 cursor-pointer"
-        >
-          <UserCircleIcon className="w-10 h-10 text-blue-700" />
-          <p className="text-sm text-gray-700">Hola, {user.name}!</p>
-        </button>
-       
-      ) : (
-        <button
-          onClick={() => login()}
-          className="flex flex-col items-center gap-1 cursor-pointer"
-        >
-          <UserCircleIcon className="w-10 h-10 text-blue-700" />
-          <span className="text-sm font-medium">Ingresar</span>
-        </button>
-      )}
-</div>
+                        <div>
+              
+                          {user ? (
+                          <button className="flex  items-center gap-1 cursor-pointer">
+                          <UserCircleIcon className="w-10 h-10 text-blue-700" />
+                          <p className="text-sm text-gray-700 whitespace-nowrap">Hola, {user.name}!</p>
+                            </button>) : (
+                            <button
+                              onClick={() => login()}
+                              className="flex flex-col items-center gap-1 cursor-pointer"
+                            >
+                              <UserCircleIcon className="w-10 h-10 text-blue-700" />
+                              <span className="text-sm font-medium">Ingresar</span>
+                            </button>
+                    )}
+              </div>
             {/* Carrito */}
             <button
               className="relative cursor-pointer flex-shrink-0 flex"
