@@ -6,6 +6,10 @@ import type { Category } from "../../api/interfaces/interfaces";
 import CategoriesList from "../CategoriesList";
 import { CartContext } from "../../context/CartContext";
 import { SearchContext } from "../../context/SearchContext";
+import { AuthContext } from "../../context/AuthContext";
+import { useGoogleLogin } from "@react-oauth/google";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 interface Props {
   categories: Category[];
@@ -16,6 +20,31 @@ function Header({ categories }: Props) {
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { searchText, setSearchText } = useContext(SearchContext);
+   const { user, setUser } = useContext(AuthContext);
+
+   const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      // Google devuelve tokenResponse.access_token
+      const res = await axios.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        {
+          headers: {
+            Authorization: `Bearer ${tokenResponse.access_token}`,
+          },
+        }
+      );
+
+      const data = res.data;
+
+      setUser({
+        name: data.name,
+        email: data.email,
+        picture: data.picture,
+      });
+    },
+    onError: () => console.log("Error al iniciar sesión"),
+  });
+
 
   return (
     <header className="bg-gray-200 sticky top-0 z-50   ">
@@ -95,7 +124,23 @@ function Header({ categories }: Props) {
                 </svg>
               </button>
             </div>
-
+           {/* Login */}
+                        <div>
+              
+                          {user ? (
+                          <button className="flex  items-center gap-1 cursor-pointer">
+                          <UserCircleIcon className="w-10 h-10 text-blue-700" />
+                          <p className="text-sm text-gray-700 whitespace-nowrap">Hola, {user.name}!</p>
+                            </button>) : (
+                            <button
+                              onClick={() => login()}
+                              className="flex flex-col items-center gap-1 cursor-pointer"
+                            >
+                              <UserCircleIcon className="w-10 h-10 text-blue-700" />
+                              <span className="text-sm font-medium">Ingresar</span>
+                            </button>
+                    )}
+              </div>
             {/* Carrito */}
             <button
               className="relative cursor-pointer flex-shrink-0 flex"

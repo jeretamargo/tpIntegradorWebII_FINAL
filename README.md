@@ -1,75 +1,165 @@
-# React + TypeScript + Vite
+<h1 align="center">React Supermarket</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+Aplicación web desarrollada con React, Vite y Tailwind CSS para la Tecnicatura en Desarrollo de Aplicaciones de la Universidad Nacional de Tierra del Fuego<br>
+Estructura modular, componentes reutilizables y enrutamiento con React Router.
+</p>
 
-Currently, two official plugins are available:
+<hr>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h2>Integrantes y Roles</h2>
 
-## React Compiler
+<table>
+  <tr>
+    <th>Integrante</th>
+    <th>Rol</th>
+  </tr>
+  <tr>
+    <td>Jeremias Tamargo</td>
+    <td>
+    Diseño completo de la interfaz en Figma.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Implementación del CRUD principal del sitio.
 
-Note: This will impact Vite dev & build performances.
+Desarrollo del carrito de compras.
 
-## Expanding the ESLint configuration
+Construcción de varios componentes del frontend y estructura general del proyecto.</td>
+  </tr>
+  <tr>
+    <td>Abigail Gómez</td>
+    <td>
+      Refactorización y limpieza del código para mejorar organización y mantenibilidad.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+  Implementación de la barra de búsqueda con filtrado dinámico.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Desarrollo de la vista de detalle de producto.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Integración del sistema de login social.</td>
+  </tr>
+ 
+</table>
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+<br>
+
+<h2>Descripción General</h2>
+
+El proyecto consiste en una aplicación web construida con React utilizando componentes, hooks y navegación entre vistas.<br>
+Incluye estilos con Tailwind CSS y herramientas modernas del ecosistema JavaScript.<br>
+Está pensado para ser escalable, modular y fácil de mantener.
+
+<br>
+## Demostración
+
+A continuación se muestran las principales funcionalidades del proyecto a través de capturas animadas.
+
+---
+
+### Página principal y barra de búsqueda
+
+En la vista inicial se muestran los productos destacados y la barra de búsqueda, que permite filtrar resultados en tiempo real según el texto ingresado por el usuario.
+
+<img src="./src/assets/images/busqueda.gif" width="700">
+
+---
+
+### Sección de categorías
+
+La sección de categorías organiza los productos por tipo, permitiendo una navegación más clara y rápida dentro del catálogo.
+
+<img src="./src/assets/images/categoria.gif" width="700">
+
+---
+
+### Detalle de producto, carrito y productos sugeridos
+
+Al seleccionar un producto se accede a su vista de detalle, donde se puede:
+
+- Ver información completa del artículo  
+- Agregarlo al carrito  
+- Ver recomendaciones en el carrusel de productos sugeridos  
+
+<img src="./src/assets/images/product-detail.gif" width="700">
+
+---
+
+### Inicio de sesión y proceso de compra
+
+El usuario puede autenticarse mediante Google para continuar su experiencia.  
+Una vez logueado, desde el carrito es posible acceder al checkout desde el botón “Finalizar compra”.
+
+<img src="./src/assets/images/login.gif" width="700">
+
+---
+
+
+<h2>Tecnologías Utilizadas</h2>
+
+- React<br>
+- Vite<br>
+- Tailwind CSS<br>
+- React Router DOM<br>
+- Axios <br>
+- TypeScript
+
+<br>
+
+<h2>Requisitos Previos</h2>
+
+Asegurarse de tener instalado:
+
+- Node.js <br>
+- npm o yarn
+
+<br>
+
+<h2>Instalación y Ejecución en Local</h2>
+
+1. Clonar el repositorio  
+git clone https://github.com/jeretamargo/tpIntegradorWebII_FINAL.git
+
+2. Ingresar al proyecto  
+cd nombre-del-repo
+
+3. Instalar dependencias  
+npm install
+
+4. Ejecutar el entorno de desarrollo  
+npm run dev
+
+Abrir en el navegador:<br>
+http://localhost:5173
+
+<br>
+
+<h2>Dependencias Principales</h2>
+
+Revisar `package.json` para verlas todas. Ejemplo:
+
+"dependencies": {
+"react": "...",
+"react-dom": "...",
+"react-router-dom": "...",
+"axios": "...",
+"tailwindcss": "..."
+}
+
+<h2>Estructura del Proyecto</h2>
+
+```src/
+ ├─ api/           # Funciones para consumir datos o manejar servicios externos
+ ├─ assets/        # Imágenes, íconos, fuentes y recursos estáticos
+ ├─ components/    # Componentes reutilizables de la interfaz
+ ├─ context/       # Context API para manejo de estado global
+ ├─ pages/         # Vistas principales del sitio (rutas)
+ ├─ styles/        # Estilos globales, configuraciones o archivos CSS/Tailwind extra
+ ├─ App.jsx        # Configuración de rutas y estructura general
+ └─ main.jsx       # Punto de entrada del proyecto con React y Vite
 ```
+<br>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+<h2>Estado del Proyecto</h2>
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Proyecto terminado, sin embargo se pueden seguir agregando funcionalidades, optimizaciones y nuevas vistas.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<hr>
+
