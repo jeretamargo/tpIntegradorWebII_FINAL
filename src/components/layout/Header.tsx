@@ -50,14 +50,18 @@ function Header({ categories }: Props) {
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8   xl:justify-items-center gap-50 ">
         <div className="flex h-20 items-center  justify-items-center  place-content-around">
           {/* Logo */}
-          <div className="flex-1 md:flex md:items-center md:gap-12 max-h-20 items-center xl:mr-25">
+          <div className="flex-1 md:flex md:items-center md:gap-12 max-h-20 items-center xl:mr-25  not-sm:mr-10">
             <Link to="/">
               <span className="sr-only">Home</span>
-              <img src={logo} className="max-h-20 max-w-48" alt="Logo" />
+              <img
+                src={logo}
+                className="max-h-20 max-w-48 not-sm:h-15"
+                alt="Logo"
+              />
             </Link>
           </div>
           {/* Barra de búsqueda desktop */}
-          <div className="hidden md:block md:flex-1 md:mx-4 ">
+          <div className="hidden  lg:block md:flex-1 md:mx-4 ">
             <input
               type="text"
               placeholder="Buscá tu producto"
@@ -67,7 +71,7 @@ function Header({ categories }: Props) {
             />
           </div>
           {/* Menú + Carrito */}
-          <div className="flex items-center gap-4 xl:ml-25">
+          <div className="flex items-center gap-2 xl:ml-25">
             {/* Categorías (desktop) */}
             <div className="hidden md:relative md:block">
               <button
@@ -127,8 +131,8 @@ function Header({ categories }: Props) {
             <div>
               {user ? (
                 <button className="flex  items-center gap-1 cursor-pointer">
-                  <UserCircleIcon className="w-10 h-10 text-blue-700" />
-                  <p className="text-sm text-gray-700 whitespace-nowrap">
+                  <UserCircleIcon className="not-sm:hidden w-10 h-10 text-blue-700" />
+                  <p className="text-sm text-gray-700 md:whitespace-nowrap wrap-break-word">
                     Hola, {user.name}!
                   </p>
                 </button>
@@ -156,7 +160,7 @@ function Header({ categories }: Props) {
               className="relative cursor-pointer flex-shrink-0 flex"
               onClick={toggleCart}
             >
-              <img src={cartIcon} alt="Cart" className="w-10 cursor-pointer" />
+              <img src={cartIcon} alt="Cart" className="w-10 cursor-pointer " />
               <span className="text-center absolute bottom-0 right-0 z-10 bg-red-600/90 rounded-full h-5 w-5 text-white text-xs flex items-center justify-center">
                 {totalQuantity}
               </span>

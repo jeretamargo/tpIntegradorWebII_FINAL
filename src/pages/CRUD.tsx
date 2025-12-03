@@ -11,6 +11,7 @@ function CRUD() {
   return (
     <div>
       <Header categories={[]}></Header>
+      <AddButton></AddButton>
       <Tabs></Tabs>
       <Table></Table>
       <Footer></Footer>

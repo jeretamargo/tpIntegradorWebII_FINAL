@@ -26,13 +26,13 @@ function AddButton() {
   }
   return (
     <div
-      className=" mx-2 flex z-10 hover:scale-110 transition-all rounded-2xl "
+      className=" fixed bottom-8 right-8 bg-white text-white p-4 rounded-full shadow-lg z-50 transition-transform hover:scale-110  "
       onClick={() => handleClickAdd()}
     >
       <button className=" cursor-pointer ">
         <img
           src="src/assets/images/add-crud.png "
-          className="flex w-15 place-self-end  self-end cursor-pointer  "
+          className=" h-auto  max-h-10 overflow-x-auto "
         ></img>
       </button>
     </div>

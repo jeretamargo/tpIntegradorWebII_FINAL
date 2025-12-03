@@ -6,8 +6,8 @@ function Tabs() {
   const { ToggleTab, ProductTabOpen, CategorieTabOpen, TagTabOpen } =
     useContext(CrudContext);
   return (
-    <div className=" flex justify-between">
-      <ul className=" flex  text-sm font-medium text-center text-black  border-gray-400 mx-30">
+    <div className=" flex not-md:justify-self-center">
+      <ul className=" flex  text-sm font-medium text-center text-black  border-gray-400 ">
         <li className="me-2">
           <button
             className={`inline-block p-4 rounded-t-lg active cursor-pointer ${
@@ -44,7 +44,6 @@ function Tabs() {
             Tags
           </button>
         </li>
-        <AddButton></AddButton>
       </ul>
     </div>
   );

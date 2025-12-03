@@ -1,11 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { PaginationContext } from "../context/PaginationContext";
-import { useParams } from "react-router-dom";
 
 function Pagination() {
   const { changePage, prodsQuantity, getProdsQuantity, selectedPage } =
     useContext(PaginationContext);
-  const params = useParams();
 
   useEffect(() => {
     const page = location.pathname;
@@ -13,7 +11,7 @@ function Pagination() {
     getProdsQuantity();
   });
   return (
-    <ul className="flex justify-center gap-1 text-gray-900">
+    <ul className="flex justify-center gap-1 text-gray-900 mt-2">
       {Array.from({ length: prodsQuantity }).map((_, index) => (
         <li>
           <button

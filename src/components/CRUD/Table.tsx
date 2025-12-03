@@ -251,33 +251,33 @@ function Table() {
   }
   if (ProductTabOpen)
     return (
-      <div className=" ">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
+      <div className="  ">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
           <table className="w-full text-sm text-left rtl:text-right text-black  ">
-            <thead className="text-xs text-black uppercase bg-gray-50">
+            <thead className="text-xs text-black uppercase bg-gray-50 ">
               <tr>
                 <th scope="col" className="px-6 py-3 ">
                   Producto
                 </th>
-                <th scope="col" className="px-6 py-3 ">
+                <th scope="col" className="px-6 py-3  ">
                   Descripción
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Imagen
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                   ID
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                   Tag
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                   Categoría
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                   Precio
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                   Acciones
                 </th>
               </tr>
@@ -435,7 +435,7 @@ function Table() {
                                 checked={product.tags?.some(
                                   (t) => t.id === tag.id
                                 )}
-                                onChange={() => {}} // evitar controlled-to-uncontrolled warnings
+                                onChange={() => {}}
                               />
 
                               <label htmlFor={`tag_${tag.id}`}>
@@ -502,7 +502,7 @@ function Table() {
                     <td className="px-6 py-4 w-50">
                       <img
                         src={`http://161.35.104.211:8000${product.pictures[0]}`}
-                        className="object-contain  h-28 w-28 m-auto"
+                        className="object-contain rounded-lg h-28 w-28 m-auto"
                       />
                     </td>
                     <td className="px-6 py-4 w-10">{product.id}</td>
@@ -576,7 +576,7 @@ function Table() {
   }
   if (CategorieTabOpen)
     return (
-      <div>
+      <div className="">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-black whitespace-normal">
             <thead className="text-xs text-black uppercase bg-gray-50">
@@ -775,8 +775,8 @@ function Table() {
     );
   if (TagTabOpen) {
     return (
-      <div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+      <div className=" md:mx-40 ">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
           <table className="w-full text-sm text-left rtl:text-right text-black ">
             <thead className="text-xs text-black uppercase bg-gray-50">
               <tr>

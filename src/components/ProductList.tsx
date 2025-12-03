@@ -4,23 +4,22 @@ import type { Products } from "../api/interfaces/interfaces";
 import ProductCard from "./ProductCard";
 import { SearchContext } from "../context/SearchContext";
 
-
 interface Props {
   products: Products[];
 }
 
 export function ProductList({ products }: Props) {
-const location = useLocation();
-const { catId: paramCatId, tagId: paramTagId } = useParams();
-const { searchText, setSearchText } = useContext(SearchContext);
+  const location = useLocation();
+  const { catId: paramCatId, tagId: paramTagId } = useParams();
+  const { searchText, setSearchText } = useContext(SearchContext);
 
-const [catId, setCatId] = useState("");
-const [tagId, setTagId] = useState("");
+  const [catId, setCatId] = useState("");
+  const [tagId, setTagId] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setCatId(params.get("cat") ?? paramCatId ?? "");
-    setTagId(params.get("tag") ?? paramTagId ??"");
+    setTagId(params.get("tag") ?? paramTagId ?? "");
   }, [location.search, paramCatId, paramTagId]);
 
   const productosBuscados = products.filter((prod) =>
@@ -30,7 +29,7 @@ const [tagId, setTagId] = useState("");
   // Barra de búsqueda mobile
   function renderSearchBar() {
     return (
-      <div className="w-full max-w-xl mx-auto mt-4 block md:hidden">
+      <div className="w-full max-w-xl mx-auto mt-4 block lg:hidden">
         <input
           type="text"
           placeholder="Buscar productos..."
