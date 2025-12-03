@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo-nuevo.png";
 import cartIcon from "../../assets/images/carro.png";
@@ -10,6 +10,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { useGoogleLogin } from "@react-oauth/google";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
+import { CrudContext } from "../../context/CrudContext";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   categories: Category[];
@@ -19,8 +21,22 @@ function Header({ categories }: Props) {
   const { totalQuantity, toggleCart } = useContext(CartContext);
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [isCrudOpen, setIsCrudOpen] = useState(false);
   const { searchText, setSearchText } = useContext(SearchContext);
   const { user, setUser } = useContext(AuthContext);
+  const location = useLocation();
+
+  useContext(CrudContext);
+
+  useEffect(() => {
+    const page = window.location.pathname;
+
+    if (page === "/admin") {
+      setIsCrudOpen(true);
+    } else {
+      setIsCrudOpen(false);
+    }
+  }, [location.pathname]);
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -61,7 +77,11 @@ function Header({ categories }: Props) {
             </Link>
           </div>
           {/* Barra de búsqueda desktop */}
-          <div className="hidden  lg:block md:flex-1 md:mx-4 ">
+          <div
+            className={`${
+              isCrudOpen ? "hidden" : ""
+            }hidden  lg:block md:flex-1 md:mx-4 `}
+          >
             <input
               type="text"
               placeholder="Buscá tu producto"
@@ -73,7 +93,11 @@ function Header({ categories }: Props) {
           {/* Menú + Carrito */}
           <div className="flex items-center gap-2 xl:ml-25">
             {/* Categorías (desktop) */}
-            <div className="hidden md:relative md:block">
+            <div
+              className={`${
+                isCrudOpen ? "hidden" : ""
+              }hidden md:relative md:block`}
+            >
               <button
                 type="button"
                 className="overflow-hidden px-3 py-2 text-sm font-medium text-gray-900 transition-colors cursor-pointer focus:relative"
@@ -106,7 +130,7 @@ function Header({ categories }: Props) {
             </div>
 
             {/* Botón hamburguesa (mobile) */}
-            <div className="block md:hidden">
+            <div className={`${isCrudOpen ? "hidden" : ""} block md:hidden`}>
               <button
                 className="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
@@ -128,10 +152,10 @@ function Header({ categories }: Props) {
               </button>
             </div>
             {/* Login */}
-            <div>
+            <div className={`${isCrudOpen ? "hidden" : ""} lg:px-2`}>
               {user ? (
                 <button className="flex  items-center gap-1 cursor-pointer">
-                  <UserCircleIcon className="not-sm:hidden w-10 h-10 text-blue-700" />
+                  {/* <UserCircleIcon className="not-sm:hidden w-10 h-10 text-blue-700" /> */}
                   <p className="text-sm text-gray-700 md:whitespace-nowrap wrap-break-word">
                     Hola, {user.name}!
                   </p>
@@ -146,8 +170,8 @@ function Header({ categories }: Props) {
                 </button>
               )}
             </div>
-
-            <div>
+            {/* btn admin panel */}
+            <div className={`${isCrudOpen ? "hidden" : ""} lg:px-2`}>
               <Link to="/admin">
                 <button className=" not-sm:hidden    inline-block rounded-sm bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl">
                   Admin

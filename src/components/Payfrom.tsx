@@ -32,13 +32,13 @@ function Payfrom() {
                     className="mb-2 block text-sm font-medium text-gray-900"
                   >
                     {" "}
-                    Nombre Completo (Como esta en la tarjeta)*{" "}
+                    Nombre que figura en la tarjeta{" "}
                   </label>
                   <input
                     type="text"
                     id="full_name"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500  dark:focus:ring-primary-500"
-                    placeholder="Bonnie Green"
+                    placeholder="Tu nombre"
                     required
                   />
                 </div>
@@ -49,8 +49,9 @@ function Payfrom() {
                     className="mb-2 block text-sm font-medium text-gray-900"
                   >
                     {" "}
-                    Numero de Tarjeta*{" "}
+                    Numero de Tarjeta <p></p>
                   </label>
+                  <p></p>
                   <input
                     type="text"
                     id="card-number-input"
@@ -64,7 +65,7 @@ function Payfrom() {
                     form="card-expiration-input"
                     className="mb-2 block text-sm font-medium text-gray-900"
                   >
-                    Fecha de expiración*{" "}
+                    Fecha de expiración{" "}
                   </label>
                   <div className="relative">
                     <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
@@ -141,9 +142,9 @@ function Payfrom() {
 
               <button
                 type="submit"
-                className="flex self-center items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-black hover:bg-blue-500 focus:outline-none focus:ring-4  focus:ring-primary-300 transition-all hover:scale-110"
+                className="flex self-center items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-black bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-4  focus:ring-primary-300 transition-all hover:scale-110"
               >
-                Pay now
+                Pagar
               </button>
             </form>
 
