@@ -1,5 +1,11 @@
-import React, { createContext, useState, type PropsWithChildren } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  type PropsWithChildren,
+} from "react";
 import type { Products } from "../api/interfaces/interfaces";
+import { useLocation } from "react-router";
 
 interface PaginationContextProps {
   pagination: string;
@@ -18,6 +24,12 @@ export function PaginationProvider({ children }: PropsWithChildren) {
   const [pagination, setPagination] = useState("?limit=12");
   const [prodsQuantity, setProdsQuantity] = useState(0);
   const [selectedPage, setSelectedPage] = useState(1);
+  const location = useLocation();
+
+  useEffect(() => {
+    setSelectedPage(1);
+    setPagination("?limit=12");
+  }, [location.pathname]);
 
   function getProdsQuantity() {
     async function fetchProducts(): Promise<Products[]> {

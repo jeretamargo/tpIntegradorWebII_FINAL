@@ -80,7 +80,7 @@ function Header({ categories }: Props) {
           <div
             className={`${
               isCrudOpen ? "hidden" : ""
-            }hidden  lg:block md:flex-1 md:mx-4 `}
+            } hidden lg:block md:flex-1 md:mx-4 `}
           >
             <input
               type="text"

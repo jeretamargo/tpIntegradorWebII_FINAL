@@ -533,7 +533,7 @@ function Table() {
                       )}
                       <p></p>
                     </td>
-                    <td className="px-6 py-4 w-10 ">${product.price * 1000}</td>
+                    <td className="px-6 py-4 w-10 ">${product.price}</td>
                     <td className="px-6 py-4 w-12">
                       <button className="px-2 cursor-pointer">
                         <img
@@ -776,7 +776,7 @@ function Table() {
     );
   if (TagTabOpen) {
     return (
-      <div className="flex justify-center">
+      <div className="flex justify-center pb-60">
         <div className="relative  overflow-x-auto shadow-md sm:rounded-lg  ">
           <table className="w-150 not-sm:w-auto text-sm text-center rtl:text-right text-black ">
             <thead className="text-xs text-black uppercase bg-gray-50">

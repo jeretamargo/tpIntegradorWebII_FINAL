@@ -66,7 +66,7 @@ export function ProductList({ products }: Props) {
                 key={producto.id}
                 title={producto.title}
                 picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
-                price={producto.price * 1000}
+                price={producto.price}
                 description={producto.description}
                 productId={producto.id}
                 tags={producto.tags}
@@ -103,7 +103,7 @@ export function ProductList({ products }: Props) {
                 key={producto.id}
                 title={producto.title}
                 picture={`http://161.35.104.211:8000${producto.pictures[0]}`}
-                price={producto.price * 1000}
+                price={producto.price}
                 description={producto.description}
                 productId={producto.id}
                 tags={producto.tags}
